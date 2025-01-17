@@ -1,28 +1,18 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 from datetime import datetime
 import json
 
-
-class DataBaseClothes(models.Model):
-  publish_date = datetime.now()
-  formated_date = publish_date.strftime("%d/%m/%Y")
-
+def get_json_sizes():
   try:
     with open("Api_Clothes/sizes.json") as file:
       data = json.load(file)
+      #return data.get("sizes", ["G","GG","M","P","PP"])
 
   except (FileNotFoundError, KeyError, json.JSONDecodeError):
-    KindsOfSizes = ["G","GG","M","P","PP"] # If will any problem exist related with updates of the sizes field. Maybe, the error is here!
+    return ["G","GG","M","P","PP"] 
   
-
-  KindsOfSizes = data["sizes"] 
-  
-  def create_booleanFields_for_each_size(*args):
-    fields = {}
-    for size in args:
-      fields[f"is_size_{size.lower()}"] = models.BooleanField(default=False)
-    return fields
-
   """
   With this function, we can create any object that include many options of choices, exemple: colors and size of clothes
 
@@ -31,17 +21,26 @@ class DataBaseClothes(models.Model):
 
   """
 
-  create_sizes = create_booleanFields_for_each_size(*KindsOfSizes)
-
+class DataBaseClothes(models.Model):
+  publish_date = datetime.now()
+  formated_date = publish_date.strftime("%d/%m/%Y")
+  
   name = models.CharField(max_length=100,null=False, blank=False)
-  price = models.FloatField(MinValueValidator=10, MaxValueValidator=380,null=False, blank=False) # If any problem happens, maybe, the erro is here, swap "FloatField" to "IntegerField()"!
+  price = models.FloatField([MinValueValidator(10), MaxValueValidator(380)],null=False, blank=False) # If any problem happens, maybe, the erro is here, swap "FloatField" to "IntegerField()"!
   public = models.BooleanField(default=False)
-  for fields_sizes, fields in create_sizes.items():
-    try:
-      setattr(models.Model, fields_sizes, fields)
-    except Exception as e:
-      print(f"Erro desconhecido: {e}")
-  """
-  I thought use the "locals()" function, but, for try avoid errors, i choice use the "setattr".
-  """
-  date = models.DateTimeField(date=formated_date)
+  date = models.DateTimeField(auto_now_add=True)
+  
+  @classmethod
+  def add_dynamic_fields(cls):
+    sizes = get_json_sizes()
+    list_fields = []
+    list_fields.append(sizes)
+    Each_field = len(list_fields)
+    c=0
+    while c<Each_field:
+      for size in list_fields:
+          field_name = f"is_size_{size}"
+          field = models.BooleanField(default=False)
+          cls.add_to_class(field_name, field)
+            
+DataBaseClothes.add_dynamic_fields()
