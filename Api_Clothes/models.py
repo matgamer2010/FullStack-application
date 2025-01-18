@@ -42,5 +42,6 @@ class DataBaseClothes(models.Model):
           field_name = f"is_size_{size}"
           field = models.BooleanField(default=False)
           cls.add_to_class(field_name, field)
+          c+=c
             
 DataBaseClothes.add_dynamic_fields()
