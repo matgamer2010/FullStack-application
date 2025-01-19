@@ -7,4 +7,4 @@ class AdminClothes(admin.ModelAdmin):
   search_fields = ("name",)
   list_editable = ("public",)
  
-admin.site.register(DataBaseClothes, AdminClothes)
+admin.site.register(DataBaseClothes,AdminClothes)
