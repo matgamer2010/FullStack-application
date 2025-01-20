@@ -1,4 +1,4 @@
-package models
+package structs
 
 type ClassApi struct{
 	ID int `json:"id"`

@@ -1,9 +1,11 @@
 package main
 
 import (
-	"structs/models"
 	"github.com/gin-gonic/gin"
 	"strconv"
+	"versions/models"
+	"versions/data"
+	"fmt"
 )
 
 var objetcts = []models.ClassApi{
@@ -44,7 +46,8 @@ func getEndPointByID(c*gin.Context){
 		return
 		})
 	}
-	for _,p := range objetcts{
+	for _,p := range objetcts
+	{
 		if p.ID == id {
 			c.JSON(200, p)
 			return
@@ -53,4 +56,28 @@ func getEndPointByID(c*gin.Context){
 	c.JSON(404, gin.H{
 		"message":"Content not Found"
 	})
+}
+
+func loadApi(){
+	file,err = os.Open("data/payments.json")
+	if err!=nil{
+		fmt.Println("Error in Open file: ", err)
+	}
+	defer file.Close()
+	decode := json.NewDecoder(file)
+	if err:= os.Decode(&objetcts); err!=nil{
+		fmt.Println("Error decoding JSON: ", err)
+	}
+}
+
+func saveApi(){
+	file,err = os.Open("data/payments.json")
+	if err!=nil{
+		fmt.Println("Error in Open file: ", err)
+	}
+	defer file.Close()
+	encode := os.Encode(file)
+	if err:= os.Enconde(objects); err!=nil{
+		fmt.Println("Erron encoding JSON: ", err)
+	}
 }
