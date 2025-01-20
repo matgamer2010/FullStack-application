@@ -9,6 +9,7 @@ class DataBaseClothes(models.Model):
     price = models.FloatField(validators=[MinValueValidator(10), MaxValueValidator(380)], null=False, blank=False)
     public = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(blank=True)
     size_g = models.BooleanField(default=False)
     size_gg = models.BooleanField(default=False)
     size_m = models.BooleanField(default=False)
