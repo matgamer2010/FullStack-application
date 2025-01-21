@@ -34,7 +34,7 @@ class RegisterUsers(forms.Form):
       attrs={
         "class":"username_register",
         "placeholder":"Escreva o nome do seu usuário",
-        "styles":styles_user,
+        "style":styles_user,
       }
     )
   )
@@ -48,7 +48,7 @@ class RegisterUsers(forms.Form):
       attrs={
         "class":"email_register",
         "placeholder":"john@xpto.com",
-        "styles": styles_email,        
+        "style": styles_email,        
       }
     )
   )
@@ -61,7 +61,7 @@ class RegisterUsers(forms.Form):
     widget=forms.PasswordInput(
       attrs={
         "class":"password_register",
-        "styles": styles_password,
+        "style": styles_password,
       }
     )
   )
@@ -74,7 +74,7 @@ class RegisterUsers(forms.Form):
     widget=forms.PasswordInput(
       attrs={
         "class":"confirm_password_register",
-        "styles": styles_confirm_password,
+        "style": styles_confirm_password,
       }
     )
   )

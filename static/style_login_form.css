@@ -4,12 +4,16 @@ body{
 
 .SectionLogin{
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
+  align-items: center; 
+  align-self: center;
+  align-content: center;
   border: 15px;
   background-color: antiquewhite;
   padding: 50px;
   position: relative;
   bottom: 30px;
+  margin-left:100px;
 }
 
 .InputLoginEmail{

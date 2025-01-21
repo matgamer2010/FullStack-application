@@ -6,20 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Header HTML</title>
-    <link rel="stylesheet" href="{% static "Forms/static/style_register_form.css"%}"></link>
+    <link rel="stylesheet" href="{% static 'style_register_form.css' %}"/>
 </head>
 <body>
-  <section class="SectionRegister">
-    <div id="Register"> 
-      <form class="FormRegister">
+  <section class="SectionLogin">
+    <div id="Login"> 
+      <form class="FormLogin" method="post">
         {% csrf_token %}
-        {% for field in form.visible_forms %}
-        <div class="DivRegister">
-          <label for={{ fields.id_for_label }}>{{field.label}}</label>
-          {{field}}
+        <div class="undefined">
+          {% for field in form.visible_fields %}
+            <div class="DivLogin">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+            </div>
+          {% endfor %}
         </div>
-        <buttom id="ButtonRegister" type="submit">Registro</buttom>
-        {% endfor %}
+        <button href="" id="ButtonRegister" type="submit">Registrar</button>
       </form>
     </div>
   </section>

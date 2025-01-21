@@ -6,20 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Header HTML</title>
-    <link rel="stylesheet" href="{% static "Forms/static/style_login_form.css"%}"></link>
+    <link rel="stylesheet" href="{% static 'style_login_form.css' %}">
 </head>
 <body>
   <section class="SectionLogin">
     <div id="Login"> 
-      <form class="FormLogin">
+      <form class="FormLogin" method="post">
         {% csrf_token %}
-        {% for field in form.visible_forms %}
-        <div class="DivLogin">
-          <label for={{ fields.id_for_label }}>{{field.label}}</label>
-          {{field}}
+        <div class="undefined">
+          {% for field in forms.visible_fields %}
+            <div class="DivLogin">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+            </div>
+          {% endfor %}
         </div>
-        <buttom id="ButtonLogin" type="submit">Login</buttom>
-        {% endfor %}
+        <button id="ButtonLogin" type="submit">Logar</button>
       </form>
     </div>
   </section>

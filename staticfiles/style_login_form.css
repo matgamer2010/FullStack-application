@@ -4,7 +4,10 @@ body{
 
 .SectionLogin{
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
+  align-items: center; 
+  align-self: center;
+  align-content: center;
   border: 15px;
   background-color: antiquewhite;
   padding: 50px;
