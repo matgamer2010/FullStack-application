@@ -35,7 +35,7 @@ func postEndPoint(c *gin.Context) {
 		})
 		return
 	}
-	postObject.ID = len(objects) + 1
+	postObject.ID 	= len(objects) + 1
 	objects = append(objects, postObject)
 	saveApi()
 	c.JSON(201, postObject)
