@@ -5,23 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Header HTML</title>
+    <title>Register</title>
     <link rel="stylesheet" href="{% static 'style_register_form.css' %}"/>
 </head>
 <body>
-  <section class="SectionLogin">
-    <div id="Login"> 
-      <form class="FormLogin" method="post">
+  <section class="SectionRegister">
+    <h1>Faça seu cadastro na M&M vendedores!</h1>
+    <div id="Register"> 
+      <form class="FormRegister" method="post">
         {% csrf_token %}
-        <div class="undefined">
+        <div class="Register">
           {% for field in form.visible_fields %}
-            <div class="DivLogin">
+            <div class="DivRegister">
               <label for="{{ field.id_for_label }}">{{ field.label }}</label>
               {{ field }}
             </div>
           {% endfor %}
         </div>
-        <button href="" id="ButtonRegister" type="submit">Registrar</button>
+        <button class="ButtonRegister" type="submit">Registrar</button>
       </form>
     </div>
   </section>

@@ -1,8 +1,9 @@
 from django import forms
 
+# Lembrar-se de que, os Label's devem ser em português para serem exibidos corretamente na página web
 class LoginUsers(forms.Form):
   email_login_form = forms.EmailField(
-    label= "email_login_form",
+    label= "Email",
     required = True,
     max_length= 100,
     widget = forms.TextInput(
@@ -13,26 +14,26 @@ class LoginUsers(forms.Form):
     )
   )
   password_login_form = forms.CharField(
-    label="password_login_form",
+    label="Senha",
     required=True,
     max_length= 70,
     widget= forms.PasswordInput(
       attrs= {
         "class": "InputLoginPassword",
+        "placeholder": "Digite sua Senha",
       }
     )
   )
-  
 class RegisterUsers(forms.Form):
   
   styles_user = {"border":"none", "background-color":"red",}  
   username_register_form = forms.CharField(
-    label="username_register_form",
+    label="Insira um Nome que será público aos usuários",
     required=True,
     max_length=100,
     widget= forms.TextInput(
       attrs={
-        "class":"username_register",
+        "class":"UsernameRegister",
         "placeholder":"Escreva o nome do seu usuário",
         "style":styles_user,
       }
@@ -41,12 +42,12 @@ class RegisterUsers(forms.Form):
   
   styles_email= {"border":"none", "background-color":"red",}
   email_register_form = forms.EmailField(
-    label="email_register_form",
+    label="Insira um Email válido",
     required=True,
     max_length=70,
     widget= forms.EmailInput(
       attrs={
-        "class":"email_register",
+        "class":"InputRegisterEmail",
         "placeholder":"john@xpto.com",
         "style": styles_email,        
       }
@@ -55,12 +56,13 @@ class RegisterUsers(forms.Form):
   
   styles_password = {"border":"none", "background-color":"red",}
   password_register_form = forms.CharField(
-    label= "passwrod_register",
+    label= "Digite uma Senha válida",
     required=True,
+    min_length=8,
     max_length=70,
     widget=forms.PasswordInput(
       attrs={
-        "class":"password_register",
+        "class":"InputRegisterPassword",
         "style": styles_password,
       }
     )
@@ -68,12 +70,13 @@ class RegisterUsers(forms.Form):
   
   styles_confirm_password = {"border":"none", "background-color":"red"}
   confirm_password_register_form = forms.CharField(
-    label= "confirm_passwrod_register",
+    label= "Confirme sua Senha",
     required=True,
+    min_length=8,
     max_length=70,
     widget=forms.PasswordInput(
       attrs={
-        "class":"confirm_password_register",
+        "class":"InputRegisterPassword_2",
         "style": styles_confirm_password,
       }
     )

@@ -5,25 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Header HTML</title>
-    <link rel="stylesheet" href="{% static 'style_login_form.css' %}">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'style_login_form.css' %}"/>
 </head>
+
 <body>
+
   <section class="SectionLogin">
-    <div id="Login"> 
+    <h2>Faça seu login na M&M vendedores</h2>
+    <a class="AuthoralRights" href="www.freepik.com">Designed by Freepik</a>
+    <img class="ImageForms" alt="image_login" src="{% static 'image_form_2.png'%}" />
+
+    <div class="Login"> 
       <form class="FormLogin" method="post">
         {% csrf_token %}
-        <div class="undefined">
+        <div class="Undefined">
           {% for field in forms.visible_fields %}
-            <div class="DivLogin">
+            <div class="Fields_django">
               <label for="{{ field.id_for_label }}">{{ field.label }}</label>
               {{ field }}
             </div>
           {% endfor %}
         </div>
-        <button id="ButtonLogin" type="submit">Logar</button>
+
+      <button type="submit" class="ButtonLogin">Login</button>
       </form>
     </div>
   </section>
+
 </body>
 </html>
