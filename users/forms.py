@@ -2,17 +2,18 @@ from django import forms
 
 # Lembrar-se de que, os Label's devem ser em português para serem exibidos corretamente na página web
 class LoginUsers(forms.Form):
-  email_login_form = forms.EmailField(
-    label= "Email",
+  username_login_form = forms.CharField(
+    label= "Usuário",
     required = True,
     max_length= 100,
     widget = forms.TextInput(
       attrs= {
-        "class": "InputLoginEmail",
-        "placeholder": "john@xpto.com",
+        "class": "InputLoginUser",
+        "placeholder": "Digite seu nome de usuário",
       }
     )
   )
+  
   password_login_form = forms.CharField(
     label="Senha",
     required=True,

@@ -12,12 +12,17 @@
 <body>
 
   <section class="SectionLogin">
+    {% for message in massages %}
+    <div>
+      <p  class="state_messages" id="messages">{{messages}}</p>
+    </div>
+    {% endfor %}
     <h2>Faça seu login na M&M vendedores</h2>
     <a class="AuthoralRights" href="www.freepik.com">Designed by Freepik</a>
     <img class="ImageForms" alt="image_login" src="{% static 'image_form_2.png'%}" />
 
     <div class="Login"> 
-      <form class="FormLogin" method="post">
+      <form class="FormLogin" method="POST">
         {% csrf_token %}
         <div class="Undefined">
           {% for field in forms.visible_fields %}

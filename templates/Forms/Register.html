@@ -12,7 +12,7 @@
   <section class="SectionRegister">
     <h1>Faça seu cadastro na M&M vendedores!</h1>
     <div id="Register"> 
-      <form class="FormRegister" method="post">
+      <form class="FormRegister" method="POST">
         {% csrf_token %}
         <div class="Register">
           {% for field in form.visible_fields %}

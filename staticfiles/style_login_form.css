@@ -1,89 +1,111 @@
-body , html{
-  background:#fffb5b;  
-  height: 100vh; 
+.SectionLogin {
+  position: relative;
   display: flex;
-  justify-content: center; 
-  align-items: center; 
-}
-
-.LoginText{
-  position:relative;
-  font-family: Arial,sans-serif;
-  transform:translateX(100px);
-}
-
-.SectionLogin{
-  position:relative;
-  display:flex;
-  justify-content:space-between;
+  flex-direction: column;
   align-items: center;
-  background:#818eed;
-  margin-left:100px;
-  padding:2vh;
-  border-radius:20px;
+  justify-content: center;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0;
+  height: 100vh;
+  overflow: hidden; /* Adicione essa linha */
 }
 
-.ImageForms{
-  position:relative;
-  height:400px;
-  width:400px;
-  margin-right:50;
-  margin-top:50px;
-  transform: translateX(-450px);
+.state_messages{
+  color:green;
+  background-color: white;
 }
 
-label{
-  font-weight:800;
-  font-family:Arial, sans-serif
+.AuthoralRights {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: #666;
 }
 
-label{
-  font-size: 25px;
+.ImageForms {
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.Login{
-  transform:translateX(-200px);    
-  margin-top:50px;
+.Login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.InputLoginEmail {
-display: flex;
-justify-content: space-between;
-gap: 10px;
-margin:7px 0px;
-padding:10px;
-border: none;
-border-radius:10px;
-white-space: nowrap;
+.FormLogin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Undefined {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.Fields_django {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.Fields_django label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.Fields_django input[type="email"] {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.InputLoginUser {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .InputLoginPassword {
-display: flex;
-justify-content: space-between;
-gap: 10px;
-margin:7px 0px;
-padding:10px;
-border: none;
-border-radius:10px;
-white-space: nowrap;
-}
-
-.ButtonLogin {
-display: flex;
-justify-content: space-between;
-gap: 10px;
-border-radius:5px;
-background-color:	#FFA07A;
-margin-top:25px;
-padding:5px 50px;
-}
-
-.ButtonLogin:hover{
-cursor: pointer;
-}
-
-.AuthoralRights{
-position:relative;
-margin-top:400px;
-transform:translateX(-300px);
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
 }
