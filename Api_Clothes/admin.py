@@ -3,7 +3,7 @@ from Api_Clothes.models import DataBaseClothes
 
 class AdminClothes(admin.ModelAdmin):
     list_display = ("id", "name", "price", "public", "date", "image",)
-    Option_sizes_admin = ["GG","PP"]    
+    Option_sizes_admin = ["GG", "PP","M","P","G"]    
     def get_list_display(self, request):
         dynamic_fields = [f"size_{size}" for size in self.Option_sizes_admin]
         return self.list_display + tuple(dynamic_fields)
