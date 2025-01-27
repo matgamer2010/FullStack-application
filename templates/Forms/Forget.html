@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forget</title>
+    <link rel="stylesheet" href="{% static 'style_forget_form.css' %}">
+</head>
+<body>
+    <section class="SectionForget">
+        <h1>Digite seu email para recuperar-mos sua conta:</h1>
+        <div class="forget_form">
+            <form action="submit" class="forget" method="POST">
+                {% csrf_token %}
+                <div class="EmailForget">
+                    {% for labels in forget.visible_fields%}
+                        <label for="{{forget.id_for_label}}">{{forget.label}}</label>
+                        {% forget %}
+                    {% endfor %}
+                </div>
+                <button type="submit" class="ForgetButton">Enviar</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

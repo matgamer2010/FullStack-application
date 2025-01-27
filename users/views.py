@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import LoginUsers, RegisterUsers
+from .forms import LoginUsers, RegisterUsers, Forget
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -63,3 +63,8 @@ def Logout(request):
     auth.logout(request)
     messages.success(request, "Você foi deslogado")
     return redirect("login_form")
+
+def Forget(request):
+    Forget = Forget()    
+    
+    return render(request, "Forms/Forget", {"forget":Forget})

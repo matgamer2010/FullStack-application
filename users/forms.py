@@ -79,6 +79,20 @@ class RegisterUsers(forms.Form):
       attrs={
         "class":"InputRegisterPassword_2",
         "style": styles_confirm_password,
+        }
+    )
+  )
+
+class Forget(forms.Form):
+
+  email_register_form = forms.EmailField(
+    label="Insira um Email válido para recuperação",
+    required=True,
+    max_length=70,
+    widget= forms.EmailInput(
+      attrs={
+        "class":"InputForgetEmail",
       }
     )
   )
+  
