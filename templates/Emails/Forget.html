@@ -11,12 +11,12 @@
     <section class="SectionForget">
         <h1>Digite seu email para recuperar-mos sua conta:</h1>
         <div class="forget_form">
-            <form action="submit" class="forget" method="POST">
+            <form class="forget" method="POST">
                 {% csrf_token %}
                 <div class="EmailForget">
                     {% for labels in forget.visible_fields%}
-                        <label for="{{forget.id_for_label}}">{{forget.label}}</label>
-                        {% forget %}
+                        <label for="{{labels.id_for_label}}">{{labels.label}}</label>
+                        {% labels %}
                     {% endfor %}
                 </div>
                 <button type="submit" class="ForgetButton">Enviar</button>

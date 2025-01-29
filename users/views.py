@@ -4,8 +4,15 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.contrib import messages
+from django.urls import reverse
+from users.forget_email import RetriveAccount
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
+token_generator = PasswordResetTokenGenerator()
+token = token_generator.make_token(User)
 
 def formLogin(request):
+    
     login_forms = LoginUsers()
     
     if request.method == "POST":
@@ -30,7 +37,9 @@ def formLogin(request):
 
     return render(request, "Forms/Login.html", {"forms":login_forms})
 
+
 def formRegister(request):
+    
     register_forms = RegisterUsers()
     
     if request.method == "POST":  
@@ -60,11 +69,37 @@ def formRegister(request):
 
 
 def Logout(request):
+    
     auth.logout(request)
     messages.success(request, "Você foi deslogado")
     return redirect("login_form")
 
+
 def Forget(request):
-    Forget = Forget()    
     
-    return render(request, "Forms/Forget", {"forget":Forget})
+    forget_form = Forget()
+    
+    if request.method == 'POST':
+        forget_form = Forget(request.POST)
+        if forget_form.is_valid():
+            try:
+                email_user = forget_form["email_register_form"]
+                if not User.objects.filter(email=email_user).exists():
+                   messages.error(request,"O email digitado não existe no nosso sistema.")
+                reset_link = f"{request.build_absolute_uri(reverse('password_reset_confirm', args=[User.id]))}?token={token}"
+                RetriveAccount(email_user,reset_link)
+                messages.success(request,"Perfeito!, enviamos um link para redefinição de senha no seu Email.")
+                return redirect("login_form")
+            except Exception as e:
+                messages.error(request,f"Houve um erro no envio do seu formulário, o erro é:{e}")
+                            
+    return render(request, "Email/Forget", {"forget":forget_form})
+
+
+def Reset(request):
+    
+    # Aqui, temos que desenvolver apenas a validação da senha do usuário
+    # primeiro, verificar se a senha é valida, segundo, se a senha é a mesma que a antiga, depois salvar
+    # Lembrar de Ver o que o chat gpt sugeriu, pois há validações importantes lá.
+    
+    return render(request, "Emails/Reset.html")
