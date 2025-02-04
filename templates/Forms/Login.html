@@ -11,11 +11,15 @@
 <body>
 
   <section class="SectionLogin">
-    {% for message in massages %}
-    <div>
-      <p  class="state_messages" id="messages">{{messages}}</p>
-    </div>
-    {% endfor %}
+    
+    {% if messages %}
+    <ul class="state_messages">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    
     <h2>Faça seu login na M&M vendedores</h2>
     <a class="AuthoralRights" href="www.freepik.com">Designed by Freepik</a>
     <img class="ImageForms" alt="image_login" src="{% static 'image_form_2.png'%}" />
@@ -30,7 +34,7 @@
               {{ field }}
             </div>
           {% endfor %}
-          <p href="{% url 'forget' %}">Esquece sua senha?</p>
+          <a href="{% url 'forget'%}">Esqueceu sua senha?</a>
         </div>
 
       <button type="submit" class="ButtonLogin">Login</button>

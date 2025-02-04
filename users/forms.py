@@ -83,7 +83,7 @@ class RegisterUsers(forms.Form):
     )
   )
 
-class Forget(forms.Form):
+class ForgetPassword(forms.Form):
 
   email_register_form = forms.EmailField(
     label="Insira um Email válido para recuperação",
@@ -92,6 +92,32 @@ class Forget(forms.Form):
     widget= forms.EmailInput(
       attrs={
         "class":"InputForgetEmail",
+      }
+    )
+  )
+  
+class ResetPassword(forms.Form):
+  
+  password_reset_form = forms.CharField(
+    label="Insira sua nova senha",
+    required=True,
+    min_length=8,
+    max_length=70,
+    widget= forms.PasswordInput(
+      attrs={
+        "class":"InputResetPassword",
+      }
+    )
+  )
+  
+  confirm_password_reset_form = forms.CharField(
+    label="Confirme sua nova senha",
+    required=True,
+    min_length=8,
+    max_length=70,
+    widget= forms.PasswordInput(
+      attrs={
+        "class":"InputResetPassword_2",
       }
     )
   )

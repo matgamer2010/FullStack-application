@@ -9,11 +9,30 @@
 </head>
 <body>
     <section class="SectionResetPassword">
-        <div class="ResetPassword">
-            
-        </div>
 
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="ResetPassword">
+            <form class="Reset" method="POST">
+                /* Aqui, deveríamos colococar o CSRF token */
+
+                <div class="Inputs">
+                    {% for labels in reset.visible_fields %}
+                        <div class="InputsResetForm">
+                            <label for="{{labels.id_for_label}}">{{labels.label}}</label>
+                            {{labels}}
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="ButtonResetPasword" >Salvar</button>
+            </form>
+        </div>
     </section>
-    
 </body>
 </html>

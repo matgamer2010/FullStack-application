@@ -9,6 +9,15 @@
 </head>
 <body>
     <section class="SectionForget">
+
+        {% if messages %}
+        <ul class="state_messages_forget">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
         <h1>Digite seu email para recuperar-mos sua conta:</h1>
         <div class="forget_form">
             <form class="forget" method="POST">
@@ -16,7 +25,7 @@
                 <div class="EmailForget">
                     {% for labels in forget.visible_fields%}
                         <label for="{{labels.id_for_label}}">{{labels.label}}</label>
-                        {% labels %}
+                        {{labels}}
                     {% endfor %}
                 </div>
                 <button type="submit" class="ForgetButton">Enviar</button>
