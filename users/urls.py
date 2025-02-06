@@ -9,7 +9,10 @@ urlpatterns = [
   path("forget/", views.Forget, name="forget"),
   path("reset_password/", views.Reset, name="reset_password"),
   path("test/", views.test_email, name="test"),
-  path("reset/<str:uidb64>/<str:token>", auth_views.PasswordResetView.as_view(),name="password_reset_confirm"),
-  path("reset/done/<str:uidb64>/<str:token>", auth_views.PasswordResetConfirmView.as_view(),name="password_reset_done"),
+  path("reset/", auth_views.PasswordResetView.as_view(),name="password_reset"),
+  path("reset/done/", auth_views.PasswordResetConfirmView.as_view(),name="password_reset_done"),
+  path("reset/<str:uidb64>/<str:token>", 
+       auth_views.PasswordResetView.as_view(success_url="localhost:3000/forms/reset/done/"),
+       name="password_reset_confirm",),
   path("reset/complete/", auth_views.PasswordResetCompleteView.as_view(),name="password_reset_complete"),
 ]

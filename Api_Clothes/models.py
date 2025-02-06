@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 class DataBaseClothes(models.Model):
+    
     name = models.CharField(max_length=100, null=False, blank=False)
     price = models.FloatField(validators=[MinValueValidator(10), MaxValueValidator(380)], null=False, blank=False)
     public = models.BooleanField(default=False)
@@ -12,6 +13,7 @@ class DataBaseClothes(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=False,
+        related_name="Clothes_users",
     )    
     def __str__(self):
         return f"Item {self.name} was saved"

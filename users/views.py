@@ -86,7 +86,6 @@ def Forget(request):
         token = token_generator.make_token(id_url)
         uidb64 = urlsafe_base64_encode(force_bytes(id_url.id))
         reset_link = f"{request.build_absolute_uri(reverse('password_reset_confirm', args=[uidb64, token]))}"
-        reset_link_done = f"{request.build_absolute_uri(reverse('password_reset_done', args=[uidb64, token]))}"
         return reset_link
 
     def create_done_link(request, user_id):
@@ -105,30 +104,35 @@ def Forget(request):
             try:
 
                 email_user = forget_form.cleaned_data["email_register_form"] 
-
+                print("aqui")
                 if User.objects.filter(email=email_user).exists():                
+                    print(f"O email digitado existe no nosso sistema.")
                     user = User.objects.get(email=email_user)
+                    print(f"O email do usuário é: {user.email}")
                     user_id = user.id
+                    print(f"O id do usuário é: {user_id}")
                     reset_link_user = create_reset_link(request, user_id)  
+                    
                     
                     done_link_user = create_done_link(request, user_id)
                     print(f"A url para indicar a finalização da redifinição da senha é: {done_link_user}")
                     print(f"A url criada é: {reset_link_user}") 
+                    
                     try:
                         RetriveAccount.submit_email(user, reset_link_user)
-                        print("Email enviado com sucesso")
+                        print(f"Email enviado com sucesso, testando o valor existente em: {RetriveAccount.submit_email(user, reset_link_user)}")
                         messages.success(request, "Email enviado com sucesso")
-                        return redirect("login_form")
+                        return redirect(reset_link_user)
                     except Exception as e:
                         messages.error(request, "Erro ao enviar email")
                         print(f"Erro no envio do email, o erro é: {e}") 
                         return redirect("forget")
                 else:
-                    print("O email digitado não existe no nosso sistema. Erro 1")
+                    print(f"O email digitado não existe no nosso sistema. Erro 1")
                     return redirect("forget")
             
-            except:
-                print("O email digitado não existe no nosso sistema. Erro 5")
+            except Exception as e:
+                print(f"O email digitado não existe no nosso sistema. Erro: {e}")
                 return redirect("forget")
                             
     return render(request, "Emails/Forget.html", {"forget":forget_form})
