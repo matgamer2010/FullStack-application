@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from Api_Clothes.models import DataBaseClothes
 from Api_Clothes.serializers import SerializersClothes
 
-
 class Crud(viewsets.ModelViewSet):
 
     queryset = DataBaseClothes.objects.all()
@@ -20,27 +19,21 @@ class Crud(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)  # ".pop()"?
+        partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(
             instance, data=request.data, partial=partial)
-        # "get_serializer"?
         if serializer.is_valid():
             self.perform_update(serializer)
-            # O que é perform_update?
             return Response(serializer.data, status=status.HTTP_200_OK)
-            # Não deveríamos dar um "serializer.save()"?
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
-        print(queryset)
         serializer = self.get_serializer(queryset, many=True)
-        print(serializer)
         return Response(serializer.data)
 
-    # Método DELETE sobrescrito
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
@@ -52,7 +45,6 @@ class Crud(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(cross_databases=self.request.user)
         # pedir ao chat gpt para explicar a lógica do request.user
-
 
 class GetObjectPerUser(viewsets.ModelViewSet):
     queryset = DataBaseClothes.objects.all()

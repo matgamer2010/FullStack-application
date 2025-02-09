@@ -83,7 +83,7 @@ class RegisterUsers(forms.Form):
     )
   )
 
-class ForgetPassword(forms.Form):
+class ConfirmEmail(forms.Form):
 
   email_register_form = forms.EmailField(
     label="Insira um Email válido para recuperação",
@@ -96,7 +96,7 @@ class ForgetPassword(forms.Form):
     )
   )
   
-class ResetPassword(forms.Form):
+class ResetPasswordDone(forms.Form):
   
   password_reset_form = forms.CharField(
     label="Insira sua nova senha",

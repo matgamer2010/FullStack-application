@@ -1,0 +1,34 @@
+body{
+    top: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+}
+
+.SectionForget{
+    background-color: whitesmoke;
+    color: black;
+    padding: 5vh 5vh;
+}
+
+
+h1{
+    position: relative;
+}
+
+.InputForgetEmail{
+    border: none;
+    white-space: nowrap;
+    border-radius: 5px;
+}
+
+.ForgetButton{
+    border: none;
+    background-color: dimgrey;
+}
+
+.ForgetButton:hover{
+    background-color: darkgray;
+}

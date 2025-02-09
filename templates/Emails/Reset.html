@@ -4,33 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset</title>
-    <link rel="stylesheet" href="{% static 'style_reset_form.css'%}">
+    <title>Forget</title>
+    <link rel="stylesheet" href="{% static 'StylesEmails/style_forget_form.css' %}">
 </head>
 <body>
-    <section class="SectionResetPassword">
+    <section class="SectionForget">
 
         {% if messages %}
-        <ul class="messages">
-          {% for message in messages %}
+        <ul class="state_messages_forget">
+            {% for message in messages %}
             <li class="{{ message.tags }}">{{ message }}</li>
-          {% endfor %}
+            {% endfor %}
         </ul>
         {% endif %}
 
-        <div class="ResetPassword">
-            <form class="Reset" method="POST">
-                /* Aqui, deveríamos colococar o CSRF token */
-
-                <div class="Inputs">
-                    {% for labels in reset.visible_fields %}
-                        <div class="InputsResetForm">
-                            <label for="{{labels.id_for_label}}">{{labels.label}}</label>
-                            {{labels}}
-                        </div>
+        <h1>Digite seu email para recuperar-mos sua conta:</h1>
+        <div class="forget_form">
+            <form class="forget" method="POST">
+                {% csrf_token %}
+                <div class="EmailForget">
+                    {% for labels in forget.visible_fields%}
+                        <label for="{{labels.id_for_label}}">{{labels.label}}</label>
+                        {{labels}}
                     {% endfor %}
                 </div>
-                <button type="submit" class="ButtonResetPasword" >Salvar</button>
+                <button type="submit" class="ForgetButton">Enviar</button>
             </form>
         </div>
     </section>

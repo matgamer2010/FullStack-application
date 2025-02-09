@@ -7,4 +7,4 @@ class SerializersClothes(serializers.HyperlinkedModelSerializer):
   class Meta:
     model = DataBaseClothes
     fields = '__all__'
-"""    read_only_fields = ['cross_databases']"""
+

@@ -23,7 +23,6 @@ class RetriveAccount:
             message,
             from_email,
             recipient_list,  
-            html_message,
+            html_message=html_message,
         )
-        print(f"Email enviado - forget_email.py, testando o valor da função: \n {send_mail}")
         

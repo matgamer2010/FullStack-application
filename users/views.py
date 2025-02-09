@@ -1,16 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-from django.conf import settings
-from django.core.mail import send_mail
-from django.http import HttpResponse
-from .forms import LoginUsers, RegisterUsers, ForgetPassword, ResetPassword
-from users.forget_email import RetriveAccount
+from django.contrib.auth.views import PasswordResetCompleteView, PasswordResetDoneView, PasswordResetView, PasswordChangeView
 from django.contrib import auth
+
+
+from .forms import LoginUsers, RegisterUsers, ConfirmEmail
+from users.forget_email import RetriveAccount
 
 
 def formLogin(request):
@@ -34,8 +34,8 @@ def formLogin(request):
                 messages.success(request, "Login bem-sucedido")
                 return redirect("http://127.0.0.1:8000/")
             else:
-                messages.error(request,"O email digitado não existe no nosso sistema.")
-
+                messages.error(
+                    request, "O email digitado não existe no nosso sistema.")
 
     return render(request, "Forms/Login.html", {"forms": login_forms})
 
@@ -78,90 +78,60 @@ def Logout(request):
     return redirect("login_form")
 
 
-def Forget(request):
+class Forget(PasswordResetView):
+
+    template_name = "Emails/Forget.html"
+    success_url = "password_reset_done"
     
-    token_generator = PasswordResetTokenGenerator()
-    def create_reset_link(request, user_id):
-        id_url = User.objects.get(id=user_id)
-        token = token_generator.make_token(id_url)
-        uidb64 = urlsafe_base64_encode(force_bytes(id_url.id))
-        reset_link = f"{request.build_absolute_uri(reverse('password_reset_confirm', args=[uidb64, token]))}"
-        return reset_link
-
-    def create_done_link(request, user_id):
-        id_url = User.objects.get(id=user_id) 
-        token = token_generator.make_token(id_url)
-        uidb64 = urlsafe_base64_encode(force_bytes(id_url.id))
-        reset_link_done = f"{request.build_absolute_uri(reverse('password_reset_done', args=[uidb64, token]))}"
-        return reset_link_done    
-
-
-    forget_form = ForgetPassword()
-    
-    if request.method == 'POST':
-        forget_form = ForgetPassword(request.POST)
-        if forget_form.is_valid():
-            try:
-
-                email_user = forget_form.cleaned_data["email_register_form"] 
-                print("aqui")
-                if User.objects.filter(email=email_user).exists():                
-                    print(f"O email digitado existe no nosso sistema.")
-                    user = User.objects.get(email=email_user)
-                    print(f"O email do usuário é: {user.email}")
-                    user_id = user.id
-                    print(f"O id do usuário é: {user_id}")
-                    reset_link_user = create_reset_link(request, user_id)  
-                    
-                    
-                    done_link_user = create_done_link(request, user_id)
-                    print(f"A url para indicar a finalização da redifinição da senha é: {done_link_user}")
-                    print(f"A url criada é: {reset_link_user}") 
-                    
-                    try:
-                        RetriveAccount.submit_email(user, reset_link_user)
-                        print(f"Email enviado com sucesso, testando o valor existente em: {RetriveAccount.submit_email(user, reset_link_user)}")
-                        messages.success(request, "Email enviado com sucesso")
-                        return redirect(reset_link_user)
-                    except Exception as e:
-                        messages.error(request, "Erro ao enviar email")
-                        print(f"Erro no envio do email, o erro é: {e}") 
-                        return redirect("forget")
-                else:
-                    print(f"O email digitado não existe no nosso sistema. Erro 1")
-                    return redirect("forget")
-            
-            except Exception as e:
-                print(f"O email digitado não existe no nosso sistema. Erro: {e}")
-                return redirect("forget")
-                            
-    return render(request, "Emails/Forget.html", {"forget":forget_form})
-
-
-def Reset(request):
-    def create_reset_link(request, user_id):
+    def Get(self, request, user):
         token_generator = PasswordResetTokenGenerator()
-        id_url = User.objects.get(id=user_id)
-        token = token_generator.make_token(id_url)
-        uidb64 = urlsafe_base64_encode(force_bytes(id_url.id))
-        reset_link = f"{request.build_absolute_uri(reverse('password_reset_done', args=[uidb64, token]))}"
+        token = token_generator.make_token(user)
+        uidb64 = urlsafe_base64_encode(force_bytes(user.id))
+        reset_link = request.build_absolute_uri(
+            reverse('password_reset_confirm', args=[uidb64, token]))
         return reset_link
-    reset_password = ResetPassword()
-    # Aqui, temos que desenvolver apenas a validação da senha do usuário
-    # Primeiro, verificar se a senha é valida, segundo, se a senha é a mesma que a antiga, depois salvar
-    # Lembrar de Ver o que o chat gpt sugeriu, pois há validações importantes lá.
-    
-    
-    return render(request, "Emails/Reset.html", {"reset":reset_password})
+
+    def get(self, request, *args, **kwargs):
+        forget_forms = ConfirmEmail()
+        return render(request, self.template_name, {"forget": forget_forms})
+
+    def post(self, request, *args, **kwargs):
+        forget_forms = ConfirmEmail(request.POST)
+        if forget_forms.is_valid():
+            email_user = forget_forms.cleaned_data["email_register_form"]
+            try:
+                if User.objects.filter(email=email_user).exists():
+                    user = User.objects.get(email=email_user)
+                    reset_link = self.Get(request, user)
+                    print(f"A URL criada foi: {reset_link}")
+                    try:
+                        RetriveAccount.submit_email(user, reset_link)
+                        messages.success(request, "Email enviado com sucesso")
+                        return redirect(self.success_url)
+                    except Exception as e:
+                        messages.error(request, f"Erro ao enviar email: {e}")
+                else:
+                    messages.error(request, "O email digitado não existe.")
+            except Exception as e:
+                messages.error(request, f"Erro inesperado: {e}")
+
+        return render(request, self.template_name, {"forget": forget_forms})
 
 
-def test_email(request):
-    subject = "Teste de Email"
-    message = "Esse é um teste simples de envio de email pelo Django."
-    send_mail(
-        subject,
-        message,
-        settings.DEFAULT_FROM_EMAIL,
-        ["matgamer297@gmail.com"],  
-    )
-    return HttpResponse("Teste de envio de email concluído!")
+class ChangePassword_done(PasswordResetDoneView):
+    template_name = 'Reset/password_reset_done.html'
+
+
+class Reset_password(PasswordChangeView):
+    template_name = "Emails/Reset.html"
+    success_url = "password_reset_completed"
+    
+    def Post(self, request, *args, **kwargs):
+        # Validar as informações contidas aqui.
+        pass
+
+
+class ChagePassword_completed(PasswordResetCompleteView):
+    template_url = 'Reset/password_reset_completed.html'
+    success_url = reverse_lazy("login_form")
+
