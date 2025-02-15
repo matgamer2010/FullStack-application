@@ -29,12 +29,30 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',    
+    
+    'rest_framework',
+    'corsheaders',
+    # possível erro aqui, já que estamos configurando portas externas.
+    
     'Api_Clothes',
     'users',
-    'rest_framework',
+    
+    'allauth',
+    'allauth.account', 
+    'allauth.socialaccount',    
+    'allauth.socialaccount.providers.github',
+    
+    'allauth.socialaccount.providers.apple',
+    'allauth.socialaccount.providers.discord',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.microsoft',
+    
 ]
 
 MIDDLEWARE = [
+    "allauth.account.middleware.AccountMiddleware",
+    "corsheaders.middleware.CorsMiddleware", 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -42,6 +60,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Next.js with React localhost.
 ]
 
 ROOT_URLCONF = 'setup_back_end.urls'
@@ -121,10 +145,44 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/" 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# django-allauth config
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+ACCOUNT_LOGIN_METHODS = {'email', 'username'}
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+LOGIN_URL = "accounts/login/"
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': os.getenv("CLIENT_ID_GOOGLE"),
+            'secret': os.getenv("SECRET"),
+            'key': ''
+        }
+    }
+}
+
+LOGIN_REDIRECT_URL = "http://localhost:8000/"
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+SOCIALACCOUNT_LOGOUT_ON_GET = True
 
 # Emails config
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

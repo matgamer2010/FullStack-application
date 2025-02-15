@@ -1,15 +1,16 @@
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from Api_Clothes.models import DataBaseClothes
 from Api_Clothes.serializers import SerializersClothes
 
+ 
 class Crud(viewsets.ModelViewSet):
-
+    permission_classes = [IsAuthenticated]
     queryset = DataBaseClothes.objects.all()
     serializer_class = SerializersClothes
-    permissson_classes = [IsAuthenticated]
-
+        
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -44,7 +45,6 @@ class Crud(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(cross_databases=self.request.user)
-        # pedir ao chat gpt para explicar a lógica do request.user
 
 class GetObjectPerUser(viewsets.ModelViewSet):
     queryset = DataBaseClothes.objects.all()
@@ -60,3 +60,4 @@ class GetObjectPerUser(viewsets.ModelViewSet):
             return Response({"detail": "Nenhum produto encontrado para o usuário."}, status=status.HTTP_404_NOT_FOUND)
         serializer = self.get_serializer(produtos, many=True)
         return Response(serializer.data)
+    

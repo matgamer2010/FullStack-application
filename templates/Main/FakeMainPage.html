@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&M vendedores</title>
+    <link rel="stylesheet" href="{% static 'StylesMain/styled_main.css' %}">
+</head>
+<body>
+    <section class="HeaderMM">
+        <div class="main-header">
+            <div class="Texts">
+                <h2 onclick="window.location.href='http://localhost:8000/'">M&M vendedores</h2>
+                <p>Excelência em produtos!</p>
+            </div>
+            <input class="InputHeader" placeholder="pesquise algo"/>
+            {% if StatusUser %}
+                {% if user.is_authenticated %}
+                    <p class="WelcomeUser" >Seja bem vindo(a): {{user}}</p>    
+                    <a class="InOut" href="http://localhost:8000/accounts/logout/">Faça seu Logout</a>
+                {% else %}
+                    <a class="InOut" href="http://localhost:8000/accounts/login/">Faça seu Login!</a>
+                    <a class="InOut" href="http://localhost:8000/accounts/login/">Faça seu Cadastro</a>
+                {% endif %}
+            {% else %}
+                <a class="InOut" href="http://localhost:8000/accounts/login/">Faça seu Cadastro</a>
+                <a class="InOut" href="http://localhost:8000/accounts/login/">Faça seu Login</a>
+            {% endif %}
+            {% if each_user_image == "" %}
+                <div class="AlternativeImage">
+                    <img class="NoUserProfile" src="{% static 'UnknowUser.png' %}" alt="UnknowUser" onclick="window.location.href='http://localhost:8000/profile_user/'" >
+                    <a class="AuthoralRights" href="www.freepik.com">Designed by Freepik</a>
+                </div>
+            {% else %}
+                    <img class="UserProfile" src="{{each_user_image}}" onclick="window.location.href='http://localhost:8000/profile_user/'" />
+            {% endif %}
+        </div>
+    </section>
+
+</body>
+</html>

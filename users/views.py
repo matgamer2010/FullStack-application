@@ -7,7 +7,10 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.views import PasswordResetCompleteView, PasswordResetDoneView, PasswordResetView, PasswordChangeView
 from django.contrib import auth
+from django.utils.timezone import now
 
+from allauth.socialaccount.models import SocialAccount
+from django.core.files.base import ContentFile
 
 from .forms import LoginUsers, RegisterUsers, ConfirmEmail
 from users.forget_email import RetriveAccount
@@ -75,14 +78,35 @@ def Logout(request):
 
     auth.logout(request)
     messages.success(request, "Você foi deslogado")
-    return redirect("login_form")
+    redirect("login_form")
+    return render(request, "Forms/Logout.html")
 
+
+def MainPage(request, **kwargs):
+    photo_url = ''
+    status_user = False
+    if request.user.is_authenticated:
+        try:
+            # Devemos manter a lógica assim pois, e se o usuário não tiver imagem?, ele vai cair na mesma página de quem não está logado?
+            # Ou, e se o usuário acabou de deletar sua conta?, ele deve ser redirecionado para a mesma página padrão?
+            social_account = SocialAccount.objects.filter(user=request.user, provider="google").first()
+            if social_account: 
+                photo_url = social_account.extra_data.get("picture", "")
+            # Isso deve permanecer assim (status_user como True), pois nem todos os usuários usarão o allauth.
+            status_user = True
+        except Exception as e:
+            print(f"Houve um erro inesperado, o erro é: {e}")
+    return render(request, "Main/FakeMainPage.html", {"each_user_image": photo_url, "StatusUser":status_user}) 
+
+def ProfileUser(request):
+     
+    return render(request, "Main/ProfileUser.html") 
 
 class Forget(PasswordResetView):
 
     template_name = "Emails/Forget.html"
     success_url = "password_reset_done"
-    
+
     def Get(self, request, user):
         token_generator = PasswordResetTokenGenerator()
         token = token_generator.make_token(user)
@@ -107,6 +131,7 @@ class Forget(PasswordResetView):
                     try:
                         RetriveAccount.submit_email(user, reset_link)
                         messages.success(request, "Email enviado com sucesso")
+                        print("Email enviado!")
                         return redirect(self.success_url)
                     except Exception as e:
                         messages.error(request, f"Erro ao enviar email: {e}")
@@ -125,7 +150,7 @@ class ChangePassword_done(PasswordResetDoneView):
 class Reset_password(PasswordChangeView):
     template_name = "Emails/Reset.html"
     success_url = "password_reset_completed"
-    
+
     def Post(self, request, *args, **kwargs):
         # Validar as informações contidas aqui.
         pass
@@ -134,4 +159,3 @@ class Reset_password(PasswordChangeView):
 class ChagePassword_completed(PasswordResetCompleteView):
     template_url = 'Reset/password_reset_completed.html'
     success_url = reverse_lazy("login_form")
-

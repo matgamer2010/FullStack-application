@@ -1,0 +1,98 @@
+*{
+    margin:0;
+    padding: 0;
+}
+
+body{
+    background-color: wheat;
+}
+
+.HeaderMM{
+    display: flex;
+    margin-top:10px;
+}
+
+.main-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: white;
+    padding: 0px 7vh;
+    margin-right:2vh;
+    margin-left:2vh;
+    border-radius: 20px;
+    width: 95%;
+}
+
+.
+
+.Texts{
+    margin:2vh 5vh;
+    font-family: sans-serif;
+}
+
+.Texts:hover{
+    cursor: pointer;
+}
+
+.UserProfile{
+    border-radius: 50%;
+    margin: 8px 2vh 0px;
+    width:70px;
+    height: 70px;
+}
+
+.UserProfile:hover{
+    opacity: 75%;
+}
+
+.NoUserProfile:hover{
+    opacity: 55%;
+}
+
+.NoUserProfile{
+    border-radius:50% ;
+    margin: 8px 2vh 0px;
+    width: 70px;
+    height: 70px;
+}
+
+.InputHeader{
+    margin-top:2vh;
+    display: flex;
+    padding: 10px;
+    border: none;
+    color:white;
+    border-radius:10px ;
+    background-color: gray;
+    width:200px;
+    margin-right: 10px;
+}
+
+.InputHeader:hover{
+    background-color: darkslategrey;
+}
+
+.InputHeader::placeholder{
+    color:white;
+    padding: 0px 55px;   
+}
+
+.InOut{
+    margin-top: 2vh;
+    margin-left:0px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color:gray;
+    color: white;
+    text-decoration: none;
+    font-family: sans-serif;
+}
+
+.InOut:hover{
+    background-color:darkslategray;
+}
+
+.AuthoralRights{
+    font-size: 10px;
+}
