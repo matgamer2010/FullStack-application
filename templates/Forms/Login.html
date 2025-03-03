@@ -13,18 +13,20 @@
   <section class="SectionLogin">
     
     {% if messages %}
-    <ul class="state_messages">
+    <div class="div_messages">
       {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
+        <p class="messages">{{ message }}</p>
       {% endfor %}
-    </ul>
+    </div>
     {% endif %}
     
-    <h2>Faça seu login na M&M vendedores</h2>
-    <a class="AuthoralRights" href="www.freepik.com">Designed by Freepik</a>
-    <img class="ImageForms" alt="image_login" src="{% static 'image_form_2.png'%}" />
-
+    
     <div class="Login"> 
+
+      <h2>Faça seu login na M&M vendedores</h2>
+      <a class="AuthoralRights" href="www.freepik.com">Designed by Freepik</a>
+      <img class="ImageForms" alt="image_login" src="{% static 'image_form_2.png'%}" />
+
       <form class="FormLogin" method="POST">
         {% csrf_token %}
         <div class="Undefined">
@@ -38,13 +40,14 @@
         </div>
 
       <button type="submit" class="ButtonLogin">Login</button>
-      </form>
-    </div>
-    <div class="OAuthAuthenticate">
-      <img src="{% static 'static/google-logo.png'%}" alt="" class="GoogleLogo">
-      <a href="http://localhost:8000/" class="CreateAccountWithOAuth">Crie uma conta com o Google!</a>
+    </form>
+
+      <div class="OAuthAuthenticate">
+        <img class="ImageGoogle" onclick="window.location.href='http://localhost:8000/accounts/google/login/?process=login'" src="{% static 'google-logo.png'%}" alt="Google IMG" />
+        <a href="http://localhost:8000/accounts/google/login/?process-login" class="CreateAccountWithOAuth">Crie uma conta com o Google!</a>
+      </div>
+      
     </div>
   </section>
-
 </body>
 </html>

@@ -1,34 +1,54 @@
+*{
+    margin:0;
+    box-sizing:border-box;
+}
+
 body{
-    top: 0;
-    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: green;
+    height:100vh;
 }
 
 .SectionForget{
     background-color: whitesmoke;
     color: black;
-    padding: 5vh 5vh;
-}
-
-
-h1{
-    position: relative;
+    padding: 100px;
+    border-radius:10px;
+    font-family:sans-serif;
 }
 
 .InputForgetEmail{
-    border: none;
     white-space: nowrap;
     border-radius: 5px;
+    padding:5px 10px;
 }
 
 .ForgetButton{
     border: none;
-    background-color: dimgrey;
+    background:LimeGreen;
+    padding:10px;
+    border-radius:5px;
+    font-family:sans-serif;
 }
 
 .ForgetButton:hover{
-    background-color: darkgray;
+    background-color:ForestGreen;
+}
+
+.div_messages{
+    display: flex;
+}
+
+.messages{
+    font-size: 15px;
+    background-color: forestgreen;
+    color:white;
+    border-radius: 7px;
+    border: none;
+    text-decoration: none;
+    margin:11vh 5vh;
+    font-family: sans-serif;
+    padding: 15px;
 }

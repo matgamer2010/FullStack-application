@@ -7,12 +7,11 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.views import PasswordResetCompleteView, PasswordResetDoneView, PasswordResetView, PasswordChangeView
 from django.contrib import auth
-from django.utils.timezone import now
-
+from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount
 from django.core.files.base import ContentFile
 
-from .forms import LoginUsers, RegisterUsers, ConfirmEmail
+from .forms import LoginUsers, RegisterUsers, ConfirmEmail, ResetPasswordDone
 from users.forget_email import RetriveAccount
 
 
@@ -37,8 +36,7 @@ def formLogin(request):
                 messages.success(request, "Login bem-sucedido")
                 return redirect("http://127.0.0.1:8000/")
             else:
-                messages.error(
-                    request, "O email digitado não existe no nosso sistema.")
+                messages.error(request, "O email digitado não existe no nosso sistema.")
 
     return render(request, "Forms/Login.html", {"forms": login_forms})
 
@@ -82,6 +80,14 @@ def Logout(request):
     return render(request, "Forms/Logout.html")
 
 
+@login_required
+def delete_account(request):
+    user = request.user
+    delete_user = user.delete()
+    messages.success(request, f"usuário {user} deletado com sucesso")
+    return redirect("main")
+
+
 def MainPage(request, **kwargs):
     photo_url = ''
     status_user = False
@@ -98,9 +104,11 @@ def MainPage(request, **kwargs):
             print(f"Houve um erro inesperado, o erro é: {e}")
     return render(request, "Main/FakeMainPage.html", {"each_user_image": photo_url, "StatusUser":status_user}) 
 
+
+@login_required
 def ProfileUser(request):
-     
-    return render(request, "Main/ProfileUser.html") 
+    user = request.user
+    return render(request, "Main/ProfileUser.html", {"user":user}) 
 
 class Forget(PasswordResetView):
 
@@ -120,40 +128,45 @@ class Forget(PasswordResetView):
         return render(request, self.template_name, {"forget": forget_forms})
 
     def post(self, request, *args, **kwargs):
-        forget_forms = ConfirmEmail(request.POST)
-        if forget_forms.is_valid():
-            email_user = forget_forms.cleaned_data["email_register_form"]
-            try:
-                if User.objects.filter(email=email_user).exists():
-                    user = User.objects.get(email=email_user)
-                    reset_link = self.Get(request, user)
-                    print(f"A URL criada foi: {reset_link}")
-                    try:
-                        RetriveAccount.submit_email(user, reset_link)
-                        messages.success(request, "Email enviado com sucesso")
-                        print("Email enviado!")
-                        return redirect(self.success_url)
-                    except Exception as e:
-                        messages.error(request, f"Erro ao enviar email: {e}")
-                else:
-                    messages.error(request, "O email digitado não existe.")
-            except Exception as e:
-                messages.error(request, f"Erro inesperado: {e}")
+        if request.method == "POST":
+            forget_forms = ConfirmEmail(request.POST)
+            if forget_forms.is_valid():
+                email_user = forget_forms.cleaned_data["email_register_form"]
+                try:
+                    if User.objects.filter(email=email_user).exists():
+                        user = User.objects.get(email=email_user)
+                        reset_link = self.Get(request, user)
+                        print(f"A URL criada foi: {reset_link}")
+                        try:
+                            RetriveAccount.submit_email(user, reset_link)
+                            messages.success(request, "Email enviado com sucesso")
+                            print("Email enviado!")
+                            return redirect(self.success_url)
+                        except Exception as e:
+                            messages.error(request, f"Erro ao enviar email: {e}")
+                    else:
+                        messages.error(request, "O email digitado não existe.")
+                except Exception as e:
+                    messages.error(request, f"Erro inesperado: {e}")
 
-        return render(request, self.template_name, {"forget": forget_forms})
+            return render(request, self.template_name, {"forget": forget_forms})
 
 
 class ChangePassword_done(PasswordResetDoneView):
     template_name = 'Reset/password_reset_done.html'
 
+def Reset_password_SendForm(request):
+    ResetPasswordDone_forms = ResetPasswordDone()
+    return render(request, "Emails/Reset.html", {"reset_password_form": ResetPasswordDone_forms})
 
 class Reset_password(PasswordChangeView):
     template_name = "Emails/Reset.html"
     success_url = "password_reset_completed"
-
+    
     def Post(self, request, *args, **kwargs):
         # Validar as informações contidas aqui.
         pass
+    
 
 
 class ChagePassword_completed(PasswordResetCompleteView):

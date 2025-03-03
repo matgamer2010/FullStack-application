@@ -8,23 +8,19 @@ body{
 }
 
 .HeaderMM{
-    display: flex;
     margin-top:10px;
 }
 
 .main-header{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between 5px;
     align-items: flex-start;
+    position: absolute;
     background-color: white;
-    padding: 0px 7vh;
-    margin-right:2vh;
-    margin-left:2vh;
+    margin:0px 5vh;
     border-radius: 20px;
     width: 95%;
 }
-
-.
 
 .Texts{
     margin:2vh 5vh;
@@ -37,7 +33,7 @@ body{
 
 .UserProfile{
     border-radius: 50%;
-    margin: 8px 2vh 0px;
+    margin: 8px 2vh 0px 5vh;
     width:70px;
     height: 70px;
 }
@@ -46,19 +42,25 @@ body{
     opacity: 75%;
 }
 
-.NoUserProfile:hover{
-    opacity: 55%;
-}
-
 .NoUserProfile{
     border-radius:50% ;
     margin: 8px 2vh 0px;
     width: 70px;
     height: 70px;
+    box-shadow: inset;
+}
+
+.NoUserPofile:hover{
+    opacity: 65%;
+}
+
+.AuthoralRights{
+    font-size: 10px;
 }
 
 .InputHeader{
-    margin-top:2vh;
+    margin-top:2vh ;
+    margin-left:50vh;
     display: flex;
     padding: 10px;
     border: none;
@@ -66,7 +68,7 @@ body{
     border-radius:10px ;
     background-color: gray;
     width:200px;
-    margin-right: 10px;
+    margin-right:10px;
 }
 
 .InputHeader:hover{
@@ -79,20 +81,63 @@ body{
 }
 
 .InOut{
-    margin-top: 2vh;
-    margin-left:0px;
-    border-radius: 5px;
-    padding: 10px;
-    background-color:gray;
-    color: white;
-    text-decoration: none;
+    background-color: gray;
+    color:white;
+    padding:10px;
+    margin-left:10vh;
+    margin-right: 5vh;
+    margin-top:2vh;
     font-family: sans-serif;
+    border-radius: 10px;
+    text-decoration: none;
 }
 
 .InOut:hover{
-    background-color:darkslategray;
+    background-color: darkslategray;
 }
 
-.AuthoralRights{
-    font-size: 10px;
+.WelcomeUser{
+    margin-top:2vh;
+    margin-right: 0px;
+    margin-left: 0px;
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+.Links{
+    margin-top: 3vh;
+}
+
+.Logout{
+    display: flex;
+}
+
+.Out{
+    margin-top:2vh;
+    background-color: gray;
+    padding:10px;
+    border:none;
+    border-radius: 5px;
+    color:white
+}
+
+.Out:hover{
+    background-color: darkslategray;
+}
+
+.div_messages{
+    display: flex;
+    position: relative;
+}
+
+.messages{
+    font-size: 15px;
+    background-color: forestgreen;
+    color:white;
+    border-radius: 7px;
+    border: none;
+    text-decoration: none;
+    margin:11vh 5vh;
+    font-family: sans-serif;
+    padding: 15px;
 }

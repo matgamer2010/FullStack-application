@@ -145,3 +145,20 @@
   border-radius: 5px;
   background-color: dimgrey;
 }
+
+.div_messages{
+  display: flex;
+  position: absolute;
+}
+
+.messages{
+  font-size: 15px;
+  background-color: forestgreen;
+  color:white;
+  border-radius: 7px;
+  border: none;
+  text-decoration: none;
+  margin:11vh 5vh;
+  font-family: sans-serif;
+  padding: 15px;
+}

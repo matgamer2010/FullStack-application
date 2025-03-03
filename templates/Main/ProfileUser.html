@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +8,18 @@
     <link rel="stylesheet" href="{% static 'StylesMain/styled_profile.css' %}">
 </head>
 <body>
+    {% if messages %}
+    {% for message in messages %}
+        <div class="div_messages">
+            <p class="messages">{{message}}</p>
+        </div>
+    {% endfor %}
+    {% endif %}
     <h1>
         Essa é a sua página de Profile!
     </h1>
+    <h2>Wellcome! {{user}}</h2>
+    /* Podemos reaproveitar as páginas de PasswordReset e outras.
+    <a class="delete_user" type="submit" href="{% url 'delete' %}">Deseja deletar sua conta?</a>
 </body>
 </html>

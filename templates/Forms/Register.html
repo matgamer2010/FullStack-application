@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="{% static 'StylesForms/style_register_form.css' %}"/>
 </head>
 <body>
+  {% if messages %}
+    {% for message in messages %}
+      <div class="div_messages">
+        <p class="messages">{{message}}</p>
+      </div>
+    {% endfor %}
+  {% endif %}
   <section class="SectionRegister">
     <h1>Faça seu cadastro na M&M vendedores!</h1>
     <div id="Register"> 
@@ -27,7 +34,7 @@
     </div>
     <div class="OAuthAuthenticate">
       <img src="{% static 'static/google-logo.png'%}" alt="" class="GoogleLogo">
-      <a href="http://localhost:8000/" class="CreateAccountWithOAuth">Crie uma conta com o Google!</a>
+      <a href="http://localhost:8000/accounts/google/login/?process=login" class="CreateAccountWithOAuth">Crie uma conta com o Google!</a>
     </div>
   </section>
 </body>

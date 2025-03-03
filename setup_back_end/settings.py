@@ -164,7 +164,7 @@ SITE_ID = 1
 ACCOUNT_LOGIN_METHODS = {'email', 'username'}
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-LOGIN_URL = "accounts/login/"
+LOGIN_URL = r"http://localhost:8000/accounts/google/login/?process=login&next%2Fmain%2F"
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {

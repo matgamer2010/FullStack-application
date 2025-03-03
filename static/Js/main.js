@@ -1,21 +1,16 @@
-// Using data of api
+const message_content = document.querySelector("messages");
+const ignore_svg = document.querySelector("ignore");
 
-// TODO: request an api of database_clothes
+console.log("No JavaScrito!");
 
-function request_api(){
-    url = "http://localhost:8000/Crud/?format=json"
-    .fetch()
-    .then((response)=>response.json)
-    .then((profile)=> profilePage());
+function ReduxOpacityOfMessagesToZero(){
+    console.log("Na função ReduxOpaityOfMessageToZero");
+    message_content.addEventListener("click", ChangeOpacity());
 }
 
-function profilePage(profile){
-    console.log("We reach at the 'profilePage' function.");
+function ChangeOpacity(){
+    console.log("Na ChangeOpacity");
+    message_content.classList.toggle("hidden");
 }
 
-function redirect_user_to_his_profile(){
-    Profile = document.getElementById("UserProfile");
-    Profile.addEventListener("onclick", ()=>{
-        onclick=window.location.href='http://localhost:8000/profile_user/'
-    })
-}
+ReduxOpacityOfMessagesToZero();

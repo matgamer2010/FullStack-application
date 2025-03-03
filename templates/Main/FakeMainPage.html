@@ -1,11 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
     <title>M&M vendedores</title>
     <link rel="stylesheet" href="{% static 'StylesMain/styled_main.css' %}">
+    <script src="{% static 'Js/main.js' %}"></script>
 </head>
 <body>
     <section class="HeaderMM">
@@ -15,28 +17,38 @@
                 <p>Excelência em produtos!</p>
             </div>
             <input class="InputHeader" placeholder="pesquise algo"/>
+
             {% if StatusUser %}
-                {% if user.is_authenticated %}
-                    <p class="WelcomeUser" >Seja bem vindo(a): {{user}}</p>    
-                    <a class="InOut" href="http://localhost:8000/accounts/logout/">Faça seu Logout</a>
-                {% else %}
-                    <a class="InOut" href="http://localhost:8000/accounts/login/">Faça seu Login!</a>
-                    <a class="InOut" href="http://localhost:8000/accounts/login/">Faça seu Cadastro</a>
-                {% endif %}
-            {% else %}
-                <a class="InOut" href="http://localhost:8000/accounts/login/">Faça seu Cadastro</a>
-                <a class="InOut" href="http://localhost:8000/accounts/login/">Faça seu Login</a>
+            <form method="post" action="accounts/logout/">
+                {% csrf_token %}
+                <div class="Logout">
+                    <button class="Out">LogOut</button>
+                </div>
+            </form>
+            {% else %}               
+                <a class="InOut" href="{% url 'register_form' %}">Cadastro</a>
+                <a class="InOut" href="{% url 'login_form' %}">Login</a>
             {% endif %}
+
             {% if each_user_image == "" %}
-                <div class="AlternativeImage">
+                <div class="ImageUserDiv">
                     <img class="NoUserProfile" src="{% static 'UnknowUser.png' %}" alt="UnknowUser" onclick="window.location.href='http://localhost:8000/profile_user/'" >
                     <a class="AuthoralRights" href="www.freepik.com">Designed by Freepik</a>
                 </div>
             {% else %}
+                <div class="ImageUserDiv">
                     <img class="UserProfile" src="{{each_user_image}}" onclick="window.location.href='http://localhost:8000/profile_user/'" />
+                </div>
             {% endif %}
         </div>
     </section>
-
+    {% if messages %}
+        {% for message in messages %}
+            <p class="messages">
+                {{message}} 
+                <img class="ignore" src="{% static 'cruz.svg' %}" alt="ignore" onclick=""> 
+            </p>
+        {% endfor %}
+    {% endif %}
 </body>
 </html>

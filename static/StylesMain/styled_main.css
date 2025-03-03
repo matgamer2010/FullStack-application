@@ -1,79 +1,116 @@
-*{
-    margin:0;
-    padding: 0;
+* {
+  padding:0;
+  margin: 0;
 }
 
-body{
-    background-color: wheat;
+html, body{
+  min-height: 100vh;
+  background:forestgreen;
 }
 
-.HeaderMM{
-    margin-top:10px;
+.SectionLogin{
 }
 
-.main-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    position: absolute;
-    background-color: white;
-    margin:0px 5vh;
-    border-radius: 20px;
+.state_messages {
+  color: green;
+  background-color: black;
 }
 
-.Texts{
-    margin:2vh 5vh;
-    font-family: sans-serif;
+.AuthoralRights {
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: #666;
 }
 
-.Texts:hover{
-    cursor: pointer;
+.ImageForms {
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.UserProfile{
-    border-radius: 50%;
-    margin: 8px 2vh 0px;
-    width:70px;
-    height: 70px;
+.Login {
+  margin-top: 50vh;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
-.UserProfile:hover{
-    opacity: 75%;
+a {
+  font-size: 10px;
 }
 
-.NoUserProfile{
-    border-radius:50% ;
-    margin: 8px 2vh 0px;
-    width: 70px;
-    height: 70px;
-    box-shadow: inset;
+.FormLogin {
 }
 
-.AuthoralRights{
-    font-size: 1px;
+.Undefined {
 }
 
-.InputHeader{
-    margin-top:2vh ;
-    display: flex;
-    padding: 10px;
-    border: none;
-    color:white;
-    border-radius:10px ;
-    background-color: gray;
-    width:200px;
-    transform: translateX(-100px);
+.Fields_django {
 }
 
-.InputHeader:hover{
-    background-color: darkslategrey;
+.Fields_django label {
 }
 
-.InputHeader::selection{
-    background-color: darkslategrey;
+.Fields_django input[type="email"] {
 }
 
-.InputHeader::placeholder{
-    color:white;
-    padding: 0px 55px;   
+.InputLoginUser {
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.InputLoginPassword {
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.ImageGoogle {
+  width: 100px;
+  height: 100px;
+}
+
+.ImageGoogle:hover {
+  cursor: pointer;
+  opacity: 75%;
+}
+
+.CreateAccountWithOAuth {
+  font-size: 20px;
+  text-decoration: none;
+  font-family: sans-serif;
+  margin-bottom: 2vh;
+}
+
+.div_messages {
+  display: flex;
+  position: absolute;
+}
+
+.messages {
+  font-size: 15px;
+  background-color: forestgreen;
+  color: white;
+  border-radius: 7px;
+  border: none;
+  text-decoration: none;
+  margin: 11vh 5vh;
+  font-family: sans-serif;
+  padding: 15px;
+}
+
+.ButtonLogin {
+  background: #b0c4de;
+  border-radius: 5px;
+  padding: 5px;
+  width: 100%;
+}
+
+.ButtonLogin:hover {
+  background: #778899;
 }

@@ -61,3 +61,5 @@ class GetObjectPerUser(viewsets.ModelViewSet):
         serializer = self.get_serializer(produtos, many=True)
         return Response(serializer.data)
     
+    
+    

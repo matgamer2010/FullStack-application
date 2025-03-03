@@ -1,0 +1,26 @@
+.div_messages{
+    display: flex;
+    position: absolute;
+}
+
+.messages{
+    font-size: 15px;
+    background-color: forestgreen;
+    color:white;
+    border-radius: 7px;
+    border: none;
+    text-decoration: none;
+    margin:11vh 5vh;
+    font-family: sans-serif;
+    padding: 15px;
+}
+
+.delete_user{
+    text-decoration: none; 
+    background-color: red; 
+    color: white; 
+    border-radius: 10px; 
+    padding: 10px; 
+    font-family: sans-serif; 
+    position: relative;
+}

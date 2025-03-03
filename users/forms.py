@@ -86,7 +86,7 @@ class RegisterUsers(forms.Form):
 class ConfirmEmail(forms.Form):
 
   email_register_form = forms.EmailField(
-    label="Insira um Email válido para recuperação",
+    label="Insira um Email válido para recuperação:",
     required=True,
     max_length=70,
     widget= forms.EmailInput(
