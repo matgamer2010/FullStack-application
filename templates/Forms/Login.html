@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'StylesForms/style_login_form.css' %}"/>
+</head>
+
+<body>
+
+  <section class="SectionLogin">
+    
+    {% if messages %}
+    <ul class="state_messages">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <h2>Faça seu login na M&M vendedores</h2>
+    <a class="AuthoralRights" href="www.freepik.com">Designed by Freepik</a>
+    <img class="ImageForms" alt="image_login" src="{% static 'image_form_2.png'%}" />
+
+    <div class="Login"> 
+      <form class="FormLogin" method="POST">
+        {% csrf_token %}
+        <div class="Undefined">
+          {% for field in forms.visible_fields %}
+            <div class="Fields_django">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+            </div>
+          {% endfor %}
+          <a href="{% url 'password_reset'%}">Esqueceu sua senha?</a>
+        </div>
+
+      <button type="submit" class="ButtonLogin">Login</button>
+      </form>
+    </div>
+    <div class="OAuthAuthenticate">
+      <img src="{% static 'static/google-logo.png'%}" alt="" class="GoogleLogo">
+      <a href="http://localhost:8000/" class="CreateAccountWithOAuth">Crie uma conta com o Google!</a>
+    </div>
+  </section>
+
+</body>
+</html>
