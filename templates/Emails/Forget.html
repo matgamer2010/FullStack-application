@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="{% static 'StylesEmails/style_forget_form.css' %}">
 </head>
 <body>
+    {% if messages %}
+    <ul class="state_messages_forget">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <section class="SectionForget">
 
-        {% if messages %}
-        <ul class="state_messages_forget">
-            {% for message in messages %}
-            <li class="{{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
 
         <h1>Digite seu email para recuperar-mos sua conta:</h1>
         <div class="forget_form">

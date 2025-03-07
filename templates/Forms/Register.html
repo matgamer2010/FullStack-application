@@ -9,6 +9,21 @@
     <link rel="stylesheet" href="{% static 'StylesForms/style_register_form.css' %}"/>
 </head>
 <body>
+
+  <header class="HeaderMM">
+    <div class="main-header">
+        <div class="Texts">
+            <h2 onclick="window.location.href='http://localhost:8000/'">M&M vendedores</h2>
+            <p>Excelência em produtos!</p>
+        </div>
+        <input class="InputHeader" placeholder="pesquise algo"/>               
+        <a class="InOut" href="{% url 'login_form' %}">Login</a>
+        <div class="ImageUserDiv">
+            <img class="UserProfile" src="{% static 'UnknowUser.png' %}"/>
+        </div>
+    </div>
+  </header>
+
   <section class="SectionRegister">
     <h1>Faça seu cadastro na M&M vendedores!</h1>
     <div id="Register"> 
@@ -26,9 +41,14 @@
       </form>
     </div>
     <div class="OAuthAuthenticate">
-      <img src="{% static 'static/google-logo.png'%}" alt="" class="GoogleLogo">
+      <img src="{% static 'google-logo.png'%}" alt="" class="GoogleLogo">
       <a href="http://localhost:8000/" class="CreateAccountWithOAuth">Crie uma conta com o Google!</a>
     </div>
   </section>
+
+  <footer>
+    <p>Desenvolido por Mateus Montanher</p>
+  </footer>
+
 </body>
 </html>

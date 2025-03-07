@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M&M vendedores</title>
-    <link rel="stylesheet" href="{% static 'StylesMain/styled_main.css' %}">
+    <link rel="stylesheet" href="{% static 'StylesMain/styled_product.css' %}">
 </head>
 <body>
 
@@ -13,12 +13,12 @@
         <div class="main-header">
             <div class="Texts">
                 <h2 onclick="window.location.href='http://localhost:8000/'">M&M vendedores</h2>
-                <p>Excelência em produtos!</p>
+                <p onclick="window.location.href='http://localhost:8000/'">Excelência em produtos!</p>
             </div>
             <input class="InputHeader" placeholder="pesquise algo"/>
 
             {% if StatusUser %}
-            <form method="post" action="accounts/logout/">
+            <form method="post" action="http://localhost:8000/accounts/logout/">
                 {% csrf_token %}
                 <div class="Logout">
                     <button class="InOut">LogOut</button>
@@ -33,7 +33,7 @@
                 <button class="InOut" onclick="window.location.href='http://localhost:8000/admin/'">Ir para a página de administrador</button>
             {% else %}
             {% endif %}
-            
+
             {% if each_user_image == "" %}
                 <div class="ImageUserDiv">
                     <img class="NoUserProfile" src="{% static 'UnknowUser.png' %}" alt="UnknowUser" onclick="window.location.href='http://localhost:8000/profile_user/'" >
@@ -48,7 +48,7 @@
 
         </div>
     </header>
-    
+
     {% if messages %}
         {% for message in messages %}
             <p class="messages">{{message}}</p>
@@ -57,25 +57,33 @@
 
     <section class="MainMM">
         <div class="cards">
-            {% if cards %}
-                {% for card in cards %}
-                {% if card.public%}
-                <div class="card_product" href="{% url 'products' card.id %}">
-                    <img class="cards_image" src="/media/{{card.image}}" alt="{{card.name}}">
-                    <h2>{{card.name}}</h2>
+            {% if product %}
+                <img class="cards_image" src="/media/{{product.image}}" alt="{{product.name}}">
+                <div class="informations">
+                    <div class="NameAndPrice">
+                        <h2>{{product.name}}</h2>
+                        <h3>{{product.price}}</h3>
+                    </div>
+                    <p class="sizes">tamanhos disponíveis: <p>
+                    {% if dynamic_boolean_fields %}
+                        {% for name, value in dynamic_boolean_fields.items %}
+                            {% if value %}
+                                <button class="size">{{name}}</button>    
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                     <img class="love" src="{% static 'love.png' %}" alt="love.png">
                     <img class="cart" src="{% static 'cart.png' %}" alt="card.png">
-                    <a class="buy" href="{% url 'products' card.id %}">comprar</a>
+                    <button class="buy">comprar</button>
+                    <p class="description">{{product.description}}</p>
                 </div>
-                {% endif %}
-                {% endfor %}
             {% endif %}
         </div>
     </section>
 
     <footer>
-        <p>Desenvolido por Mateus Montanher</p>
+        <p class="text_footer">Desenvolido por Mateus Montanher</p>
     </footer>
-    
+
 </body>
 </html>

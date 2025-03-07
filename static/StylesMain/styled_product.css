@@ -4,6 +4,8 @@
 }
 
 body{
+    height: 100vh;
+    box-sizing: border-box;
     background-color: wheat;
 }
 
@@ -115,7 +117,8 @@ body{
     text-decoration: none;
     background-color: green;
     color: white;
-    padding: 5px;
+    padding: 15px 30px;
+    font-size: 25px;
     border-radius: 5px;
 }
 
@@ -124,8 +127,8 @@ body{
 }
 
 .cards_image{
-    width: 300px;
-    height: 300px;
+    width: 550px;
+    height: 550px;
 }
 
 .InOut:hover{
@@ -137,10 +140,10 @@ body{
 }
 
 .messages{
-    width: fit-content;
-    margin: 10px 0 0 5vh;
+    margin: 10px;
     text-decoration: none;
     font-family: sans-serif;
+    font-size: 15px;
     padding: 10px;
     border-radius: 5px;
     background-color: green;
@@ -166,4 +169,51 @@ footer{
     color: black;
     font-family: sans-serif;
     height: 5vh;   
+    position: absolute;
+}
+
+.informations{
+    font-size: 50px;
+    margin-left: 50%;
+}
+
+h3{
+    color: beige;
+}
+
+p{
+    font-size: 10px;
+}
+
+.text_footer{
+    font-size: 20px;
+}
+
+.NameAndPrice{
+    font-size: 20px;
+}
+
+.size{
+    padding:5px;
+    border-radius: 5px;
+    background-color: blanchedalmond;
+    font-family: sans-serif;
+    font-size: 15px;
+    margin:15px;
+}
+
+.size:hover{
+    opacity: 75%;
+}
+
+.size:active{
+    opacity: 0.5;
+}
+
+.description{
+    font-size:20px;
+}
+
+.sizes{
+    font-size:15px;
 }
