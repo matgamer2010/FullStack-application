@@ -1,5 +1,7 @@
 import styled from "styled-components"
 
+
+
 function Home(){
   <Header/>;
   <MainContent/>;
