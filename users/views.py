@@ -16,6 +16,34 @@ from django.db import models
 from .forms import LoginUsers, RegisterUsers, ConfirmEmail, ResetPasswordDone
 from users.forget_email import RetriveAccount
 
+def Verifications(request):
+    photo_url = ''
+    status_user = False
+    is_superuser = False
+
+    cards = DataBaseClothes.objects.all()
+
+    
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            is_superuser=True
+            print("A verificação foi bem-sucedida, você é um administrador!")
+        
+        try:
+            # Devemos manter a lógica assim pois, e se o usuário não tiver imagem?, ele vai cair na mesma página de quem não está logado?
+            # Ou, e se o usuário acabou de deletar sua conta?, ele deve ser redirecionado para a mesma página padrão?
+            social_account = SocialAccount.objects.filter(user=request.user, provider="google").first()
+            if social_account:
+                photo_url = social_account.extra_data.get("picture", "")
+                # Isso deve permanecer assim (status_user como True fora da condicional), pois nem todos os usuários usarão o allauth.
+            status_user = True
+        except Exception as e:
+            print(f"Houve um erro inesperado, o erro é: {e}")
+
+        status_user = True
+    return {"each_user_image": photo_url, "StatusUser": status_user, "IsSuperUser":is_superuser, "cards": cards}
+
+
 
 def formLogin(request):
 
@@ -36,7 +64,7 @@ def formLogin(request):
             if user is not None:
                 auth.login(request, user)
                 messages.success(request, "Login bem-sucedido")
-                return redirect("http://127.0.0.1:8000/")
+                return redirect("http://localhost:8000/")
             else:
                 messages.error(request, "O email digitado não existe no nosso sistema.")
 
@@ -105,35 +133,15 @@ def Logout(request):
 @login_required
 def delete_account(request):
     user = request.user
-    delete_user = user.delete()
+    auth.logout(request, user)
+    user.delete()
     messages.success(request, f"usuário {user} deletado com sucesso")
     return redirect("main")
 
 
 def MainPage(request, pk=None, **kwargs):
-    photo_url = ''
-    status_user = False
-    is_superuser = False
-
-    cards = DataBaseClothes.objects.all()
-    
-    if request.user.is_authenticated:
-        if request.user.is_superuser:
-            is_superuser=True
-            print("A verificação foi bem-sucedida, você é um administrador!")
-        
-        try:
-            # Devemos manter a lógica assim pois, e se o usuário não tiver imagem?, ele vai cair na mesma página de quem não está logado?
-            # Ou, e se o usuário acabou de deletar sua conta?, ele deve ser redirecionado para a mesma página padrão?
-            social_account = SocialAccount.objects.filter(user=request.user, provider="google").first()
-            if social_account:
-                photo_url = social_account.extra_data.get("picture", "")
-                # Isso deve permanecer assim (status_user como True fora da condicional), pois nem todos os usuários usarão o allauth.
-            status_user = True
-        except Exception as e:
-            print(f"Houve um erro inesperado, o erro é: {e}")
-    
-    return render(request, "Main/FakeMainPage.html", {"each_user_image": photo_url, "StatusUser": status_user, "cards": cards, "IsSuperUser":is_superuser})
+    cards = DataBaseClothes.objects.all()  
+    return render(request, "Main/FakeMainPage.html", {"cards": cards})
 
 
 def ProfileUser(request):
@@ -163,12 +171,13 @@ def product(request, pk):
             print(f"Houve um erro inesperado, o erro é: {e}")
     product_request = get_object_or_404(DataBaseClothes, pk=pk)
 
-    # Create a flash-card about it.
+    # Create a flash-card about it
     boolean_fields = {
         field.name: getattr(product_request, field.name) 
         for field in product_request._meta.fields
         if isinstance(field, models.BooleanField) and field.name != 'public'
     }
+
     return render(request, "Main/Product.html", {"product": product_request ,"each_user_image": photo_url, "StatusUser": status_user, "IsSuperUser":is_superuser,
                                                 "dynamic_boolean_fields": boolean_fields})
 

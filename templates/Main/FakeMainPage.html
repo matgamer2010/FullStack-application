@@ -8,47 +8,9 @@
     <link rel="stylesheet" href="{% static 'StylesMain/styled_main.css' %}">
 </head>
 <body>
-
-    <header class="HeaderMM">
-        <div class="main-header">
-            <div class="Texts">
-                <h2 onclick="window.location.href='http://localhost:8000/'">M&M vendedores</h2>
-                <p>Excelência em produtos!</p>
-            </div>
-            <input class="InputHeader" placeholder="pesquise algo"/>
-
-            {% if StatusUser %}
-            <form method="post" action="accounts/logout/">
-                {% csrf_token %}
-                <div class="Logout">
-                    <button class="InOut">LogOut</button>
-                </div>
-            </form>
-            {% else %}               
-            <a class="InOut" href="{% url 'register_form' %}">Cadastro</a>
-            <a class="InOut" href="{% url 'login_form' %}">Login</a>
-            {% endif %}
-            
-            {% if IsSuperUser %}
-                <button class="InOut" onclick="window.location.href='http://localhost:8000/admin/'">Ir para a página de administrador</button>
-            {% else %}
-            {% endif %}
-            
-            {% if each_user_image == "" %}
-                <div class="ImageUserDiv">
-                    <img class="NoUserProfile" src="{% static 'UnknowUser.png' %}" alt="UnknowUser" onclick="window.location.href='http://localhost:8000/profile_user/'" >
-                    <a class="AuthoralRights" href="www.freepik.com">Designed by Freepik</a>
-                </div>
-            {% else %}
-                <div class="ImageUserDiv">
-                    <img class="UserProfile" src="{{each_user_image}}" onclick="window.location.href='http://localhost:8000/profile_user/'" />
-                </div>
-            {% endif %}
-
-
-        </div>
-    </header>
     
+    {% include 'partials/_header.html' %}
+
     {% if messages %}
         {% for message in messages %}
             <p class="messages">{{message}}</p>
