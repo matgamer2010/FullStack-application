@@ -6,7 +6,7 @@ export function MidContent(){
                 font-sans text-transparent font-bold md:text-9xl ">maior</a>  
                 <p className="text-2xl md:text-8xl">de Minas gerais</p>
             </div>
-            <img src="./Banner-2.png" className="scale-80 blur-sm -skew-6 outiline-4 lg:scale-50"/>
+            <img src="./Banner-2.png" className="scale-80 blur-none -skew-6 outiline-4 lg:scale-50 md:blur-sm"/>
         </section>
     );
 }
