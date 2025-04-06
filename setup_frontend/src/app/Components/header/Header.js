@@ -1,7 +1,7 @@
 export function Header(props){
     return(
         <section>
-            <div  className="flex items-center justify-center bg-slate-100 relative box-border 
+            <div  className="flex items-center justify-center bg-slate-50 relative box-border 
             rounded m-auto p-10 shadow-lg font-bold 
             md:mt-5 md:mx-5 sm:mt-3 sm:mx-3 ">
 

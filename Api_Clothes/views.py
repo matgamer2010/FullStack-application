@@ -7,7 +7,6 @@ from Api_Clothes.serializers import SerializersClothes
 
  
 class Crud(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
     queryset = DataBaseClothes.objects.all()
     serializer_class = SerializersClothes
         
@@ -31,7 +30,7 @@ class Crud(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
+        queryset = self.queryset
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -40,8 +39,8 @@ class Crud(viewsets.ModelViewSet):
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def get_queryset(self):
-        return DataBaseClothes.objects.filter(cross_databases=self.request.user)
+    """    def get_queryset(self):
+        return None"""
 
     def perform_create(self, serializer):
         serializer.save(cross_databases=self.request.user)
@@ -49,7 +48,6 @@ class Crud(viewsets.ModelViewSet):
 class GetObjectPerUser(viewsets.ModelViewSet):
     queryset = DataBaseClothes.objects.all()
     serializer_class = SerializersClothes
-    permissson_classes = [IsAuthenticated]
     
     def get_queryset(self):
         return DataBaseClothes.objects.filter(cross_databases=self.request.user)

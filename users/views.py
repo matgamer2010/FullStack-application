@@ -125,7 +125,6 @@ def formRegister(request):
 
 
 def Logout(request):
-
     auth.logout(request)
     messages.success(request, "Você foi deslogado")
     redirect("login_form")
