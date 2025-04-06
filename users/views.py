@@ -35,6 +35,7 @@ def Verifications(request):
             social_account = SocialAccount.objects.filter(user=request.user, provider="google").first()
             if social_account:
                 photo_url = social_account.extra_data.get("picture", "")
+                status_user = True
                 # Isso deve permanecer assim (status_user como True fora da condicional), pois nem todos os usuários usarão o allauth.
             status_user = True
         except Exception as e:
@@ -82,6 +83,7 @@ def formLogin(request):
             social_account = SocialAccount.objects.filter(user=request.user, provider="google").first()
             if social_account:
                 photo_url = social_account.extra_data.get("picture", "")
+                status_user = True
                 # Isso deve permanecer assim (status_user como True fora da condicional), pois nem todos os usuários usarão o allauth.
             status_user = True
         except Exception as e:
