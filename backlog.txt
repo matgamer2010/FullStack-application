@@ -1,0 +1,7 @@
+BACKLOG 7/4:
+
+- Estilizar o Texto "Veja o nosso catálogo"
+- Aprimorar a estilização dos cards (Dando preferência a cores mais escuras)
+- Criar a página de Login e Cadastro
+- Criar a página de cada produto 
+- Colocar os Direitos autorais no Header (Criar uma página só para isso)

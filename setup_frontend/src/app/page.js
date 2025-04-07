@@ -5,7 +5,7 @@ import Mid from "./Components/Mid/";
 
 function Home(){
   return(
-    <body className="bg-slate-200  box-border scroll-smooth bg-fixed">
+    <body className="bg-slate-100  box-border scroll-smooth bg-fixed">
       <Header h1={"M&M vendedores"} />
       <Mid />
       <Cards/>
