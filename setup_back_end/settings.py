@@ -61,7 +61,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Next.js with React localhost.
-    "https://mm-vendedores.vercel.app/",
+    "https://mm-vendedores.vercel.app",
     "https://meu-backend-django.onrender.com", 
 ]
 
@@ -93,7 +93,7 @@ DATABASES = {
     "default": dj_database_url.config(
         default=os.getenv("DATABASE_URL"),
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=False
     )
 }
 

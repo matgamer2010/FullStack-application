@@ -23,17 +23,4 @@ BACKLOG 13/4:
 
 - Fazer deploy do Backend
 
-    Configurar o settings.py para:
-
-    import dj_database_url
-
-    DEBUG = os.getenv("DEBUG", "False") == "True"
-    ALLOWED_HOSTS = ['*']
-
-    DATABASES = {
-        'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
-    }
-
-    Configurar o yaml - Fazendo.
-
-    Fazer a integração nativa com o Postgree
+    A configuração ja ta quase pronta e o backend já subiu pra prod, mas ta com http 500.
