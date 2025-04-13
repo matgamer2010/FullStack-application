@@ -29,8 +29,7 @@ class Crud(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request, *args, **kwargs):
-        queryset = self.queryset
-        serializer = self.get_serializer(queryset, many=True)
+        serializer = self.get_serializer(DataBaseClothes.objects.all(), many=True)
         return Response(serializer.data)
 
     def destroy(self, request, *args, **kwargs):
@@ -45,10 +44,7 @@ class GetObjectPerUser(viewsets.ModelViewSet):
     queryset = DataBaseClothes.objects.all()
     serializer_class = SerializersClothes
     permission_classes = [IsAuthenticated]
-    
-    def get_queryset(self):
-        return DataBaseClothes.objects.filter(cross_databases=self.request.user)
-    
+
     def retrieve(self, request, pk=None):
         produtos = DataBaseClothes.objects.filter(cross_databases=pk)
         if not produtos:

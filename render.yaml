@@ -9,6 +9,7 @@ services:
       pip install -r requirements.txt
       python manage.py collectstatic --noinput
       python manage.py migrate
+      python manage.py createsuperuser --noinput || true
     startCommand: gunicorn setup_back_end.wsgi:application
     autoDeploy: true
     envVars:
@@ -22,6 +23,12 @@ services:
         value: "False"
       - key: ALLOWED_HOSTS
         value: meu-backend-django.onrender.com
+      - key: DJANGO_SUPERUSER_USERNAME
+        value: admin
+      - key: DJANGO_SUPERUSER_EMAIL
+        value: admin@example.com
+      - key: DJANGO_SUPERUSER_PASSWORD
+        value: senhaSuperSegura123 # Você pode alterar diretamente no painel da Render
 databases:
   - name: meu-banco-postgre
     region: oregon
