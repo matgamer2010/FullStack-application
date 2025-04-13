@@ -6,7 +6,7 @@ function Cards(){
     const [product, setProduct] = useState([]);
 
     useEffect(() => {
-        const url = "http://localhost:8000/APICrud/?format=json";
+        const url = process.env.API_URL;
         fetch(url)
         .then((response) => response.json())
         .then((data) => setProduct(data))

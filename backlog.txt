@@ -1,9 +1,9 @@
 BACKLOG 13/4:
 
+
+
+
 - Criar a página de Login e Cadastro:
-    
-    Criar uma camada de websockets com Node.js especializada para a tranferência de dados.
-    Para isso, usar o axios para trabalhar com verbos HTTP diferentes.
 
 - Criar a página de cada produto :
 
@@ -13,14 +13,18 @@ BACKLOG 13/4:
     para isso, deve-se ter em mente que é possível referenciar componentes como páginas Web, para isso, ver o print
     tirado ontem.
 
+- Configurar JWT, Cachê e buffers com o DRF e Node.js
+
+- Criar um usuário normal, com o Django, chamado NodeJs, através dele, faremos o request da API (Temos que definir a 
+  ele uma permissão especial, para que apenas ele possa fazer a requisição).
+
+- Com a camada de websockets ligada, devemos refatorar: users/views.py, e as urls, já que não serão mais necessárias.
+
+- Configurar pagamentos com o Stripe e gerenciar estoque.
+
 - Colocar os Direitos autorais no Header (Criar uma página só para isso):
 
     Até agora, a lista é:
 
     - Banner da Homepage
     - A imagem de usuário Default
-
-
-- Fazer deploy do Backend
-
-    A configuração ja ta quase pronta e o backend já subiu pra prod, mas ta com http 500.
