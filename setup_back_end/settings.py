@@ -17,9 +17,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["meu-backend-django.onrender.com", "localhost", "127.0.0.1",]
+
 
 
 # Application definition
@@ -47,22 +48,21 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "allauth.account.middleware.AccountMiddleware",
     "corsheaders.middleware.CorsMiddleware", 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
-
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Next.js with React localhost.
     "https://mm-vendedores.vercel.app/",
+    "https://meu-backend-django.onrender.com", 
 ]
 
 ROOT_URLCONF = 'setup_back_end.urls'

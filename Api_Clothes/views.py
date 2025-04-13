@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from Api_Clothes.models import DataBaseClothes
 from Api_Clothes.serializers import SerializersClothes
-from rest_framework import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
  
 class Crud(viewsets.ModelViewSet):
     queryset = DataBaseClothes.objects.all()

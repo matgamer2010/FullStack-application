@@ -12,7 +12,7 @@ services:
     startCommand: gunicorn setup_back_end.wsgi:application
     autoDeploy: true
     envVars:
-      - key: DJANGO_SECRET_KEY
+      - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
         fromDatabase:
