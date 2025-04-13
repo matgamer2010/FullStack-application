@@ -1,14 +1,13 @@
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from Api_Clothes.models import DataBaseClothes
 from Api_Clothes.serializers import SerializersClothes
-
+from rest_framework import IsAuthenticated
  
 class Crud(viewsets.ModelViewSet):
     queryset = DataBaseClothes.objects.all()
     serializer_class = SerializersClothes
+    permission_classes = [IsAuthenticated]
         
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -38,16 +37,14 @@ class Crud(viewsets.ModelViewSet):
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-    """    def get_queryset(self):
-        return None"""
-
+    
     def perform_create(self, serializer):
         serializer.save(cross_databases=self.request.user)
 
 class GetObjectPerUser(viewsets.ModelViewSet):
     queryset = DataBaseClothes.objects.all()
     serializer_class = SerializersClothes
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         return DataBaseClothes.objects.filter(cross_databases=self.request.user)

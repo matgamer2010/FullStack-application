@@ -1,7 +1,39 @@
-BACKLOG 7/4:
+BACKLOG 13/4:
 
-- Estilizar o Texto "Veja o nosso catálogo"
-- Aprimorar a estilização dos cards (Dando preferência a cores mais escuras)
-- Criar a página de Login e Cadastro
-- Criar a página de cada produto 
-- Colocar os Direitos autorais no Header (Criar uma página só para isso)
+- Criar a página de Login e Cadastro:
+    
+    Criar uma camada de websockets com Node.js especializada para a tranferência de dados.
+    Para isso, usar o axios para trabalhar com verbos HTTP diferentes.
+
+- Criar a página de cada produto :
+
+    Isso não é difícil, eu preciso criar um Product/index.js, 
+    Em seguida, Usar props para criarmos as referências para cada Tipo de tag (ex: image, name, description...),
+    Com isso, aproveitamos o Map para chamar esse componente referenciando para cada respectivo valor;
+    para isso, deve-se ter em mente que é possível referenciar componentes como páginas Web, para isso, ver o print
+    tirado ontem.
+
+- Colocar os Direitos autorais no Header (Criar uma página só para isso):
+
+    Até agora, a lista é:
+
+    - Banner da Homepage
+    - A imagem de usuário Default
+
+
+- Fazer deploy do Backend
+
+    Configurar o settings.py para:
+
+    import dj_database_url
+
+    DEBUG = os.getenv("DEBUG", "False") == "True"
+    ALLOWED_HOSTS = ['*']
+
+    DATABASES = {
+        'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    }
+
+    Configurar o yaml - Fazendo.
+
+    Fazer a integração nativa com o Postgree

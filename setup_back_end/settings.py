@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import dj_database_url
+
 
 load_dotenv()
 
@@ -17,7 +19,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,14 +42,8 @@ INSTALLED_APPS = [
     
     'allauth',
     'allauth.account', 
-    'allauth.socialaccount',    
-    'allauth.socialaccount.providers.github',
-    
-    'allauth.socialaccount.providers.apple',
-    'allauth.socialaccount.providers.discord',
+    'allauth.socialaccount',       
     'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.microsoft',
-    
 ]
 
 MIDDLEWARE = [
@@ -66,6 +62,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Next.js with React localhost.
+    "https://mm-vendedores.vercel.app/",
 ]
 
 ROOT_URLCONF = 'setup_back_end.urls'

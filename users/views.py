@@ -109,7 +109,7 @@ def formRegister(request):
             email_form_register = register_forms.cleaned_data['email_register_form']
             password_form_register = register_forms.cleaned_data['password_register_form']
 
-            if User.objects.filter(username=name_form_register).exists() and User.objects.filter(email=email_form_register):
+            if User.objects.filter(username=name_form_register).exists() or User.objects.filter(email=email_form_register).exists():
                 messages.error(request, "Já existe um usuário com credenciais semelhantes. Tente novamente.")
                 return render(request, "Forms/Register.html", {"form": register_forms})
 
