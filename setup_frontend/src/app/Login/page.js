@@ -1,9 +1,8 @@
-import {Header} from "../header"
+import {Main} from "./login";
 
 function Login(){
     return(
-        <Header/>
-        
+        <Main/>      
     );
 }
 

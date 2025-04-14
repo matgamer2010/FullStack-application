@@ -3,14 +3,14 @@ import Cards from "./Components/Cards/";
 import Footer from "./Components/footer/";
 import Mid from "./Components/Mid/";
 
-function Home(){
-  return(
-    <body className="bg-slate-100  box-border scroll-smooth bg-fixed">
-      <Header h1={"M&M vendedores"} />
+function Home() {
+  return (
+    <section className="">
+      <Header h1="M&M vendedores" />
       <Mid />
-      <Cards/>
+      <Cards />
       <Footer />
-    </body>
+    </section>
   );
 }
 

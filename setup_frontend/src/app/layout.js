@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={``}
+        className={`bg-slate-100 box-border scroll-smooth bg-fixed`}
       >
         {children}
       </body>
