@@ -9,7 +9,6 @@ from django.contrib.auth.views import PasswordResetCompleteView, PasswordResetDo
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount
-from django.core.files.base import ContentFile
 from Api_Clothes.models import DataBaseClothes
 from django.db import models
 

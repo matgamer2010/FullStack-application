@@ -19,7 +19,7 @@ export function Main(){
                     <div className="md:my-10">
                         <h2 className="font-light underline underline-offset-6 decoration-sky-200">Senha :</h2>
                         <input className="placeholder:text-gray-500 placeholder:italic placeholder:text-xl 
-                        placeholder:text-center border-1 border-indigo-300 md:border-2 m-3" placeholder="Digite sua senha"/>
+                        placeholder:text-center border-1 border-indigo-300 md:border-2 m-3" placeholder="Digite sua senha" type="password"/>
                     </div>
 
                     <button className="bg-indigo-600 font-light text-white rounded p-2 w-full shadow-2xl 

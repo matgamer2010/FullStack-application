@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',    
     
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
     # possível erro aqui, já que estamos configurando portas externas.
     
@@ -46,6 +47,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount',       
     'allauth.socialaccount.providers.google',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware", 

@@ -8,6 +8,9 @@ class Crud(viewsets.ModelViewSet):
     queryset = DataBaseClothes.objects.all()
     serializer_class = SerializersClothes
     permission_classes = [IsAuthenticated]
+
+    def get(self):
+        return Response({"Msg":"Você está autenticado na API !!!"})
         
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -29,6 +32,9 @@ class Crud(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request, *args, **kwargs):
+        # At make this set, The only user that can be able to request our API is NodeJs
+        if request.user.username != "NodeJs":
+            return Response({"Ms":"You're not allowed to do that"})
         serializer = self.get_serializer(DataBaseClothes.objects.all(), many=True)
         return Response(serializer.data)
 
