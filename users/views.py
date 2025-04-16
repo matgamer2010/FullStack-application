@@ -11,6 +11,8 @@ from django.contrib.auth.decorators import login_required
 from allauth.socialaccount.models import SocialAccount
 from Api_Clothes.models import DataBaseClothes
 from django.db import models
+from rest_framework import serializers
+from rest_framework.response import Response
 
 from .forms import LoginUsers, RegisterUsers, ConfirmEmail, ResetPasswordDone
 from users.forget_email import RetriveAccount
@@ -44,52 +46,35 @@ def Verifications(request):
     return {"each_user_image": photo_url, "StatusUser": status_user, "IsSuperUser":is_superuser, "cards": cards}
 
 
+class LoginValidate(serializers.Serializer):
+    user = serializers.EmailField()
+    password = serializers.CharField()
 
 def formLogin(request):
 
-    login_forms = LoginUsers()
-
     if request.method == "POST":
-        login_forms = LoginUsers(request.POST)
-        if login_forms.is_valid():
-            username_form_login = login_forms["username_login_form"].value()
-            password_form_login = login_forms["password_login_form"].value()
+        serializer = LoginValidate(data=request.data)
 
-            user = auth.authenticate(
-                request,
-                username=username_form_login,
-                password=password_form_login,
-            )
+        if not serializer.is_valid():
+            # I've written this message in portuguese because it'll be show on the FrontEnd.
+            return Response({"ERRO":'Os dados submetidos não são validos'})
 
-            if user is not None:
-                auth.login(request, user)
-                messages.success(request, "Login bem-sucedido")
-                return redirect("http://localhost:8000/")
-            else:
-                messages.error(request, "O email digitado não existe no nosso sistema.")
+        username_form_login = serializer.validated.data.get("user")
+        password_form_login = serializer.validated.data.get("password")
 
-    status_user = False
-    is_superuser = False
-    
-    if request.user.is_authenticated:
-        if request.user.is_superuser:
-            is_superuser=True
-            print("A verificação foi bem-sucedida, você é um administrador!")
-        
-        try:
-            # Devemos manter a lógica assim pois, e se o usuário não tiver imagem?, ele vai cair na mesma página de quem não está logado?
-            # Ou, e se o usuário acabou de deletar sua conta?, ele deve ser redirecionado para a mesma página padrão?
-            social_account = SocialAccount.objects.filter(user=request.user, provider="google").first()
-            if social_account:
-                photo_url = social_account.extra_data.get("picture", "")
-                status_user = True
-                # Isso deve permanecer assim (status_user como True fora da condicional), pois nem todos os usuários usarão o allauth.
-            status_user = True
-        except Exception as e:
-            print(f"Houve um erro inesperado, o erro é: {e}")
+        user = auth.authenticate(
+            request,
+            username=username_form_login,
+            password=password_form_login,
+        )
 
+        if user is not None:
+            auth.login(request, user)
+            return Response({"Success":f"Senha bem vindo: {username_form_login}"})
+        else:
+            return Response({"NotFound":"Usuário não encontrado no nosso sistema."})
 
-    return render(request, "Forms/Login.html", {"forms": login_forms, "StatusUser":status_user, "IsSuperUser":is_superuser})
+    return render(request, "Forms/Login.html")
 
 
 def formRegister(request):

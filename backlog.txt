@@ -1,30 +1,23 @@
-BACKLOG 15/4:
+BACKLOG 16/4:
 
 ## Backend
 
-  * Status: Done!
-  * Obs: pode até não ser relevante, mas eu adicionei um "/" ao final da url da API
-  - Parte do Django:
-    - Instalar a Lib,
-    - Configurar settings para aceitar JWT como forma de autenticação,
-    - Depois, criar urls protegidas para esses tokens.
-    - Criar um usuário normal, com o Django, chamado NodeJs, através dele, 
-    faremos o request da API (Temos que definir a ele uma permissão especial, para que apenas ele possa fazer a requisição)
---> Fazer Commit
+  * STATUS: Fazendo.
+  - NodeJs, lidar com dados do React:
 
-  - Por fim, vem a parte do Node.js, onde fazemos o envio do Token:
-      - Consumismo a URL da API (por enquanto, a localhost)
-      - Definimos o cabeçalho da requição (User e password)
-      - Definimos funções para a requisição em si.
+  # Ver qual commit tudo estava "Ok" apenas com Django.
+  # Fazer Flashcards
 
-  - Lista de eventos necessários para o WebSocket:
-    - Submit do form
+  - Montagem da Camada de WebScoket da Home Page:
+    - Agora sim vem a parte do JWT/ tokens, para faz a requisição dos PRODUTOS.
+    - O evento que o WebScoket irá escutar é o carregamento da Página inicial.
     - Integrar cachê para armazenamento de requisições (Prisma e Redis), e integrar Buffers para acelerar a requisição
+    - Fazer o API Gateway
     - Preparar para a comunicação com o ChatBot.
 
   - Criar WebSockets para a avaliação de produtos.
 
-  - Fazer testes automatizados:
+  - Fazer testes automatizados, com Node e Jest
 
 ## Frontend
 
@@ -33,7 +26,7 @@ BACKLOG 15/4:
 
 ## Backend
 
-  - Com a camada de websockets ligada, devemos refatorar: users/views.py, e as urls, já que não serão mais necessárias.
+  - refatorar: users/views.py, pois apenas algumas views e url não são mais necessárias
 
   - Configurar pagamentos com o Stripe e gerenciar estoque.
 

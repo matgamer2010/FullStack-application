@@ -35,7 +35,7 @@ export function Main(){
             console.log("Houve um erro:", err.response?.data || err.message );
         }
         console.log(data);    
-}
+    }
 
     return(
         <section>
