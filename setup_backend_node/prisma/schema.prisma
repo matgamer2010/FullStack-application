@@ -19,20 +19,27 @@ model UserSearch{
   id     Int    @id @default(autoincrement())
   userID Int
   query  String
-  user   User @relation(fields: [userID], references: [id])
+  user   UserForSearch @relation(fields: [userID], references: [id])
 }
 
 model Recommendation {
   id Int @id
   userID Int
   items Json
-  recomendations User @relation(fields: [userID], references: [id])
+  recomendations UserForSearch @relation(fields: [userID], references: [id])
 }
 
-model User{
+model UserForSearch{
   id Int @id 
   email String
   name String
   searches UserSearch[]
   recommendation Recommendation[]
+}
+
+model UserForCache{
+  id Int @id
+  name String
+  email String
+  cachedAt DateTime @default(now())
 }

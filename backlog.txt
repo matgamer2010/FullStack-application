@@ -7,12 +7,12 @@ BACKLOG 17/4:
   - Montagem da Camada de WebScoket da Home Page:
     - Agora sim vem a parte do JWT/ tokens, para faz a requisição dos PRODUTOS.
     _ O evento que o WebScoket irá escutar é o carregamento da Página inicial.
-    - Integrar cachê para armazenamento de requisições (Prisma e Redis), e integrar Buffers para acelerar a requisição (Quase feito)
+    - integrar Buffers para acelerar a requisição (feito)
     - Fazer o API Gateway
     - Preparar para a comunicação com o ChatBot.
+    -
 
-    - Criar models no Prisma (Prisma armazena cachê de Histórico de pesquisa do site, já feito -> Product) que receba informações relacioandas a usuários (Aleterar a rota do router.get)
-    - Alterar o Redis para receber os dados da requisição dos Objetos
+  - Alterar o Componente de Cabeçalho de acordo com a página em questão e se o usuário está logado.
     - Preparar express para consumir a API dos produtos e exibir isso no endpoint "localhost:3001/product"
 
   - Fazer testes automatizados, com Node (no back) e Jest (no front)
@@ -24,6 +24,10 @@ BACKLOG 17/4:
     - Lembrar de fazer a seção de descrição de cada Produto.
 
 ## Backend
+
+  - Configurar as URLs para a ativação do Cachê, e elas são:
+    - "/products/" -> exibição dos produtos
+    - "/users/"
 
   - Implementar um serviço de emails para:
     - Confirmar o Cadastro
