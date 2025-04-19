@@ -7,7 +7,9 @@ urlpatterns = [
   path("login/", views.formLogin, name="login_form"),
   path("register/",views.formRegister, name="register_form"),
   path("logout/", views.Logout, name="logout"),
-  
+
+  path("process_login/", views.ProcessLogin, name="process_login"),
+  path("process_register/", views.ProcessRegister, name="process_register"),
   
   # These URLs are using for the Reset Account feature. It does not be changed
   path("reset/", 

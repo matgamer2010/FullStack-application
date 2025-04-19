@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import dj_database_url
 
 
 load_dotenv()
@@ -17,9 +16,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "fullstack-application-5s0h.onrender.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 
@@ -67,9 +66,9 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Next.js with React localhost.
+    "http://localhost:3000",
+    "http://localhost:3001",
     "https://mm-vendedores.vercel.app",
-    "https://meu-backend-django.onrender.com", 
 ]
 
 ROOT_URLCONF = 'setup_back_end.urls'
@@ -97,11 +96,10 @@ WSGI_APPLICATION = 'setup_back_end.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=False
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
 }
 
 
@@ -190,10 +188,10 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_LOGOUT_ON_GET = True
 
 # Emails config
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.office365.com'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'matgamer297@hotmail.com'  
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  
-DEFAULT_FROM_EMAIL = 'matgamer297@hotmail.com'  
+EMAIL_HOST_USER = "matgamer297@gmail.com"
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

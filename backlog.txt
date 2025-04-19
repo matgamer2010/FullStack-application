@@ -1,30 +1,37 @@
-BACKLOG 16/4:
+BACKLOG 17/4:
 
 ## Backend
 
-  * STATUS: Fazendo.
-  - NodeJs, lidar com dados do React:
-
-  # Ver qual commit tudo estava "Ok" apenas com Django.
-  # Fazer Flashcards
-
+  * Status: Fazendo
+  *
   - Montagem da Camada de WebScoket da Home Page:
     - Agora sim vem a parte do JWT/ tokens, para faz a requisição dos PRODUTOS.
-    - O evento que o WebScoket irá escutar é o carregamento da Página inicial.
-    - Integrar cachê para armazenamento de requisições (Prisma e Redis), e integrar Buffers para acelerar a requisição
+    _ O evento que o WebScoket irá escutar é o carregamento da Página inicial.
+    - Integrar cachê para armazenamento de requisições (Prisma e Redis), e integrar Buffers para acelerar a requisição (Quase feito)
     - Fazer o API Gateway
     - Preparar para a comunicação com o ChatBot.
 
-  - Criar WebSockets para a avaliação de produtos.
+    - Criar models no Prisma (Prisma armazena cachê de Histórico de pesquisa do site, já feito -> Product) que receba informações relacioandas a usuários (Aleterar a rota do router.get)
+    - Alterar o Redis para receber os dados da requisição dos Objetos
+    - Preparar express para consumir a API dos produtos e exibir isso no endpoint "localhost:3001/product"
 
-  - Fazer testes automatizados, com Node e Jest
+  - Fazer testes automatizados, com Node (no back) e Jest (no front)
 
 ## Frontend
 
+  - Fazer uma lista de exercícios acerca do useState.
   - Criar a página de cada produto (Com base no Id). 
     - Lembrar de fazer a seção de descrição de cada Produto.
 
 ## Backend
+
+  - Implementar um serviço de emails para:
+    - Confirmar o Cadastro
+    - Confirmar compra
+    
+    Ou configurar meu próprio smtp.
+  
+  - Criar WebSockets para a avaliação de produtos.
 
   - refatorar: users/views.py, pois apenas algumas views e url não são mais necessárias
 
@@ -34,9 +41,9 @@ BACKLOG 16/4:
 
   - Testes automatizados
 
-
-
 ## Extras:
+
+  - Fazer todos os Flashcards dos conteúdos estudados até então.
 
   - Colocar os Direitos autorais no Header (Criar uma página só para isso):
 
@@ -44,6 +51,7 @@ BACKLOG 16/4:
 
     - Banner da Homepage
     - A imagem de usuário Default
+    - Ícone de "delete"
 
   - Marketing do projeto.
 

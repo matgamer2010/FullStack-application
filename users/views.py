@@ -8,14 +8,17 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.views import PasswordResetCompleteView, PasswordResetDoneView, PasswordResetView, PasswordChangeView
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
 from allauth.socialaccount.models import SocialAccount
 from Api_Clothes.models import DataBaseClothes
 from django.db import models
 from rest_framework import serializers
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 from .forms import LoginUsers, RegisterUsers, ConfirmEmail, ResetPasswordDone
-from users.forget_email import RetriveAccount
+from users.forget_email import RetriveAccount, SendEmailAfterRegister
 
 def Verifications(request):
     photo_url = ''
@@ -47,9 +50,39 @@ def Verifications(request):
 
 
 class LoginValidate(serializers.Serializer):
-    user = serializers.EmailField()
+    user = serializers.CharField()
     password = serializers.CharField()
 
+@csrf_exempt
+@require_http_methods(['POST'])
+@api_view(['POST'])
+def ProcessLogin(request):
+
+    if request.method == 'POST':  
+
+        serializer = LoginValidate(data=request.data)
+
+        if not serializer.is_valid():
+            return Response({"ERROR": "O conteúdo submetido não é válido."}, status=400)
+        
+        get_user = serializer.validated_data.get("user")
+        get_password = serializer.validated_data.get("password")
+
+        if not User.objects.filter(username=get_user).exists():
+            return Response({"ERROR": "Usuário não foi encontrado"}, status=404)
+
+        user = auth.authenticate(
+            request,
+            username = get_user,
+            password = get_password,
+        )
+
+        if user is not None:
+            auth.login(request, user)
+            return Response({"Success": "Seja bem vindo!"}, status=200)
+        return Response({"ERROR": "As credenciais não conferem"}, status=400)
+
+# TODO: Refatorar
 def formLogin(request):
 
     if request.method == "POST":
@@ -76,6 +109,50 @@ def formLogin(request):
 
     return render(request, "Forms/Login.html")
 
+
+class RegisterValidate(serializers.Serializer):
+    email = serializers.EmailField()
+    user = serializers.CharField()
+    password = serializers.CharField()
+    secondPassword = serializers.CharField()
+
+@csrf_exempt
+@require_http_methods(['POST'])
+@api_view(['POST'])
+def ProcessRegister(request): 
+    serializer = RegisterValidate(data=request.data)
+    if request.method == 'POST':
+        if serializer.is_valid():
+            email = serializer.validated_data.get("email")
+            user = serializer.validated_data.get("user")
+            password = serializer.validated_data.get("password")
+            secondPassword = serializer.validated_data.get("secondPassword")
+
+            print(f"Os dados que Chegaram ao Djago foram: {email, user, password, secondPassword}")
+
+            if User.objects.filter(username=user).exists() or User.objects.filter(email=email):
+                return Response({"ERROR": "Já existe um usuário com essas credenciais"}, status=302)
+            else:
+                if password != secondPassword:
+                    return Response({"ERROR": "As senhas são diferentes"}, status=400)
+                else:
+                    if len(password) < 8:
+                        return Response({"ERROR": "As senhas devem conter ao menos 8 dígitos"}, status=400)
+                    else:
+                        user = User.objects.create_user(
+                            email = email,
+                            username = user,
+                            password = password,
+                        )
+                        user.save()
+                        try:
+                            SendEmailAfterRegister.submit_email(user, "http://localhost:3000/")
+                            print(f"Email enviado!, veja a caixa de entrada")
+                        except Exception as err:
+                            print(f"Houve um erro, veja: {err}")
+                        return Response({"Success": "Usuário cadastrado com sucesso"}, status=201)
+        else:
+            return Response({"ERROR": "O conteúdo submetido não é valido."}, status=400)  
 
 def formRegister(request):
 

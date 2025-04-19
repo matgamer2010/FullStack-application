@@ -8,9 +8,6 @@ class Crud(viewsets.ModelViewSet):
     queryset = DataBaseClothes.objects.all()
     serializer_class = SerializersClothes
     permission_classes = [IsAuthenticated]
-
-    def get(self):
-        return Response({"Msg":"Você está autenticado na API !!!"})
         
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

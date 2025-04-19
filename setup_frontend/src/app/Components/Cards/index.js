@@ -28,7 +28,7 @@ function Cards(){
             </div>
 
             <section>
-                {product.map((item) =>{
+                { product.map((item) =>{
                     return(
                         <div key={item.id} className=" 
                         bg-gray-100 rounded shadow-lg shadow-sky-500 m-20 mt-10 p-5 w-fit 

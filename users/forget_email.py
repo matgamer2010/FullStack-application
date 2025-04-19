@@ -26,3 +26,25 @@ class RetriveAccount:
             html_message=html_message,
         )
         
+class SendEmailAfterRegister:
+
+    @staticmethod
+    def submit_email(user, url):
+        subject = "Seja bem vindo!"
+        message = f"Olá {user}!, você se registrou na M&M vendedores!, agradecemos por criar uma conta em nosso site!, você pode ver os nosso produtos aqui: {url}"
+        from_email = settings.DEFAULT_FROM_EMAIL
+        recipient_list = [user.email]
+
+        # Any template
+        template_name = "Emails/Reset.html"
+        context = {"user": user, "url":url }
+        
+        html_message = strip_tags(render_to_string(template_name, context))
+
+        send_mail(
+            subject,
+            message,
+            from_email,
+            recipient_list,
+            html_message=html_message,
+        )

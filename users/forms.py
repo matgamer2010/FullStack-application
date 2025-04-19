@@ -1,6 +1,5 @@
 from django import forms
 
-# Lembrar-se de que, os Label's devem ser em português para serem exibidos corretamente na página web
 class LoginUsers(forms.Form):
   username_login_form = forms.CharField(
     label= "Usuário",
