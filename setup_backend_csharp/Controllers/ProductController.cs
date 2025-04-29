@@ -1,0 +1,44 @@
+using System.ComponentModel;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+// Here, we request the Django URL for the products
+
+namespace setup_backend_csharp.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class ClothesController : ControllerBase
+{
+    private readonly ILogger _logger;
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public ClothesController(IHttpClientFactory httpClientFactory, ILogger logger)
+    {
+        _logger = logger;
+        _httpClientFactory = httpClientFactory;
+    }
+
+    public async Task<IActionResult> GetProducts(IHttpContextAcessor httpContextAcessor)
+    {
+        try
+        {
+            var request = await httpContextAcessor.GetAsync("http://localhost:8000/API/Crud/");
+            if (request.IsSuccessStatusCode)
+            {
+                var response = await request.Content.ReadAsStringAsync();
+                return Ok(response);
+            }
+            else
+            {
+                return StatusCode((int)request.StatusCode, "Error fetching data");
+            }
+        }
+        catch (Exception e)
+        {
+            return _logger.LogWarning($"We cannot request the API, se the exception: {e}");
+        }
+    }
+}

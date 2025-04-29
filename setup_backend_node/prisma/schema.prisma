@@ -15,28 +15,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model UserSearch{
-  id     Int    @id @default(autoincrement())
-  userID Int
-  query  String
-  user   UserForSearch @relation(fields: [userID], references: [id])
-}
-
-model Recommendation {
-  id Int @id
-  userID Int
-  items Json
-  recomendations UserForSearch @relation(fields: [userID], references: [id])
-}
-
-model UserForSearch{
-  id Int @id 
-  email String
-  name String
-  searches UserSearch[]
-  recommendation Recommendation[]
-}
-
 model UserForCache{
   id Int @id
   name String

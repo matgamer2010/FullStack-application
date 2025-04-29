@@ -1,55 +1,62 @@
-BACKLOG 17/4:
+BACKLOG 28/4:
 
 ## Backend
 
-  * Status: Fazendo
+  * Status: Feito:
   *
+  - Configuração de pagamentos com ASP.NET Core.
+
+
+  * Status: Fazendo
   - Montagem da Camada de WebScoket da Home Page:
-    - Agora sim vem a parte do JWT/ tokens, para faz a requisição dos PRODUTOS.
-    _ O evento que o WebScoket irá escutar é o carregamento da Página inicial.
-    - integrar Buffers para acelerar a requisição (feito)
+    * Fazendo:
+    - Agora sim vem a parte do JWT/ tokens, para fazer a requisição dos PRODUTOS --> ASP.NET Core
+
+    - integrar Buffers para acelerar a requisição (Buffers junto ao cachê)
     - Fazer o API Gateway
-    - Preparar para a comunicação com o ChatBot.
-    -
+    - Entender mais sobre o framework Express
+
+  - Estudar mais sobre orientação a objeto em C#.
+  - Fazer testes unitários, com Node (no back), Jest (no front), PyTest (Django), xUnit(ASP.NET Core)
+
+  - Implementar CI/CD com o GitHub Actions.
+	
+## Frontend
 
   - Alterar o Componente de Cabeçalho de acordo com a página em questão e se o usuário está logado.
     - Preparar express para consumir a API dos produtos e exibir isso no endpoint "localhost:3001/product"
-
-  - Fazer testes automatizados, com Node (no back) e Jest (no front)
-
-## Frontend
-
+    
   - Fazer uma lista de exercícios acerca do useState.
   - Criar a página de cada produto (Com base no Id). 
     - Lembrar de fazer a seção de descrição de cada Produto.
+    - gerenciar estoque (Decidi que isso pode ficar por conta do React).
+    - Sempre multiplicar o valor do produto por 1000 antes de enviar ao ASP.NET
 
 ## Backend
 
-  - Configurar as URLs para a ativação do Cachê, e elas são:
-    - "/products/" -> exibição dos produtos
-    - "/users/"
+   
+  - Configurar as URLs (Url fantasma do Django que fornece dados sobre cada item) para a ativação do Cachê, e elas são:
+    - "/products" -> exibição dos produtos -> ASP.NET Core -> já lida com produtos (mais pesado)
+    - "/usersLogin" -> exibição de dados de usuários -> lida com usuários (mais leve)
 
   - Implementar um serviço de emails para:
     - Confirmar o Cadastro
     - Confirmar compra
-    
-    Ou configurar meu próprio smtp.
-  
-  - Criar WebSockets para a avaliação de produtos.
+    - Ou configurar meu próprio smtp.
 
   - refatorar: users/views.py, pois apenas algumas views e url não são mais necessárias
-
-  - Configurar pagamentos com o Stripe e gerenciar estoque.
-
+  
   - Implementar um ChatBot para auxílio do cliente.
 
   - Testes automatizados
 
 ## Extras:
 
-  - Fazer todos os Flashcards dos conteúdos estudados até então.
+  - Fazer todos os Flashcards dos conteúdos estudados até então, os principais temas para flashcards são:
+    - React
+    - Javascript
 
-  - Colocar os Direitos autorais no Header (Criar uma página só para isso):
+  - Colocar os Direitos autorais no Footer (Criar uma página só para isso):
 
     Até agora, a lista é:
 
