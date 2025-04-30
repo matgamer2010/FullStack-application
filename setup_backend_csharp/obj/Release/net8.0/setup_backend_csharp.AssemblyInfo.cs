@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("setup_backend_csharp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+52cb499667a01be64f718b11f0d69cdfe1b80163")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6113364ed19da57a492da967fd468e92d64af480")]
 [assembly: System.Reflection.AssemblyProductAttribute("setup_backend_csharp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("setup_backend_csharp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
