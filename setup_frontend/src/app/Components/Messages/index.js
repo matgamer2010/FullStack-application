@@ -43,7 +43,6 @@ export default function Messages() {
             deleteMessage();
           }}
         >
-          <img className="w-5 h-5 mb-1 mx-1" src="./delete.png" />
         </button>
       </h2>
     </div>

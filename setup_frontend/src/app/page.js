@@ -2,7 +2,7 @@ import Header from "./Components/header/";
 import Cards from "./Components/Cards/";
 import Footer from "./Components/footer/";
 import Mid from "./Components/Mid/";
-import Messages from "./Components/Messages/"
+import Messages from "./Components/Messages";
 
 function Home() {
   return (

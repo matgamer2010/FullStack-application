@@ -24,7 +24,7 @@ export function Header(props){
                         md:mx-3 md:scale-100">Login</a>
                 </Link>
                                     
-                <Link href="Cadastro/" legacyBehavior>
+                <Link href="Register/" legacyBehavior>
                     <a className="text-center text-white w-20 bg-indigo-500 scale-80 text-shadow-md/20 
                         radius-2 rounded-sm mx-1/3 shadow-lg transition duration-200 ease-out hover:scale-110 hover:translate-y-1 hover:animate-pulse p-2
                         md:scale-100 md:mx-3">Cadastro</a>
