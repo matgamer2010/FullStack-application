@@ -5,6 +5,11 @@ Stripe.StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHttpClient("ClothesClient").ConfigurePrimaryHttpMessageHandler(() =>
+    new HttpClientHandler
+    {
+        AllowAutoRedirect = true,
+    });
 
 var app = builder.Build();
 

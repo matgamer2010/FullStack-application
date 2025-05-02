@@ -25,7 +25,8 @@ public class ClothesController : ControllerBase
     {
         try
         {
-            var request = await httpContextAcessor.GetAsync("http://localhost:8000/API/Crud/");
+            var client = _httpClientFactory.CreateClient("ClothesClient");
+            var request = await client.GetAsync("http://localhost:8000/API/Crud/");
             if (request.IsSuccessStatusCode)
             {
                 var response = await request.Content.ReadAsStringAsync();

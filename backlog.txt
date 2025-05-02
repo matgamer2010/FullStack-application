@@ -11,9 +11,9 @@ BACKLOG 28/4:
   - Montagem da Camada de WebScoket da Home Page:
     * Fazendo:
     - Agora sim vem a parte do JWT/ tokens, para fazer a requisição dos PRODUTOS --> ASP.NET Core
-
     - integrar Buffers para acelerar a requisição (Buffers junto ao cachê)
-    - Fazer o API Gateway
+
+    - Fazer o API Gateway ()
     - Entender mais sobre o framework Express
 
   - Estudar mais sobre orientação a objeto em C#.
