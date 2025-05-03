@@ -1,6 +1,6 @@
 "use client";
 import Header from "../Components/header";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Messages from "../Components/Messages";
@@ -65,8 +65,10 @@ export function Register() {
     const styleDiv = "mt-30 md:m-10 w-fit p-10 md:p-25 rounded text-black shadow-2xl md:text-3xl";
     return (
         <section>
-            <Header h1="M&M vendedores"/>
-            <Messages />
+            <Header h1="M&M vendedores" />
+            <Suspense fallback={ null }>
+                <Messages />
+            </Suspense>
             <form onSubmit={(event) => sendInfo(event) }>
                 <section className="flex justify-center items-center box-border">
                     <div className={styleForm || styleDiv}>
