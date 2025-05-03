@@ -1,10 +1,23 @@
-BACKLOG 28/4:
+BACKLOG 3/5:
 
 ## Backend
 
   * Status: Feito:
   *
   - Configuração de pagamentos com ASP.NET Core.
+
+  // // // // // // // / // /// // / // // // 
+  
+  
+  
+  
+  
+-------------------------------------->>>>>>>> Gerar uma nova chave do Stripe.
+  
+  
+  
+  
+  |\ \\\\\|\|||\\||
 
   // resolver o problema de Commits, remover o commit que contenha alguma chave de API.
 
