@@ -3,7 +3,6 @@ import Header from "../Components/header";
 import { useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import Messages from "../Components/Messages";
 
 function Inputs(props) {
     return (
@@ -66,9 +65,6 @@ export function Register() {
     return (
         <section>
             <Header h1="M&M vendedores" />
-            <Suspense fallback={ null }>
-                <Messages />
-            </Suspense>
             <form onSubmit={(event) => sendInfo(event) }>
                 <section className="flex justify-center items-center box-border">
                     <div className={styleForm || styleDiv}>

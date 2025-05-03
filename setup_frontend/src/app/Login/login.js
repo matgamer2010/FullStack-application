@@ -3,7 +3,7 @@ import {useState} from "react";
 import { useRouter } from "next/navigation";
 import Header from "../Components/header";
 import axios from "axios";
-import Messages from "../Components/Messages";
+
 
 function Inputs(props){
     return(
@@ -60,7 +60,6 @@ export function Main(){
     return(
         <section>
             <Header h1="M&M vendedores" />
-            <Messages/>
             <form onSubmit={(event)=>{sendInfo(event)} }>
                 <section className="flex justify-center items-center box-border">
 

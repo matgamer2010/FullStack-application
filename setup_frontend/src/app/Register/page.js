@@ -1,8 +1,16 @@
-import {Register} from "./Register";
+import { Register } from "./Register";
+import { Suspense } from "react";
+import Messages from "../Components/Messages";
 
 function Registro() {
     return (
-        <Register/>
+        <>
+            <Suspense fallback={null}>
+                <Messages/>
+            </Suspense>
+
+            <Register/>
+        </>
     );
 }
 
