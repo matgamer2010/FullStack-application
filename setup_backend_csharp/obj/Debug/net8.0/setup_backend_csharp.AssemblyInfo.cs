@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("setup_backend_csharp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12edec821e41f05bb7cdc62b494d6c76ea069a94")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+11a1c86d854bfd659a2d8b49a80d4a7b92558ebc")]
 [assembly: System.Reflection.AssemblyProductAttribute("setup_backend_csharp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("setup_backend_csharp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

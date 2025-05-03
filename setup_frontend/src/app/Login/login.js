@@ -1,5 +1,5 @@
 "use client";
-import {useState, Suspense} from "react";
+import {useState} from "react";
 import { useRouter } from "next/navigation";
 import Header from "../Components/header";
 import axios from "axios";
@@ -60,9 +60,7 @@ export function Main(){
     return(
         <section>
             <Header h1="M&M vendedores" />
-            <Suspense fallback={ null }>
-                <Messages/>
-            </Suspense>
+            <Messages/>
             <form onSubmit={(event)=>{sendInfo(event)} }>
                 <section className="flex justify-center items-center box-border">
 
