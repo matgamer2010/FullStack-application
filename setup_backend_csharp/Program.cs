@@ -24,7 +24,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000") // ou sua URL do frontend
+            policy.WithOrigins("https://mm-vendedores.vercel.app/") // ou sua URL do frontend
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
