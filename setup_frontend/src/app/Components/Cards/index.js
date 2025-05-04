@@ -1,18 +1,30 @@
 "use client";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; 
 
 function Cards(){
 
     const [product, setProduct] = useState([]);
 
     useEffect(() => {
-        const url = process.env.API_URL;
+        const url = "http://localhost:5039/Clothes/";
         fetch(url)
         .then((response) => response.json())
         .then((data) => setProduct(data))
         .catch((error) => console.log(error));
     }, []);
-    
+
+    const router = useRouter();
+
+    const SendInfoToDynamicPage = (ID) => {
+        console.log(`Valor ID: ${ID}`);
+        const encodedID = encodeURIComponent(ID);
+        console.log(`Valor ID codificado: ${encodedID}`); 
+        router.push(`/Produtos/${encodedID}`);
+    }
+
+    if(!product) return (<p>Carregando catálogo...</p>)
+
     return(
         <section className="section_cards box-border">
 
@@ -30,7 +42,7 @@ function Cards(){
             <section>
                 { product.map((item) =>{
                     return(
-                        <div key={item.id} className=" 
+                        <div key={item.name} className=" 
                         bg-gray-100 rounded shadow-lg shadow-sky-500 m-20 mt-10 p-5 w-fit 
                         grid-cols-1 gap-4  transition duration-700 ease-in-out hover:scale-105 hover:shadow-xl 
                         cursor-pointer  hover:translate-5 hover:skew-3
@@ -42,11 +54,9 @@ function Cards(){
 
                             <p className="my-5 text-2xl"> R$ {item.price}</p>
 
-                            <button onClick={() => window.location.href="http://localhost:8000/APICrud/"} className="
+                            <button onClick={() => SendInfoToDynamicPage(item.id)} className="
                             text-white bg-indigo-600 p-3 rounded shadow-lg transition duration-700 ease-in-out 
-                            hover:scale-105 hover:animate-pulse  
-
-                            cursor-pointer">Comprar</button>
+                            hover:scale-105 hover:animate-pulse cursor-pointer">Comprar</button>
 
                         </div>
                     );

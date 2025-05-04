@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using ProductModel.Models;
 using Stripe.Checkout;
 
-
 namespace setup_backend_csharp.Controllers;
 
 [ApiController]
@@ -54,7 +53,7 @@ public class PaymentsController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogWarning($"There was an error with the Payment request. See the reason: {ex}");
-            return StatusCode(500, new { errpr = "An error ocurred while creating the Checkout page" });
+            return StatusCode(500, new { err = "An error ocurred while creating the Checkout page" });
         }
         
     }

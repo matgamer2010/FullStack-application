@@ -19,6 +19,11 @@ appsettings.Development.json
 
 *.json
 
+.env
+
+*.env
+
+secrets.env
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

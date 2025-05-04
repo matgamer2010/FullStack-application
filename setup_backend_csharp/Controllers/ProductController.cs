@@ -15,13 +15,14 @@ public class ClothesController : ControllerBase
     private readonly ILogger _logger;
     private readonly IHttpClientFactory _httpClientFactory;
 
-    public ClothesController(IHttpClientFactory httpClientFactory, ILogger logger)
+    public ClothesController(IHttpClientFactory httpClientFactory, ILogger<ClothesController> logger)
     {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<IActionResult> GetProducts(IHttpContextAcessor httpContextAcessor)
+    [HttpGet]
+    public async Task<IActionResult> GetProducts()
     {
         try
         {
@@ -36,10 +37,13 @@ public class ClothesController : ControllerBase
             {
                 return StatusCode((int)request.StatusCode, "Error fetching data");
             }
+            // Retorno do JSON
+            
         }
         catch (Exception e)
         {
-            return _logger.LogWarning($"We cannot request the API, se the exception: {e}");
+            _logger.LogWarning($"We cannot request the API, se the exception: {e}");
+            return StatusCode(500, "Internal server error");
         }
     }
 }

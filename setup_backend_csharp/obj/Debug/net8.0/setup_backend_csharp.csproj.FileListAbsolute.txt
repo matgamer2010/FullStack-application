@@ -38,3 +38,6 @@ D:\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp
 D:\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.pdb
 D:\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.genruntimeconfig.cache
 D:\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\ref\setup_backend_csharp.dll
+D:\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\bin\Debug\net8.0\apppsettings.json
+D:\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\bin\Debug\net8.0\DotNetEnv.dll
+D:\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\bin\Debug\net8.0\Sprache.dll

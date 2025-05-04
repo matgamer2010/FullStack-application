@@ -1,8 +1,16 @@
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+using DotNetEnv;
+using Stripe;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-Stripe.StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+Env.Load("secrets.env");
+Stripe.StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("StripeSecretKey");
+
+
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers();  
 builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpClient("ClothesClient").ConfigurePrimaryHttpMessageHandler(() =>
@@ -10,6 +18,18 @@ builder.Services.AddHttpClient("ClothesClient").ConfigurePrimaryHttpMessageHandl
     {
         AllowAutoRedirect = true,
     });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000") // ou sua URL do frontend
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 
 var app = builder.Build();
 
@@ -25,6 +45,8 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 

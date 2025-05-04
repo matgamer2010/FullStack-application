@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".vercel.app"]
 
 # Application definition
 
@@ -32,9 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',    
     
     'rest_framework',
-    'rest_framework_simplejwt',
     'corsheaders',
-    # possível erro aqui, já que estamos configurando portas externas.
     
     'Api_Clothes',
     'users',
@@ -45,11 +43,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware", 
@@ -66,6 +59,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:3001",
+    "http://localhost:5039",
     "https://mm-vendedores.vercel.app",
 ]
 
@@ -119,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -164,6 +157,7 @@ AUTHENTICATION_BACKENDS = [
 SITE_ID = 1
 ACCOUNT_LOGIN_METHODS = {'email', 'username'}
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 LOGIN_URL = "accounts/login/"
 

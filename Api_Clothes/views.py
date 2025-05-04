@@ -7,9 +7,10 @@ from rest_framework.permissions import IsAuthenticated
 class Crud(viewsets.ModelViewSet):
     queryset = DataBaseClothes.objects.all()
     serializer_class = SerializersClothes
-    permission_classes = [IsAuthenticated]
         
     def create(self, request, *args, **kwargs):
+        if not request.user.is_admin:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             self.perform_create(serializer)
@@ -18,6 +19,8 @@ class Crud(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
+        if not request.user.is_admin:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(
@@ -29,18 +32,19 @@ class Crud(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request, *args, **kwargs):
-        # At make this set, The only user that can be able to request our API is NodeJs
-        if request.user.username != "NodeJs":
-            return Response({"Ms":"You're not allowed to do that"})
         serializer = self.get_serializer(DataBaseClothes.objects.all(), many=True)
         return Response(serializer.data)
 
     def destroy(self, request, *args, **kwargs):
+        if not request.user.is_admin:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
     
     def perform_create(self, serializer):
+        if not self.request.user.is_admin:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         serializer.save(cross_databases=self.request.user)
 
 class GetObjectPerUser(viewsets.ModelViewSet):

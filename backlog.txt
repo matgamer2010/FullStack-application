@@ -2,35 +2,39 @@ BACKLOG 3/5:
 
 ## Backend
 
-  * Status: Feito:
-  *
-  - Configuração de pagamentos com ASP.NET Core.
-
-  // // // // // // // / // /// // / // // // 
-  
-  
-  
-  
-  
--------------------------------------->>>>>>>> Gerar uma nova chave do Stripe.
-  
-  
-  
-  
-  |\ \\\\\|\|||\\||
-
-  // resolver o problema de Commits, remover o commit que contenha alguma chave de API.
-
   * Status: Fazendo
+  *
+  * Não esquecer de usar a secret no Program.cs
+  *
   - Montagem da Camada de WebScoket da Home Page:
     * Fazendo:
     - Agora sim vem a parte do JWT/ tokens, para fazer a requisição dos PRODUTOS --> ASP.NET Core
+
+
+    Grupo 1: FEITO !
+
+    Grupo 2:
+
+    * Criar página dinâmica dos produtos (passar essas informações via URL+ criptografia b64) e verificar
+    * Usar Stripe.js para gerar a página de Checkout
+
+    Grupo 3:
+
+    * Dockerização do projeto (Backend)
+    * Kubernetes (Backend)
+    * AWS (Backend)
+    * CI/CD para automatizar o processo de deploy (Backend)
+
+
     - integrar Buffers para acelerar a requisição (Buffers junto ao cachê)
+
 
     - Fazer o API Gateway ()
     - Entender mais sobre o framework Express
 
   - Estudar mais sobre orientação a objeto em C#.
+  - Como usei CORS para fazer a comunicação entre o React e o ASP.NET.
+  - Criação automatica de pastas
   - Fazer testes unitários, com Node (no back), Jest (no front), PyTest (Django), xUnit(ASP.NET Core)
 
   - Implementar CI/CD com o GitHub Actions.
