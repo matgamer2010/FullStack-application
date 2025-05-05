@@ -1,6 +1,6 @@
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 using DotNetEnv;
 using Stripe;
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,10 +21,14 @@ builder.Services.AddHttpClient("ClothesClient").ConfigurePrimaryHttpMessageHandl
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
+    options.AddPolicy("AllowSpecificOrigin",
         policy =>
         {
-            policy.WithOrigins("https://mm-vendedores.vercel.app/") // ou sua URL do frontend
+            policy.WithOrigins(
+                "http://localhost:3000", 
+                "https://mm-vendedores-mateus-projects-7cfb9e28.vercel.app/", 
+                "https://mm-vendedores.vercel.app/"
+                )
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
@@ -46,13 +50,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 
 app.MapControllers();
 app.MapRazorPages();
-
-app.MapGet("/hi", () => "Hello!");
 
 app.Run();

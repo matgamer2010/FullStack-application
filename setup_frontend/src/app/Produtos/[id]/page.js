@@ -25,14 +25,13 @@ function ProductPage({ params }) {
     }, [EncodedID]);
 
     const StripeCheckout = async () => {
-        const url = "http://localhost:5039/Payments/create-checkout-session";
+        const url = "http://localhost:5039/Payments/create-checkout-session/";
 
         const data = {
             name: product.name,
             price: product.price,
             amount: product.amount,
         }
-        console.log("Dados enviados para o backend: \n", data);
         try {
             console.log("Tentando fazer a requisicao para o backend");
             const request = await axios.post(url, data, { validateStatus: () => true });

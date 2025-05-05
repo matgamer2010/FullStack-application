@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import Header from "../Components/header";
 import axios from "axios";
 
-
 function Inputs(props){
     return(
         <div className="md:my-10">
@@ -25,36 +24,38 @@ export function Main(){
     // States for Styles
     const [classForm, setClassForm] = useState("");
     const [disabled, setDisabled] = useState(false);
-    const styledSection = "mt-30 md:m-10 w-fit p-10 md:p-25 rounded text-black shadow-2xl md:text-3xl"
+    const styledSection = "mt-30 md:m-10 w-fit p-10 md:p-25 rounded text-black shadow-2xl md:text-3xl";
     
     const router = useRouter();
     const sendInfo = async (event)=>{
-        setClassForm("mt-30 md:m-10 w-fit p-10 md:p-25 rounded text-black shadow-2xl md:text-3xl animate-pulse blur-sm select-none")
+        setClassForm("mt-30 md:m-10 w-fit p-10 md:p-25 rounded text-black shadow-2xl md:text-3xl animate-pulse blur-sm select-none");
         setDisabled(true);
         event.preventDefault();
-        console.log(event);
 
         const data = {
             user: user,
-            password:password,
-        }
+            password: password,
+        };
 
         try{
             console.log("Antes do post para o Express");
-            const response = await axios.post("http://localhost:3001/Login", data, {validateStatus: () => true});
+            const response = await axios.post("http://localhost:3001/Login", data, { validateStatus: () => true });
+
+            localStorage.setItem("access", response.access);
+            localStorage.setItem("refresh", response.refresh);
+
             if(response.status === 200){
-                console.log("O status foi 200.")
-                router.push(`/?message=${encodeURIComponent(response.data.Success)}&type=Success`)
+                console.log("O status foi 200.");
+                router.push(`/?message=${encodeURIComponent(response.data.Success)}&type=Success`);
             } else{
                 console.log(`O status foi diferente de 200, veja: ${response.status}`);
                 setClassForm("");
                 setDisabled(false);
-                router.push(`/Login/?message=${encodeURIComponent(response.data.ERROR)}&type=ERROR`)
+                router.push(`/Login/?message=${encodeURIComponent(response.data.ERROR)}&type=ERROR`);
             } 
         } catch(err){
             console.log("Houve um erro:", err.response?.data || err.message );
         }
-        console.log(data);    
     }
 
     return(

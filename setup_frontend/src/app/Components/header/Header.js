@@ -30,9 +30,12 @@ export function Header(props){
                         md:scale-100 md:mx-3">Cadastro</a>
                 </Link>
 
-                <img src="https://github.com/matgamer2010.png" className="w-12 h-12 mx-3/2 mr-5 rounded-full cursor-pointer scale-80 border-2 
-                border-solid border-gray-300 transition duration-200 ease-out hover:scale-110 hover:translate-y-1 shadow-lg 
-                lg:ml-5 md:ml-5 md:scale-100 "></img>
+                <Link href="User/">
+                    <img src="https://github.com/matgamer2010.png" className="w-12 h-12 mx-3/2 mr-5 rounded-full cursor-pointer scale-80 border-2 
+                    border-solid border-gray-300 transition duration-200 ease-out hover:scale-110 hover:translate-y-1 shadow-lg 
+                    lg:ml-5 md:ml-5 md:scale-100 "></img>
+                </Link>
+
 
             </div>
         </section>

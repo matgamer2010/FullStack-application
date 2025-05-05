@@ -10,6 +10,7 @@ urlpatterns = [
 
   path("process_login/", views.ProcessLogin, name="process_login"),
   path("process_register/", views.ProcessRegister, name="process_register"),
+  path("process_users/", views.ProcessUsers, name="process_users"),
   
   # These URLs are using for the Reset Account feature. It does not be changed
   path("reset/", 

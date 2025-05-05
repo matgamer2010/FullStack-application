@@ -11,11 +11,14 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from allauth.socialaccount.models import SocialAccount
+from requests import get
 from Api_Clothes.models import DataBaseClothes
 from django.db import models
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.http import JsonResponse
+import json
 
 from .forms import LoginUsers, RegisterUsers, ConfirmEmail, ResetPasswordDone
 from users.forget_email import RetriveAccount, SendEmailAfterRegister
@@ -184,12 +187,39 @@ def formRegister(request):
 
     return render(request, "Forms/Register.html", {"form": register_forms})
 
-
 def Logout(request):
     auth.logout(request)
     messages.success(request, "Você foi deslogado")
     redirect("login_form")
     return render(request, "Forms/Logout.html")
+
+class SimpleUserSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    username = serializers.CharField()
+
+@csrf_exempt
+@require_http_methods(['POST'])
+def ProcessUsers(request):
+    try:
+        body = json.loads(request.body)
+        user_data = body.get("user", {})
+        serializer = SimpleUserSerializer(data=user_data)
+        
+        if serializer.is_valid():
+            username = serializer.validated_data["username"]
+            user = User.objects.filter(username=username).first()
+            if user:
+                return JsonResponse({
+                    "id": user.id,
+                    "username": user.username,
+                    "email": user.email,
+                })
+            return JsonResponse({ "error": "User not found" }, status=404)
+        
+        return JsonResponse(serializer.errors, status=400)
+    
+    except Exception as e:
+        return JsonResponse({ "error": str(e) }, status=500)
 
 
 @login_required
