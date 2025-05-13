@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Link } from "next-navigation";
+import Link from "next/link";
 import Header from "../Components/header";
 
-
-export default function Main() {
+function Payments(){
 
     const [product, setProduct] = useState(null);
 
@@ -12,8 +11,8 @@ export default function Main() {
         const takeAccessToken = localStorage.getItem("access");
         const takeRefreshToken = localStorage.getItem("refresh");
 
-        async function getProducts() {
-            const requestProductsUserInfo = await fetch("http://localhost:3001/UserHistory", {
+        function getProducts() {
+            const requestProductsUserInfo = fetch("http://localhost:3001/UserHistory", {
                 method: 'GET',
                 headers: {
                     'Content-Type': "application/json", 'authorization': `Bearer ${takeAccessToken}`
@@ -21,17 +20,25 @@ export default function Main() {
             });
 
             if (requestProductsUserInfo.ok) {
-                const data = await requestProductsUserInfo.json();
+                const data = requestProductsUserInfo.json();
                 setProduct(data);
             }
         }
 
         getProducts();
-            
+
     }, [])
 
-    if (!product) return <p> Você ainda não tem nenhuma compra realizada, <Link> <p>que tal faze a sua primeira? </p> </Link></p>
-    console.log("Veja as compras realizadas pelo usuário: ", product);
+    if (!product) return <section className="flex flex-col justify-center items-center text-2xl my-100 line-clamp-1">
+        <p>Nenhuma compra realizada...</p>
+        <Link href="/">
+
+            <p className="my-5 text-sky-400 hover:underline focus:underline">Que tal fazer a primeira?</p>
+
+        </Link>
+    </section>;
+
+    console.log("Veja as compras realizadas pelo usuario: ", product);
     return (
         <>
             <Header h1="M&M vendedores" />
@@ -42,11 +49,13 @@ export default function Main() {
                         <img key={products.Product} src={products.Image}></img>,
                         <p key={products.Product}>Valor: {products.Value}</p>,
                         <p key={products.Product}> Quantidade: {products.Amount} </p>,
-                        <p>Data da compra: {products.Date}</p>,
-                        <p>Comprada por: {products.User}</p>
+                        <p key={products.Product}>Data da compra: {products.Date}</p>,
+                        <p key={products.Product}>Comprada por: {products.User}</p>
                     );
                 })}
             </section>
         </>
     );
 }
+
+export default Payments;

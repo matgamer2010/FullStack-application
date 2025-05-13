@@ -16,7 +16,7 @@ export default function Register() {
         console.log(`Valor ID: ${ID}`);
         const encodedID = encodeURIComponent(ID);
         console.log(`Valor ID codificado: ${encodedID}`);
-        router.push(`/Produtos/${encodedID}`);
+        router.push(`/Produtos/${encodedID}/`);
     }
 
     if (!product) return <p> Carregando busca...</p> ;

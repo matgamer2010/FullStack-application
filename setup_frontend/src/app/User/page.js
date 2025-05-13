@@ -89,7 +89,7 @@ export default function User() {
     return (
         <>
             <Header h1="M&M vendedores" />
-            <section className="flex justify-center items-center box-border">
+            <section className="flex justify-center items-center box-border md:my-30">
                 <div className="mt-30 md:m-10 w-fit p-10 md:p-25 rounded text-black shadow-2xl md:text-3xl">
 
                     <h1>Seja bem vindo {user.username} !</h1>
