@@ -1,4 +1,4 @@
-BACKLOG 3/5:
+BACKLOG 10/5:
 
 ## Backend
 
@@ -13,6 +13,8 @@ BACKLOG 3/5:
     Grupo 1:
     
     * Feature de usuários no frontend (Criar a página):
+
+	Onde parei no dia 9/5 às 23:44? -> O usuário faz login, temos os tokens, enviamo-os corretamente para /forms/process_users/ e obtemos 200, o problema está na devolução, onde recebemos 500, o que nos faz cair em um redirect para /Login, o problema é, que trecho do código redireciona para /Login além do obvio?
 
         * Pegar os dados do localStorage para então exibir a página de usuário
 
@@ -48,6 +50,7 @@ BACKLOG 3/5:
   - Como usei CORS para fazer a comunicação entre o React e o ASP.NET.
   - Como criei as páginas automaticas de cada produto
   - Como usei JWT com o Django e Node.
+  - Como usei WebHooks com o ASP.NET Core
   - Fazer flashcards acerca do cachê com Redis no Node
   - Fazer flashcards acerca da quantidade de produtos na página de produtos
 

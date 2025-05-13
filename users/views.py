@@ -1,3 +1,4 @@
+from tkinter import E
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -11,17 +12,18 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from allauth.socialaccount.models import SocialAccount
+from django.db import models
+from django.http import JsonResponse
 from requests import get
 from Api_Clothes.models import DataBaseClothes
-from django.db import models
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.http import JsonResponse
 import json
 
 from .forms import LoginUsers, RegisterUsers, ConfirmEmail, ResetPasswordDone
 from users.forget_email import RetriveAccount, SendEmailAfterRegister
+from users.HistoryPayments import HistoryPayments
 
 def Verifications(request):
     photo_url = ''
@@ -193,34 +195,72 @@ def Logout(request):
     redirect("login_form")
     return render(request, "Forms/Logout.html")
 
-class SimpleUserSerializer(serializers.Serializer):
-    user_id = serializers.IntegerField()
-    username = serializers.CharField()
-
 @csrf_exempt
 @require_http_methods(['POST'])
 def ProcessUsers(request):
     try:
         body = json.loads(request.body)
-        user_data = body.get("user", {})
-        serializer = SimpleUserSerializer(data=user_data)
-        
-        if serializer.is_valid():
-            username = serializer.validated_data["username"]
-            user = User.objects.filter(username=username).first()
+        username = body.get("username")
+        if(username):
+
+            user = User.objects.get(id=username.get("user_id"))
+
             if user:
+                data = {"id": user.id, "username":user.username, "email": "user.email"}
+                print(data)
                 return JsonResponse({
                     "id": user.id,
                     "username": user.username,
                     "email": user.email,
-                })
+                }, status=200)
+
             return JsonResponse({ "error": "User not found" }, status=404)
         
-        return JsonResponse(serializer.errors, status=400)
-    
     except Exception as e:
         return JsonResponse({ "error": str(e) }, status=500)
 
+@csrf_exempt
+@require_http_methods(['GET'])
+def ProcessUsersPayments(request):
+    try:
+        body = json.loads(request.body)
+        GetToken = body.get("token")
+        if GetToken:
+            GetPaymentsUsers = HistoryPayments.objects.all(Username=GetToken.get("user_id"))
+            if not GetPaymentsUsers:
+                return JsonResponse({"ERROR":"Nenhum produto encontrado para o respectivo usuário"}, status=404)
+            return JsonResponse({"Products":GetPaymentsUsers})
+    except Exception as e:
+        return JsonResponse({"ERROR": str(e)}, status=500)
+
+@csrf_exempt
+def ProcessPayments(request):
+    data = request.data
+    try:
+        HistoryPayments.objects.create(
+            Product=data['product_name'],
+            Image=data['image_adress'],
+            Value=data['product_value'],
+            Amount=data['amount'],
+            Date=data['payment_date'],
+            Username=data['username']
+        )
+        return Response({"Success": "Pagamento registrado com sucesso"}, status=201)
+    except Exception as e:
+        return Response({"ERROR": str(e)}, status=400)
+
+@csrf_exempt
+def ProcessSearch(request):
+    data = request.data
+    try:
+        search = data.get("search")
+        product = DataBaseClothes.objects.filter(name__iconteins = search)
+        if not product:
+            return JsonResponse({'ERROR': 'Não temos um produto como:'.format(search)}, status=404)
+        return JsonResponse({'Success': "Veja o que encontramos para: ".format(search)}, product, status=304)
+        
+    except Exception as e:
+        return JsonResponse({'ERROR': str(e) }, status=400)
 
 @login_required
 def delete_account(request):

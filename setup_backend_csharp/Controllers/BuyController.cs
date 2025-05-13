@@ -22,6 +22,7 @@ public class PaymentsController : ControllerBase
         Console.WriteLine(product);
         try
         {
+            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString;
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string> { "card" },
@@ -35,15 +36,28 @@ public class PaymentsController : ControllerBase
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
                                 Name = product.Name,
+                                // Enviar o endereço de imagem
+                                Images = new List<string> {product.ImageAdress},
                             },
                             UnitAmount = (long)(product.Amount * 100),
                         },
-                        Quantity = 1,
+                        // Criar o campo quantity, que se refere a quantidade de roupas que o usuário quer comprar
+                        Quantity = product.Quantity,
                     },
                 },
                 Mode = "payment",
                 SuccessUrl = "https://mm-vendedores.vercel.app/",
                 CancelUrl = "https://mm-vendedores.vercel.app/?message=PagamentoCancelado",
+                MetaData = new Dictionary<string, string>
+                {
+                    { "user", Convert.ToString(product.User) },
+{                   { "product", Convert.ToString(product.Name) },
+                    { "price", Convert.ToString(product.Amount) },
+                    { "amount", Convert.ToString(product.Quantity) },
+                    { "image_adress", Convert.ToString(product.ImageAdress) }
+                    { "data",  timestamp},
+                }
+                }
             };
             var service = new SessionService();
             Session session = service.Create(options);

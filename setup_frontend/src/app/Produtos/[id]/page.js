@@ -14,7 +14,7 @@ function ProductPage({ params }) {
         if (!EncodedID) return;
 
         try{
-            const url = `http://localhost:8000/API/Crud/${decodeURIComponent(EncodedID)}`;
+            const url = `http://localhost:8000/API/Crud/${decodeURIComponent(EncodedID)}/`;
             fetch(url)
                 .then((response) => response.json())
                     .then((data) => setProduct(data) );
@@ -55,7 +55,7 @@ function ProductPage({ params }) {
 
     return (
         <>
-            <Header />
+            <Header h1="M&M vendedores" />
             <section>
                 <div>
                     <img src={product.image} />

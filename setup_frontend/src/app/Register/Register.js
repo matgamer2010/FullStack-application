@@ -48,7 +48,7 @@ export function Register() {
             secondPassword: secondPassword
         };
         try {
-            const request = await axios.post("http://localhost:3000/api/register", data, { validateStatus: () => true });
+            const request = await axios.post("http://localhost:3001/Cadastro", data, { validateStatus: () => true });
             if (request.status == 201) {
                 console.log(request.data);
             }

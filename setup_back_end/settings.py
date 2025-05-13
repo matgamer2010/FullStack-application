@@ -55,8 +55,10 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": os.getenv("SIMPLE_JWT_SECRET")
+    "SIGNING_KEY": SECRET_KEY
 }
+
+APPEND_SLASH=False
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware", 

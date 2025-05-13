@@ -41,10 +41,13 @@ export function Main(){
             console.log("Antes do post para o Express");
             const response = await axios.post("http://localhost:3001/Login", data, { validateStatus: () => true });
 
-            localStorage.setItem("access", response.access);
-            localStorage.setItem("refresh", response.refresh);
 
             if(response.status === 200){
+                const { access, refresh } = response.data;
+
+                localStorage.setItem("access", access);
+                localStorage.setItem("refresh", refresh);
+
                 console.log("O status foi 200.");
                 router.push(`/?message=${encodeURIComponent(response.data.Success)}&type=Success`);
             } else{
