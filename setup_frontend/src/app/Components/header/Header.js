@@ -11,7 +11,7 @@ export function Header(props) {
     async function sendSearch(event) {
         event.preventDefault();
         const data = event.target.value;
-        console.log("O usuário requisitou: ", data);
+        console.log("O usuario requisitou: ", data);
 
         const body = { search: data };
         const request = await fetch("http://127.0.0.1:8000/forms/process_search/", {
