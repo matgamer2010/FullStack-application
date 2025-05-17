@@ -41,3 +41,26 @@ D:\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp
 D:\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\bin\Debug\net8.0\apppsettings.json
 D:\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\bin\Debug\net8.0\DotNetEnv.dll
 D:\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\bin\Debug\net8.0\Sprache.dll
+C:\Users\leand\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.csproj.AssemblyReference.cache
+C:\Users\leand\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\leand\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.AssemblyInfoInputs.cache
+C:\Users\leand\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.AssemblyInfo.cs
+C:\Users\leand\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.csproj.CoreCompileInputs.cache
+C:\Users\leand\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\leand\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.RazorAssemblyInfo.cache
+C:\Users\leand\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.RazorAssemblyInfo.cs
+C:\Users\leand\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.sourcelink.json
+C:\Users\leand\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.dll
+C:\Users\leand\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\refint\setup_backend_csharp.dll
+C:\Users\leand\OneDrive\Mateus\ALURA\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.pdb
+D:\OneDrive\Área de Trabalho\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.csproj.AssemblyReference.cache
+D:\OneDrive\Área de Trabalho\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.GeneratedMSBuildEditorConfig.editorconfig
+D:\OneDrive\Área de Trabalho\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.AssemblyInfoInputs.cache
+D:\OneDrive\Área de Trabalho\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.AssemblyInfo.cs
+D:\OneDrive\Área de Trabalho\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.csproj.CoreCompileInputs.cache
+D:\OneDrive\Área de Trabalho\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.MvcApplicationPartsAssemblyInfo.cache
+D:\OneDrive\Área de Trabalho\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.RazorAssemblyInfo.cache
+D:\OneDrive\Área de Trabalho\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.RazorAssemblyInfo.cs
+D:\OneDrive\Área de Trabalho\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.dll
+D:\OneDrive\Área de Trabalho\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\refint\setup_backend_csharp.dll
+D:\OneDrive\Área de Trabalho\inspiron5548-FullStack-application\setup_backend_csharp\obj\Debug\net8.0\setup_backend_csharp.pdb

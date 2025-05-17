@@ -1,31 +1,11 @@
-BACKLOG 10/5:
+BACKLOG 17/5:
 
 ## Backend
 
   * Tarefa: terminar o MVP
   * Status: Fazendo
 
-  Como obter qualquer informação acerca do usuário?
-  faz um post do localStorage.getItem("access") para :3001/UserInfo
-  faça um tratamento para caso haja um retorno de um 401, se houver, faça um POST do localStorage.getItem("refresh") para :3001/refresh
-
-
     Grupo 1:
-    
-    * Feature de usuários no frontend (Criar a página):
-
-	Onde parei no dia 9/5 às 23:44? -> O usuário faz login, temos os tokens, enviamo-os corretamente para /forms/process_users/ e obtemos 200, o problema está na devolução, onde recebemos 500, o que nos faz cair em um redirect para /Login, o problema é, que trecho do código redireciona para /Login além do obvio?
-
-        * Pegar os dados do localStorage para então exibir a página de usuário
-
-        * Desenvolver a seção de "Meus Pedidos", isso envolverá:
-
-            * Pra gente ter certeza que ele comprou, vamos ter que pegar da URL de success alguma informação? Não!,
-                vamos ver como fazer isso do ASP.NET Core para o React
-
-            * Vamos ter que criar uma model que relaciona o usuário com o pedido, ex: GetUserOrders
-            * Criar o necessário para isso, ou seja: model, view, serializer, router.
-
 
     * API dos correios para cálculo de Frete e prazo
     * Por fim, mecanismo de busca, fácil?, o input pode ser um form que quando submetido, faz um get por um nome de um produto.

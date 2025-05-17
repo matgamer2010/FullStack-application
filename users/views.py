@@ -235,7 +235,7 @@ def ProcessUsersPayments(request):
 
 @csrf_exempt
 def ProcessPayments(request):
-    data = request.data
+    data = json.loads(request.body)
     try:
         HistoryPayments.objects.create(
             Product=data['product_name'],
@@ -245,22 +245,37 @@ def ProcessPayments(request):
             Date=data['payment_date'],
             Username=data['username']
         )
+
+        gotProduct = DataBaseClothes.objects.get(name=data['product_name'])
+        gotProduct.amount -= int(data['amount'])
+        gotProduct.save()
+
         return Response({"Success": "Pagamento registrado com sucesso"}, status=201)
     except Exception as e:
         return Response({"ERROR": str(e)}, status=400)
 
+
 @csrf_exempt
 def ProcessSearch(request):
-    data = request.data
     try:
-        search = data.get("search")
-        product = DataBaseClothes.objects.filter(name__iconteins = search)
-        if not product:
-            return JsonResponse({'ERROR': 'Não temos um produto como:'.format(search)}, status=404)
-        return JsonResponse({'Success': "Veja o que encontramos para: ".format(search)}, product, status=304)
-        
+        body = json.loads(request.body)
+        search = body.get("search")
+
+        if not search:
+            return JsonResponse({'ERROR': 'Pesquisa vazia.'}, status=400)
+
+        product_qs = DataBaseClothes.objects.filter(name__icontains=search)
+
+        if not product_qs.exists():
+            return JsonResponse({'ERROR': f'Não temos um produto como: {search}'}, status=404)
+
+        # Serialização simplificada
+        products = list(product_qs.values("id", "name", "price", "image"))
+
+        return JsonResponse({'results': products}, status=200)
+    
     except Exception as e:
-        return JsonResponse({'ERROR': str(e) }, status=400)
+        return JsonResponse({'ERROR': str(e)}, status=400)
 
 @login_required
 def delete_account(request):

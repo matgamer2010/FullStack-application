@@ -8,6 +8,7 @@ import { loadStripe } from "@stripe/stripe-js";
 function ProductPage({ params }) {
     const { id: EncodedID } = params;
     const [ product, setProduct ] = useState(null);
+    const [ quantity, setQuantity ] = useState(1);
 
     const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
     useEffect(() => {
@@ -26,11 +27,15 @@ function ProductPage({ params }) {
 
     const StripeCheckout = async () => {
         const url = "http://localhost:5039/Payments/create-checkout-session/";
-
+        console.log("Esse é o valor de quantity: ",quantity);
+        console.log("Esse é o valor de image: ",product.image);
+        debugger;
         const data = {
             name: product.name,
             price: product.price,
             amount: product.amount,
+            imageAdress: product.image,
+            quantity: quantity,
         }
         try {
             console.log("Tentando fazer a requisicao para o backend");
@@ -58,16 +63,16 @@ function ProductPage({ params }) {
             <Header h1="M&M vendedores" />
             <section>
                 <div>
-                    <img src={product.image} />
-                    <h1>{product.name}</h1>
-                    <p>{product.price}</p>
-                    <select>
-                        {[...Array(product.amount)].map((_, value) => (
-                            <option key={value}>{ value+1 }</option>
-                        ))}
-                    </select>
-                    <p>{product.description}</p>
-                    <button className="bg-indigo-500 hover:bg-sky-500" onClick={() => { StripeCheckout() }}>Comprar</button>
+                        <img src={product.image} />
+                        <h1>{product.name}</h1>
+                        <p>{product.price}</p>
+                        <select value={quantity} onChange={(event) => setQuantity(Number( event.target.value))} >
+                            {[...Array(product.amount)].map((_, value) => (
+                                <option key={value}>{ value+1 }</option>
+                            ))}
+                        </select>
+                        <p>{product.description}</p>
+                        <button className="bg-indigo-500 hover:bg-sky-500" onClick={() => {StripeCheckout()} }>Comprar</button>
                 </div>
             </section>
         </>  

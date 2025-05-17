@@ -1,30 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useState } from 'react';
+import { useState } from "react"; 
 import { useRouter } from 'next/navigation';
 
 export function Header(props) {
 
+    const [search, setSearch] = useState("");
     const router = useRouter();
-    async function sendSearch(event) {
-        event.preventDefault();
-        const data = event.target.value;
-        console.log("O usuario requisitou: ", data);
-
-        const body = { search: data };
-        const request = await fetch("http://127.0.0.1:8000/forms/process_search/", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body)
-        });
-
-        const getReturnProducts = await request.json();
-        if (getReturnProducts.ok) {
-            localStorage.setItem("productsSearch", request);
-        }
-    } 
 
     return(
         <section>
@@ -37,13 +19,13 @@ export function Header(props) {
                     lg:mx-5 md:mx-5 md:scale-100 md:ml-1 md:text-stone-800">{props.h1}</h1>
                 </Link>
 
-                <form onSubmit={(event) => sendSearch(event)}>
-
+                <form onSubmit={(event) => { event.preventDefault(); router.push(`/Search/${encodeURIComponent(search)}/`); }} >
                     <input placeholder="Pesquise por algo" className="border-2 border-indigo-900 border-double bg-slate-100 
-                    h-8 text-xs scale-90 rounded w-25 placeholder:text-center 
-                    lg:p-1 lg:mx-5 md:mx-5 lg:text-lg md:scale-100 md:w-100" />
-
+                        h-8 text-xs scale-90 rounded w-25 placeholder:text-center 
+                        lg:p-1 lg:mx-5 md:mx-5 lg:text-lg md:scale-100 md:w-100" onChange={(event) => { setSearch(event.target.value) }} value={search} />
                 </form>
+
+
 
                 <Link href="Login/" legacyBehavior>
                     <a className="text-center text-white  w-20 bg-indigo-500 scale-80 text-shadow-md/20 

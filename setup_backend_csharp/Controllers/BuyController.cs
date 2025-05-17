@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using ProductModel.Models;
 using Stripe.Checkout;
@@ -19,10 +19,12 @@ public class PaymentsController : ControllerBase
     [HttpPost("create-checkout-session")]
     public ActionResult CreateCheckoutSession([FromBody] Product product)
     {
-        Console.WriteLine(product);
+        Console.WriteLine(JsonSerializer.Serialize(product)); // imprime corretamente o objeto
+
         try
         {
-            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString;
+            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string> { "card" },
@@ -36,29 +38,27 @@ public class PaymentsController : ControllerBase
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
                                 Name = product.Name,
-                                // Enviar o endereço de imagem
-                                Images = new List<string> {product.ImageAdress},
+                                Images = new List<string> { product.ImageAdress },
                             },
                             UnitAmount = (long)(product.Amount * 100),
                         },
-                        // Criar o campo quantity, que se refere a quantidade de roupas que o usuário quer comprar
                         Quantity = product.Quantity,
                     },
                 },
                 Mode = "payment",
                 SuccessUrl = "https://mm-vendedores.vercel.app/",
                 CancelUrl = "https://mm-vendedores.vercel.app/?message=PagamentoCancelado",
-                MetaData = new Dictionary<string, string>
+                Metadata = new Dictionary<string, string>
                 {
                     { "user", Convert.ToString(product.User) },
-{                   { "product", Convert.ToString(product.Name) },
+                    { "product", Convert.ToString(product.Name) },
                     { "price", Convert.ToString(product.Amount) },
                     { "amount", Convert.ToString(product.Quantity) },
-                    { "image_adress", Convert.ToString(product.ImageAdress) }
-                    { "data",  timestamp},
-                }
+                    { "image_adress", Convert.ToString(product.ImageAdress) },
+                    { "data", timestamp },
                 }
             };
+
             var service = new SessionService();
             Session session = service.Create(options);
 
@@ -67,8 +67,7 @@ public class PaymentsController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogWarning($"There was an error with the Payment request. See the reason: {ex}");
-            return StatusCode(500, new { err = "An error ocurred while creating the Checkout page" });
+            return StatusCode(500, new { err = "An error occurred while creating the Checkout page" });
         }
-        
     }
 }
