@@ -3,21 +3,23 @@ import { useEffect, useState } from "react";
 import Header from "../Components/header";
 import Footer from "../Components/footer"; 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function User() {
 
-    const user = localStorage.getItem("user");
-    if (!user) return <section className="flex flex-col justify-center items-center text-2xl my-100 ">
-        <p> Demorando muito?</p>
-        <Link href="/">
+    const [user, setUser] = useState("");
+    const router = useRouter();
 
-            <p className="my-5 text-gray-400 hover:underline focus:underline"> Voltar para a Home page </p>
+    useEffect(() => {
 
-        </Link>
-        <p> Ou</p>
-        <Link href="/Login"> <p className="text-sky-400 hover:underline focus:underline" > sem login?, para a Login page</p> </Link>
-    </section>;
+        const user = localStorage.getItem("user");
+        if (!user) return router.push('/Login');
+        setUser(user)
+    }, [router])
 
+    if (user === null) {
+        return <> <p className="flex items-center justify-center text-2xl flex-col">Você provavelmente não está logado, gostaria de ir para a página de</p> <Link href="/Login"> <p className="flex items-center text-sky-500 text-2xl">Login</p> </Link> </> 
+    }
 
     console.log("Passamos pela verificacao e temos um valor para user, veja: ", user);
     return (
