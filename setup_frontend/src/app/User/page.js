@@ -18,7 +18,7 @@ export default function User() {
     }, [router])
 
     if (user === null) {
-        return <> <p className="flex items-center justify-center text-2xl flex-col">Você provavelmente não está logado, gostaria de ir para a página de</p> <Link href="/Login"> <p className="flex items-center text-sky-500 text-2xl">Login</p> </Link> </> 
+        return <> <p className="flex items-center justify-center text-2xl flex-col">Sem Login...</p> <Link href="/Login"> <p className="flex items-center text-sky-500 text-2xl">gostaria de ir para a page de Login</p> </Link> </> 
     }
 
     console.log("Passamos pela verificacao e temos um valor para user, veja: ", user);
