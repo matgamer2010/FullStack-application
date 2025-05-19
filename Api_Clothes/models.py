@@ -18,16 +18,41 @@ class DataBaseClothes(models.Model):
         null=True,
         blank=False,
         related_name="Clothes_users",
-    )    
+    )
+    
     amount = models.IntegerField(null=False, blank=False)
+
+    sizes = models.ManyToManyField("Size", related_name="clothes")
+    colors = models.ManyToManyField("Color", related_name="clothes")
+    category = models.ManyToManyField("Category", related_name="clothes")
+    
     def __str__(self):
         return f"Item {self.name} was saved"
     
     class Meta:
         app_label = "Api_Clothes"
 
-#        
-Option_sizes = ["GG", "PP","M","P","G"]
-for size in Option_sizes:
-    field_name = f"size_{size}"
-    DataBaseClothes.add_to_class(field_name, models.BooleanField(default=False))
+class ImageClothes(models.Model):
+    product = models.ForeignKey(DataBaseClothes, on_delete=models.CASCADE, related_name="images")
+    image =  models.ImageField(blank=True)
+    
+    def __str__(self):
+        return f"Image for {self.product.name}"
+
+class Size(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+    
+    def __str__(self):
+        return self.name
+
+class Color(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+    hex = models.CharField(max_length=7, default="#FFFFFF")
+
+    def __str__(self):
+        return self.name
+
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    def __str__(self):
+        return self.name

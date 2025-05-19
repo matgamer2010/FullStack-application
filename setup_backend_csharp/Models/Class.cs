@@ -16,6 +16,10 @@ namespace ProductModel.Models
         public int Quantity { get; set; } = 1;
         [Required]  
         public string User { get; set; } = "User not defined";
+        [Required]
+        public string Size { get; set; }
+        [Required]
+        public string Color { get; set; }
     }
 }
 

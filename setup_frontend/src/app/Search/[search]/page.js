@@ -4,31 +4,33 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from 'next/navigation';
 
-export default function Register() {
+export default function Search() {
     const params = useParams();
     const router = useRouter();
     const [product, setProduct] = useState(null);
 
     const searchValue = params?.search;
 
-    if (!searchValue || searchValue === "") {
-        return (
-            <section className="my-100">
-                <p className="flex justify-center items-center text-2xl">
-                    Nenhuma pesquisa foi feita ainda...
-                </p>
-                <Link href="/">
-                    <p className="flex flex-col  text-2xl text-center my-5 text-sky-500 focus:underline hover:underline">
-                        Voltar para a home page
-                    </p>
-                </Link>
-            </section>
-        );
-    }
-
-    const decodedSearch = decodeURIComponent(searchValue);
 
     useEffect(() => {
+        if (!searchValue || searchValue === "") {
+            return (
+                <section className="my-100">
+                    <p className="flex justify-center items-center text-2xl">
+                        Nenhuma pesquisa foi feita ainda...
+                    </p>
+                    <Link href="/">
+                        <p className="flex flex-col  text-2xl text-center my-5 text-sky-500 focus:underline hover:underline">
+                            Voltar para a home page
+                        </p>
+                    </Link>
+                </section>
+            );
+        }
+
+        const decodedSearch = decodeURIComponent(searchValue);
+
+
         async function sendProductToSearchUrl() {
             try {
                 const response = await fetch('http://127.0.0.1:8000/forms/process_search/', {
@@ -41,7 +43,7 @@ export default function Register() {
 
                 if (response.ok) {
                     const data = await response.json();
-                    setProduct(data);
+                    setProduct(data.results);
                 } else {
                     console.log('Erro ao buscar produto');
                 }
@@ -58,11 +60,14 @@ export default function Register() {
         router.push(`/Produtos/${encodedID}/`);
     }
 
-    if (!product) return <p> Carregando busca...</p> ;
+    if (!product) return <p> Carregando busca...</p>;
+    console.log(product);
+    debugger;
     return (
         <>
             <Header h1="M&M vendedores" />
             <section>
+                <h1 className="flex justify-center items-center my-5 text-4xl"> Resultados encontrados: </h1>
                 {product.map((item) => {
                     return (
                         <div key={item.name} className=" 

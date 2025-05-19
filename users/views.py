@@ -19,6 +19,8 @@ from Api_Clothes.models import DataBaseClothes
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from xml.etree import ElementTree
+import requests
 import json
 
 from .forms import LoginUsers, RegisterUsers, ConfirmEmail, ResetPasswordDone
@@ -189,6 +191,48 @@ def formRegister(request):
 
     return render(request, "Forms/Register.html", {"form": register_forms})
 
+
+def UsarApiCorreios(cep_destino):
+    url = "https://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx"
+    params = {
+        "nCdServico": "04014",
+        "sCepOrigem": "37440000",
+        "sCepDestino": cep_destino.replace("-", ""),
+        "nVlPeso": "1",
+        "nCdFormato": "1",
+        "nVlComprimento": "20",
+        "nVlAltura": "5",
+        "nVlLargura": "15",
+        "nVlDiametro": "0",
+        "sCdMaoPropria": "N",
+        "nVlValorDeclarado": "0",
+        "sCdAvisoRecebimento": "N",
+        "StrRetorno": "xml"
+    }    
+
+    response = requests.get(url, params=params)
+    tree = ElementTree.fromstring(response.content)
+    prazo = tree.find('.//PrazoEntrega').text
+    return int(prazo)
+
+@csrf_exempt
+def CalcFretePrazo(request):
+    if request.method == 'POST':
+        body = json.loads(request.body)
+        cep_destino = body.get('cep_destino')
+        if(cep_destino):
+            try:
+                prazo_de_entrega_com_um_atraso = UsarApiCorreios(cep_destino) + 1
+                return JsonResponse({'Success': prazo_de_entrega_com_um_atraso})
+            except Exception as e: 
+                return JsonResponse({'ERROR': str(e) })
+        else:
+            return JsonResponse({'ERROR': 'Deve-se conter o cep do destinatário'}, status=400)
+    else:
+        return JsonResponse({'EROR':'Method not allowed'}, status=405)
+
+
+
 def Logout(request):
     auth.logout(request)
     messages.success(request, "Você foi deslogado")
@@ -252,6 +296,7 @@ def ProcessPayments(request):
 
         return Response({"Success": "Pagamento registrado com sucesso"}, status=201)
     except Exception as e:
+        print(e)
         return Response({"ERROR": str(e)}, status=400)
 
 

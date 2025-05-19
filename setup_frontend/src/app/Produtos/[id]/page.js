@@ -1,42 +1,59 @@
 "use client";
 import { useEffect, useState } from "react";
 import Header from "../../Components/header";
+import Footer from "../../Components/footer"; 
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js"; 
 
 
 function ProductPage({ params }) {
     const { id: EncodedID } = params;
-    const [ product, setProduct ] = useState(null);
-    const [ quantity, setQuantity ] = useState(1);
+    const [product, setProduct] = useState(null);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [images, setImages] = useState([]);
+
+    const [quantity, setQuantity] = useState(1);
+    const [size, setSize] = useState("");
+    const [color, setColor] = useState("");
 
     const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
     useEffect(() => {
         if (!EncodedID) return;
 
-        try{
-            const url = `http://localhost:8000/API/Crud/${decodeURIComponent(EncodedID)}/`;
-            fetch(url)
-                .then((response) => response.json())
-                    .then((data) => setProduct(data) );
-
-        } catch (e) {
-            alert("houve um erro durante o carregamento das informacoes o erro e: \n", e.message);
-        }
+        const url = `http://localhost:8000/API/Crud/${decodeURIComponent(EncodedID)}/`;
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+                setProduct(data);
+                setImages([data.image, ...data.images.map((imgObj) => imgObj.image)]);
+            })
+            .catch((e) => {
+                alert("Houve um erro durante o carregamento das informações:\n" + e.message);
+            });
     }, [EncodedID]);
+
 
     const StripeCheckout = async () => {
         const url = "http://localhost:5039/Payments/create-checkout-session/";
         console.log("Esse é o valor de quantity: ",quantity);
-        console.log("Esse é o valor de image: ",product.image);
+        console.log("Esse é o valor de image: ", product.image);    
+        console.log("Esse é o valor de product: ", product.price);
         debugger;
+        if (!localStorage.getItem("user")) {
+            alert("User not found, you will be redirect to Login page");
+            window.location.href = "/Login";
+        }
         const data = {
             name: product.name,
-            price: product.price,
-            amount: product.amount,
-            imageAdress: product.image,
+            amount: product.price,
+            ImageAdress: product.image,
             quantity: quantity,
+            User: localStorage.getItem("user"),
+            Size: size,
+            Color: color
         }
+        console.log(data);
+        debugger;
         try {
             console.log("Tentando fazer a requisicao para o backend");
             const request = await axios.post(url, data, { validateStatus: () => true });
@@ -56,25 +73,75 @@ function ProductPage({ params }) {
     }
 
     if (!product) return (<p>Carregando...</p>);
-    if (product.amount === 0) return alert("estoque esgotado, favor retornar para a pagina inicial");
+    console.log(product);
+    if (product.amount === 0) return alert("estoque esgotado, volte para a home page"), window.location.href = "/";
 
     return (
         <>
             <Header h1="M&M vendedores" />
+
             <section>
-                <div>
-                        <img src={product.image} />
-                        <h1>{product.name}</h1>
-                        <p>{product.price}</p>
-                        <select value={quantity} onChange={(event) => setQuantity(Number( event.target.value))} >
-                            {[...Array(product.amount)].map((_, value) => (
-                                <option key={value}>{ value+1 }</option>
-                            ))}
-                        </select>
-                        <p>{product.description}</p>
-                        <button className="bg-indigo-500 hover:bg-sky-500" onClick={() => {StripeCheckout()} }>Comprar</button>
+
+                <div className="flex text-2xl justify-between md:m-10 relative m-9 ">
+
+
+                    <div className="flex items-center justify-center scale-90 ">
+                        <button
+                            onClick={() => setCurrentImageIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1))}
+                            className="sm:relative md:relative scale-80 md:scale-100 left-0 bg-gray-700 text-white p-2 rounded-full hover:bg-gray-900"
+                        >
+                            ◀
+                        </button>   
+
+                        <img
+                            src={images[currentImageIndex]}
+                            className="rounded h-90 w-90 md:h-200 md:w-200 sm:scale-110 md:scale-100 transition duration-500 ease-in-out relative "
+                            alt="Product"
+                        />
+
+                        <button
+                            onClick={() => setCurrentImageIndex((prev) => (prev + 1) % images.length)}
+                            className="relative md:relative scale-80 md:scale-100 right-0 bg-gray-700 text-white p-2 rounded-full hover:bg-gray-900"
+                        >
+                            ▶
+                        </button>
+                    </div>
+
+
+                    <div className="flex flex-col mx-5 p-0 scale-80 md:scale-90 ">
+
+                        <h1 className="text-6xl my-5 text-shadow-lg">{product.name}</h1>
+                        <p className="text-3xl my-3 font-light ">{product.price} R$</p>
+
+                        <div className="flex m-2 ">
+                            <select className="mb-3 bg-gray-300 w-fit rounded border-none" value={quantity} onChange={(event) => setQuantity(Number( event.target.value))} >
+                                {[...Array(product.amount)].map((_, value) => (
+                                    <option key={value}>{ value+1 }</option>
+                                ))}
+                            </select>
+
+                            <select className="mb-3 bg-gray-300 w-fit rounded border-none mx-2" value={color} onChange={(event) => {setColor(String(event.target.value)) } }>
+                                {product.colors.map((color, index) => (
+                                    <option key={index}>{color.name}</option>
+                                ))}
+                            </select>
+
+                            <select className="mb-3 bg-gray-300 w-fit rounded border-none" value={size} onChange={(event) => {setSize(String(event.target.value)) } }>
+                                {product.sizes.map((size, index) => (
+                                    <option key={index}>{ size.name}</option>
+                                )) }
+                            </select>
+                        </div>
+
+
+                        <button className="bg-sky-500 text-xl rounded-full p-4 text-white text-shadow-2lg transition ease-in-out hover:bg-sky-600 hover:cursor-pointer focus:bg-sky-600 " onClick={() => {StripeCheckout()} }>Comprar</button>
+                        <p className="text-gray-500 my-3 ">{product.description}</p>
+                    </div>
+
                 </div>
             </section>
+
+            <Footer></Footer>
         </>  
     );
 }

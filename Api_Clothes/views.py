@@ -3,6 +3,9 @@ from rest_framework.response import Response
 from Api_Clothes.models import DataBaseClothes
 from Api_Clothes.serializers import SerializersClothes
 from rest_framework.permissions import IsAuthenticated
+from django.http import JsonResponse
+import requests
+from xml.etree import ElementTree
  
 class Crud(viewsets.ModelViewSet):
     queryset = DataBaseClothes.objects.all()
@@ -58,4 +61,3 @@ class GetObjectPerUser(viewsets.ModelViewSet):
             return Response({"detail": "Nenhum produto encontrado para o usuário."}, status=status.HTTP_404_NOT_FOUND)
         serializer = self.get_serializer(produtos, many=True)
         return Response(serializer.data)
-    

@@ -5,83 +5,17 @@ import Footer from "../Components/footer";
 import Link from "next/link";
 
 export default function User() {
-    const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        const accessToken = localStorage.getItem("access");
-        const refreshToken = localStorage.getItem("refresh");
-
-        console.log(`Valor de accessToken: ${accessToken} \n \n valor de refreshToken: ${refreshToken} `);
-        if (!accessToken && !refreshToken || accessToken === undefined && refreshToken === undefined) {
-            console.log("Sem tokens");
-            window.location.href = "/Login";
-            return;
-        }
-
-        const fetchUser = async () => {
-            try {
-                console.log("Tentando buscar os dados do usuario");
-                const res = await fetch("http://localhost:3001/UserInfo", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "authorization": `Bearer ${accessToken}`,
-                    }
-                });
-                console.log("O access token foi enviado");
-                if (res.status === 401 && refreshToken) {
-                    const refreshRes = await fetch("http://localhost:3001/refresh", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "authorization": `Bearer ${refreshToken}`,
-                        },
-                    });
-
-                    if (refreshRes.ok) {
-                        const newTokens = await refreshRes.json();
-                        localStorage.setItem("access", newTokens.access);
-                        localStorage.setItem("refresh", newTokens.refresh || refreshToken);
-                        console.log("Tokens atualizados com sucesso."); 
-
-                        const retryRes = await fetch("http://localhost:3001/UserInfo", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                "authorization": `Bearer ${newTokens.access}`,
-                            },
-                        });
-                        const userData = await retryRes.json();
-                        setUser(userData);
-                    } else {
-                        console.log("sla");
-                    }
-                } else if (res.ok) {
-                    console.log(res);
-                    const userData = await res.json();
-                    console.log("Dados do usuario:", userData);
-                    setUser(userData)   
-                } else {
-                    console.log(res.status);
-                    console.log(res);
-                    throw new Error("Erro ao buscar dados do usuario");
-                }
-
-            } catch (err) {
-                console.error("Erro:", err);
-            }
-        };
-
-        fetchUser();
-    }, []);
-
-    if (!user) return <section className="flex flex-col justify-center items-center text-2xl my-100 line-clamp-1">
-        <p> Carregando.... </p>
+    const user = localStorage.getItem("user");
+    if (!user) return <section className="flex flex-col justify-center items-center text-2xl my-100 ">
+        <p> Demorando muito?</p>
         <Link href="/">
 
-            <p className="my-5 text-sky-400 hover:underline focus:underline"> Voltar para a Home page </p>
+            <p className="my-5 text-gray-400 hover:underline focus:underline"> Voltar para a Home page </p>
 
         </Link>
+        <p> Ou</p>
+        <Link href="/Login"> <p className="text-sky-400 hover:underline focus:underline" > sem login?, para a Login page</p> </Link>
     </section>;
 
 
@@ -92,7 +26,7 @@ export default function User() {
             <section className="flex justify-center items-center box-border md:my-30">
                 <div className="mt-30 md:m-10 w-fit p-10 md:p-25 rounded text-black shadow-2xl md:text-3xl">
 
-                    <h1>Seja bem vindo {user.username} !</h1>
+                    <h1>Seja bem vindo {user} !</h1>
                     <p className="lg:text-xl lg:my-3 my-5 font-light underline
                     underline-offset-2 decoration-sky-200
                     "

@@ -53,6 +53,8 @@ public class StripeWebhookController : ControllerBase
             var amount = session.Metadata["amount"];
             var image = session.Metadata["image_adress"];
             var data = session.Metadata["data"];
+            var size = session.Metadata["size"];
+            var color = session.Metadata["color"];
 
             var body = new Dictionary<string, string>
             {
@@ -61,7 +63,9 @@ public class StripeWebhookController : ControllerBase
                 { "product_value", price },
                 { "amount", amount },
                 { "payment_date", data },
-                { "username", user }
+                { "username", user },
+                { "color", color },
+                { "size" , size}
             };
 
             var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
