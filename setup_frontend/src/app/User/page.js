@@ -21,6 +21,38 @@ export default function User() {
         return <> <p className="flex items-center justify-center text-2xl flex-col">Sem Login...</p> <Link href="/Login"> <p className="flex items-center text-sky-500 text-2xl">gostaria de ir para a page de Login</p> </Link> </> 
     }
 
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    async function makeLogOut() {
+        try {
+            const csrfToken = getCookie("csrftoken");
+            console.log(csrfToken);
+            const response = await fetch("http://127.0.0.1:8000/forms/process_logout/", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                credentials: 'include'
+            });
+
+            if (response.status ===200) {
+                router.push('/Login');
+            } else {
+                console.log(response.status)
+                alert("Erro ao tentar desconectar-se.");
+            }
+        } catch (error) {
+            console.error("Erro na requisicao de logout:", error);
+            alert("Erro de conexao ao tentar fazer logout.");
+        }
+    }
+
+
     console.log("Passamos pela verificacao e temos um valor para user, veja: ", user);
     return (
         <>
@@ -40,6 +72,11 @@ export default function User() {
                             <h2 className="bg-sky-500 text-white rounded-full scale-80 p-2 transition focus:bg-sky-600 hover:bg-sky-600 justify-left text-center">Ver minhas compras</h2>
                         </Link>
                     </div>
+
+                    <div className="flex justify-center items-center">
+                        <button onClick={() => { makeLogOut() }} className="bg-red-400 text-white p-3 rounded-full scale-80 p-2 transition hover:opacity-75 hover:cursor-pointer justify-left text-center">Fazer LogOut</button>
+                    </div>
+
                 </div>
 
             </section>

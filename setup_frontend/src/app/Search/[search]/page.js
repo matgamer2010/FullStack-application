@@ -8,6 +8,7 @@ export default function Search() {
     const params = useParams();
     const router = useRouter();
     const [product, setProduct] = useState(null);
+    const [search, setSearch] = useState(null);
 
     const searchValue = params?.search;
 
@@ -29,7 +30,7 @@ export default function Search() {
         }
 
         const decodedSearch = decodeURIComponent(searchValue);
-
+        setSearch(decodedSearch);
 
         async function sendProductToSearchUrl() {
             try {
@@ -45,6 +46,8 @@ export default function Search() {
                     const data = await response.json();
                     setProduct(data.results);
                 } else {
+                    console.log(response.status);
+                    console.log(response.data);
                     console.log('Erro ao buscar produto');
                 }
             } catch (e) {
@@ -53,16 +56,21 @@ export default function Search() {
         }
 
         sendProductToSearchUrl();
-    }, [decodedSearch]);
+    }, [searchValue]);
 
     const SendInfoToDynamicPage = (ID) => {
         const encodedID = encodeURIComponent(ID);
         router.push(`/Produtos/${encodedID}/`);
     }
 
-    if (!product) return <p> Carregando busca...</p>;
     console.log(product);
     debugger;
+    if (!product) return <>
+        <Header h1="M&M vendedores"></Header>
+        <section>
+            <h1>Nenhum resultado para {searchValue} no momento</h1>
+        </section>
+    </>
     return (
         <>
             <Header h1="M&M vendedores" />

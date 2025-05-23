@@ -79,6 +79,12 @@ CORS_ALLOWED_ORIGINS = [
     "https://mm-vendedores.vercel.app",
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000"
+]
+
 ROOT_URLCONF = 'setup_back_end.urls'
 
 TEMPLATES = [

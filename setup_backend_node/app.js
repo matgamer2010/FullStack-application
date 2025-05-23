@@ -45,6 +45,27 @@ app.post("/Login", async (request, res) => {
     }
 });
 
+app.post('/LogOut', async (req, res) => {
+    const getUser = JSON.parse(req.body);
+    console.log("Valor de user --> ", getUser);
+    try {
+        const request = await fetch('http://127.0.0.1:8000/forms/process_logout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: getUser
+        })
+        const data = await request.json();
+        if (data.ok) {
+            res.status(data.status).json(data);
+        } else {
+            res.status(data.status).json({ 'err': 'There was an error with the request' });
+        }
+    } catch (e) {
+        console.log('Houve um erro no Logout, o erro é: ', e);
+        res.status(500).json({ 'error': JSON.stringify(e) });
+    }
+})
+
 
 app.post("/Cadastro", async (request, res) => {
   const {email, user, password, secondPassword} = request.body;

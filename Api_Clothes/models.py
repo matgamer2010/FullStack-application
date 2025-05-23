@@ -19,15 +19,11 @@ class DataBaseClothes(models.Model):
         blank=False,
         related_name="Clothes_users",
     )
-    
-    amount = models.IntegerField(null=False, blank=False)
-
-    sizes = models.ManyToManyField("Size", related_name="clothes")
     colors = models.ManyToManyField("Color", related_name="clothes")
     category = models.ManyToManyField("Category", related_name="clothes")
     
     def __str__(self):
-        return f"Item {self.name} was saved"
+        return f"{self.name}"
     
     class Meta:
         app_label = "Api_Clothes"
@@ -52,6 +48,15 @@ class Color(models.Model):
     def __str__(self):
         return self.name
 
+class ClothesSizeColorStock(models.Model):
+    product = models.ForeignKey(DataBaseClothes, on_delete=models.CASCADE, related_name="product_stocks")
+    size = models.ForeignKey(Size, on_delete=models.CASCADE, related_name="size_stock")
+    color = models.ForeignKey(Color, on_delete=models.CASCADE, related_name="color_stock")
+    amount = models.PositiveIntegerField(default=0)
+
+class Meta:
+    unique_together = ('product', 'size', 'color')
+           
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     def __str__(self):

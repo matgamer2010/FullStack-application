@@ -33,6 +33,8 @@ BACKLOG 17/5:
   - Como usei WebHooks com o ASP.NET Core
   - Relacionamentos nas models do Django.
   - Carrossel de imagens com React.
+  - Como extraí cookies do navegador
+
   - Fazer flashcards acerca do cachê com Redis no Node
   - Fazer flashcards acerca da quantidade de produtos na página de produtos
 

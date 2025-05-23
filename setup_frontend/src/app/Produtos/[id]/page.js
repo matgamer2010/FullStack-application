@@ -13,8 +13,7 @@ function ProductPage({ params }) {
     const [images, setImages] = useState([]);
 
     const [quantity, setQuantity] = useState(1);
-    const [size, setSize] = useState("");
-    const [color, setColor] = useState("");
+    const [optionClothe, setOptionClothe] = useState("");
 
     const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
     useEffect(() => {
@@ -38,7 +37,6 @@ function ProductPage({ params }) {
         console.log("Esse é o valor de quantity: ",quantity);
         console.log("Esse é o valor de image: ", product.image);    
         console.log("Esse é o valor de product: ", product.price);
-        debugger;
         if (!localStorage.getItem("user")) {
             alert("User not found, you will be redirect to Login page");
             window.location.href = "/Login";
@@ -49,11 +47,9 @@ function ProductPage({ params }) {
             ImageAdress: product.image,
             quantity: quantity,
             User: localStorage.getItem("user"),
-            Size: size,
-            Color: color
+            Option: optionClothe
         }
         console.log(data);
-        debugger;
         try {
             console.log("Tentando fazer a requisicao para o backend");
             const request = await axios.post(url, data, { validateStatus: () => true });
@@ -80,7 +76,7 @@ function ProductPage({ params }) {
         <>
             <Header h1="M&M vendedores" />
 
-            <section>
+            <section className="hidden md:block">
 
                 <div className="flex text-2xl justify-between md:m-10 relative m-9 ">
 
@@ -119,17 +115,12 @@ function ProductPage({ params }) {
                                     <option key={value}>{ value+1 }</option>
                                 ))}
                             </select>
-
-                            <select className="mb-3 bg-gray-300 w-fit rounded border-none mx-2" value={color} onChange={(event) => {setColor(String(event.target.value)) } }>
-                                {product.colors.map((color, index) => (
-                                    <option key={index}>{color.name}</option>
+                            <select className="mb-3 bg-gray-300 mx-5 w-fit rounded border-none">
+                                {product.clothes_size_color_stock.map((value, index) => (
+                                    <option key={index} onClick={(event) => { setOptionClothe(event.target.value) }}>
+                                        tamanho: {value.size.name}, cor: {value.color.name}, unidades: {value.amount}
+                                    </option>
                                 ))}
-                            </select>
-
-                            <select className="mb-3 bg-gray-300 w-fit rounded border-none" value={size} onChange={(event) => {setSize(String(event.target.value)) } }>
-                                {product.sizes.map((size, index) => (
-                                    <option key={index}>{ size.name}</option>
-                                )) }
                             </select>
                         </div>
 
@@ -141,7 +132,66 @@ function ProductPage({ params }) {
                 </div>
             </section>
 
-            <Footer></Footer>
+            <section className="block md:hidden">
+                <div className="flex flex-col ">
+
+
+                    <h1 className="text-2xl text-center mt-5 text-shadow-lg">{product.name}</h1>
+                    <div className="flex items-center justify-center scale-90 ">
+                        <button
+                            onClick={() => setCurrentImageIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1))}
+                            className="sm:relative md:relative scale-80 md:scale-100 left-0 bg-gray-700 text-white p-2 rounded-full hover:bg-gray-900"
+                        >
+                            ◀
+                        </button>
+
+                        <img
+                            src={images[currentImageIndex]}
+                            className="scale-110 rounded mt-8 mx-5"
+                            alt="Product"
+                        />
+
+                        <button
+                            onClick={() => setCurrentImageIndex((prev) => (prev + 1) % images.length)}
+                            className="relative md:relative scale-80 md:scale-100 right-0 bg-gray-700 text-white p-2 rounded-full hover:bg-gray-900"
+                        >
+                            ▶
+                        </button>
+                    </div>
+
+
+                    <div className="flex flex-col mx-5 p-0 scale-80 md:scale-90 ">
+                        <p className="text-3xl text-center my-3 font-light ">{product.price} R$</p>
+
+                        <div className="flex items-center justify-center m-2 ">
+                            <select className="mb-3 bg-gray-300 w-fit rounded border-none" value={quantity} onChange={(event) => setQuantity(Number(event.target.value))} >
+                                {[...Array(product.amount)].map((_, value) => (
+                                    <option key={value}>{value + 1}</option>
+                                ))}
+                            </select>
+
+                            <select className="mb-3 bg-gray-300 mx-5 w-fit rounded border-none">
+                                {product.clothes_size_color_stock.map((value, index) => (
+                                    <option key={index} onClick={(event) => {setOptionClothe(event.target.value) } }>
+                                        tamanho: {value.size.name}, cor: {value.color.name}, unidades: {value.amount}
+                                    </option>
+                                ))}
+                            </select>
+
+                        </div>
+
+                        <button className="bg-sky-500 text-xl rounded-full p-4 text-white text-shadow-2lg transition ease-in-out hover:bg-sky-600 hover:cursor-pointer focus:bg-sky-600 " onClick={() => { StripeCheckout() }}>
+                            Comprar
+                        </button>
+
+                        <p className="text-gray-500 my-3 ">{product.description}</p>
+                    </div>
+
+
+                </div>
+
+            </section>
+
         </>  
     );
 }

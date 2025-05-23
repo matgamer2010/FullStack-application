@@ -1,5 +1,6 @@
+from math import prod
 from django.contrib import admin
-from Api_Clothes.models import DataBaseClothes, ImageClothes, Size, Color, Category
+from Api_Clothes.models import DataBaseClothes, ImageClothes, Size, Color, Category, ClothesSizeColorStock
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -21,8 +22,12 @@ class ImagesInline(admin.TabularInline):
     model = ImageClothes
     extra = 5
 
+class ProductsSizeStockInline(admin.TabularInline):
+    model = ClothesSizeColorStock
+    extra = 1
+
 class AdminClothes(admin.ModelAdmin):
-    inlines = [ImagesInline]
+    inlines = [ImagesInline, ProductsSizeStockInline]
     list_display = ("id", "name", "price", "public", "date", "image",)
     list_display_links = ("id", "name",)
     search_fields = ("name",)

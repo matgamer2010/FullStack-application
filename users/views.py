@@ -10,7 +10,7 @@ from django.contrib.auth.views import PasswordResetCompleteView, PasswordResetDo
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from allauth.socialaccount.models import SocialAccount
 from django.db import models
 from django.http import JsonResponse
@@ -191,7 +191,9 @@ def formRegister(request):
 
     return render(request, "Forms/Register.html", {"form": register_forms})
 
-
+# Vou usar isso no futuro, quando a complexidade da empresa favorecer.
+# Atualemente, há um processo relativamente burocrático cujo qual não
+# vale a pena ser investido tempo nisso.
 def UsarApiCorreios(cep_destino):
     url = "https://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx"
     params = {
@@ -231,7 +233,14 @@ def CalcFretePrazo(request):
     else:
         return JsonResponse({'EROR':'Method not allowed'}, status=405)
 
+@require_http_methods(['POST'])
+@csrf_protect
+def ProcessLogout(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({"error": "Usuário não está logado"}, status=400)
 
+    auth.logout(request)
+    return JsonResponse({"success": "Usuário desconectado com sucesso"}, status=200)
 
 def Logout(request):
     auth.logout(request)
@@ -305,16 +314,15 @@ def ProcessSearch(request):
     try:
         body = json.loads(request.body)
         search = body.get("search")
-
+        print(search)
         if not search:
             return JsonResponse({'ERROR': 'Pesquisa vazia.'}, status=400)
 
         product_qs = DataBaseClothes.objects.filter(name__icontains=search)
-
+        print(product_qs)
         if not product_qs.exists():
             return JsonResponse({'ERROR': f'Não temos um produto como: {search}'}, status=404)
 
-        # Serialização simplificada
         products = list(product_qs.values("id", "name", "price", "image"))
 
         return JsonResponse({'results': products}, status=200)

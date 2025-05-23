@@ -56,8 +56,7 @@ public class PaymentsController : ControllerBase
                     { "amount", Convert.ToString(product.Quantity) },
                     { "image_adress", Convert.ToString(product.ImageAdress) },
                     { "data", timestamp },
-                    { "color", Convert.ToString(product.Color) },
-                    { "size", Convert.ToString(product.Size)}
+                    { "option", Convert.ToString(product.Option) }
                 }
             };
 

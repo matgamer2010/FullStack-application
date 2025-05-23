@@ -17,9 +17,7 @@ namespace ProductModel.Models
         [Required]  
         public string User { get; set; } = "User not defined";
         [Required]
-        public string Size { get; set; }
-        [Required]
-        public string Color { get; set; }
+        public string Option { get; set; }
     }
 }
 
