@@ -236,11 +236,15 @@ def CalcFretePrazo(request):
 @require_http_methods(['POST'])
 @csrf_protect
 def ProcessLogout(request):
-    if not request.user.is_authenticated:
-        return JsonResponse({"error": "Usuário não está logado"}, status=400)
+    try:
+        if not request.user.is_authenticated:
+            return JsonResponse({"error": "Usuário não está logado"}, status=400)
 
-    auth.logout(request)
-    return JsonResponse({"success": "Usuário desconectado com sucesso"}, status=200)
+        auth.logout(request)
+        return JsonResponse({"success": "Usuário desconectado com sucesso"}, status=200)
+    except Exception as e:
+        print(f'Houve um erro na requisição, e o erro é: {e}')
+        return JsonResponse({'ERRO': f'Houve um erro na requisição, e o erro é: {e}'})
 
 def Logout(request):
     auth.logout(request)

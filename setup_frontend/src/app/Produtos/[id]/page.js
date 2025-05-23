@@ -12,7 +12,7 @@ function ProductPage({ params }) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [images, setImages] = useState([]);
 
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(0);
     const [optionClothe, setOptionClothe] = useState("");
 
     const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
@@ -110,11 +110,6 @@ function ProductPage({ params }) {
                         <p className="text-3xl my-3 font-light ">{product.price} R$</p>
 
                         <div className="flex m-2 ">
-                            <select className="mb-3 bg-gray-300 w-fit rounded border-none" value={quantity} onChange={(event) => setQuantity(Number( event.target.value))} >
-                                {[...Array(product.amount)].map((_, value) => (
-                                    <option key={value}>{ value+1 }</option>
-                                ))}
-                            </select>
                             <select className="mb-3 bg-gray-300 mx-5 w-fit rounded border-none">
                                 {product.clothes_size_color_stock.map((value, index) => (
                                     <option key={index} onClick={(event) => { setOptionClothe(event.target.value) }}>
@@ -164,11 +159,6 @@ function ProductPage({ params }) {
                         <p className="text-3xl text-center my-3 font-light ">{product.price} R$</p>
 
                         <div className="flex items-center justify-center m-2 ">
-                            <select className="mb-3 bg-gray-300 w-fit rounded border-none" value={quantity} onChange={(event) => setQuantity(Number(event.target.value))} >
-                                {[...Array(product.amount)].map((_, value) => (
-                                    <option key={value}>{value + 1}</option>
-                                ))}
-                            </select>
 
                             <select className="mb-3 bg-gray-300 mx-5 w-fit rounded border-none">
                                 {product.clothes_size_color_stock.map((value, index) => (
