@@ -14,6 +14,8 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from allauth.socialaccount.models import SocialAccount
 from django.db import models
 from django.http import JsonResponse
+from django.middleware.csrf import get_token
+from django.views.decorators.csrf import ensure_csrf_cookie
 from requests import get
 from Api_Clothes.models import DataBaseClothes
 from rest_framework import serializers
@@ -63,6 +65,7 @@ class LoginValidate(serializers.Serializer):
 @csrf_exempt
 @require_http_methods(['POST'])
 @api_view(['POST'])
+@ensure_csrf_cookie
 def ProcessLogin(request):
 
     if request.method == 'POST':  
@@ -70,7 +73,7 @@ def ProcessLogin(request):
         serializer = LoginValidate(data=request.data)
 
         if not serializer.is_valid():
-            return Response({"ERROR": "O conteúdo submetido não é válido."}, status=400)
+            return Response({"ERROR": "O conteúdo submetido não é válido."}, status=403)
         
         get_user = serializer.validated_data.get("user")
         get_password = serializer.validated_data.get("password")
@@ -83,12 +86,16 @@ def ProcessLogin(request):
             username = get_user,
             password = get_password,
         )
-
+        CSRF = get_token(request)
+        print("Valor do csrf token: ",CSRF)
         if user is not None:
+            print("O usuário não é Null")
             auth.login(request, user)
-            return Response({"Success": "Seja bem vindo!"}, status=200)
-        return Response({"ERROR": "As credenciais não conferem"}, status=400)
-
+            return JsonResponse(
+                {"Success": "Seja bem vindo!",
+                 "X-CSRFToken": CSRF,
+                }, status=200)
+        return JsonResponse({"ERROR": "As credenciais não conferem"}, status=401)
 # TODO: Refatorar
 def formLogin(request):
 
@@ -241,6 +248,7 @@ def ProcessLogout(request):
             return JsonResponse({"error": "Usuário não está logado"}, status=400)
 
         auth.logout(request)
+        print("desconectado")
         return JsonResponse({"success": "Usuário desconectado com sucesso"}, status=200)
     except Exception as e:
         print(f'Houve um erro na requisição, e o erro é: {e}')

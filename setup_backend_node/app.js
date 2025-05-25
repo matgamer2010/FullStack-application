@@ -15,13 +15,15 @@ app.use(cors({
 app.use(bodyParser.json());
 
 app.post("/Login", async (request, res) => {
+    console.log(request.body);
+        
     const { user, password } = request.body;
+
     console.log("Dados recebidos do front:", { user, password });
 
-    // ERR connection refused.
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/token/", {
+        const responseTokens = await fetch("http://127.0.0.1:8000/api/token/", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -29,18 +31,24 @@ app.post("/Login", async (request, res) => {
             body: JSON.stringify({ username: user, password }),
         });
 
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
-            const data = await response.json();
+        const responseLogin = await fetch("http://127.0.0.1:8000/forms/process_login/", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: user, password: password })
+        });
+
+        const contentType = responseTokens.headers.get('content-type');
+        if (contentType && contentType.includes('application/json') && responseLogin.status === 200) {
+            const data = await responseTokens.json();
             console.log("Dados que vieram do Django: ", data);
-            res.status(response.status).json(data);
+            res.status(responseTokens.status).json(data);
         } else {
-            const text = await response.text();
-            console.warn("Resposta não JSON recebida pelo Django -->", text);
-            res.status(response.status).send(text);
+            const text = await responseTokens.text();
+            console.log("Resposta não JSON recebida pelo Django -->", text);
+            res.status(responseTokens.status).send(text);
         }
     } catch (error) {
-        console.log("Ocorreu um erro ao se comunicar com o Django", error);
+        console.log("Ocorreu um erro ao se comunicar com o Django", error.text() );
         res.status(500).json({ error: "There was an error with the request" });
     }
 });

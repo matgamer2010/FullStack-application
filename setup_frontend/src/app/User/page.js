@@ -31,11 +31,11 @@ export default function User() {
         try {
             const csrfToken = getCookie("csrftoken");
             console.log(csrfToken);
-            const response = await fetch("http://127.0.0.1:8000/forms/process_logout/", {
+            const response = await fetch("http://localhost:8000/forms/process_logout/", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken
+                    'X-CsrfToken': getCookie("csrftoken")
                 },
                 credentials: 'include'
             });

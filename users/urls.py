@@ -14,7 +14,7 @@ urlpatterns = [
   path("process_user_payments/", views.ProcessUsersPayments, name="process_users_payments"),
   path("process_payment/", views.ProcessPayments, name="process_payments"),
   path("process_search/", views.ProcessSearch, name="process_search"),
-  path("process_logout/", views.ProcessLogout, name ="logout"),
+  path("process_logout/", views.ProcessLogout, name ="process_logout"),
   path("calculo_frete_prazo/", views.CalcFretePrazo, name="calculo_frete_prazo"),
   # These URLs are using for the Reset Account feature. It does not be changed
   path("reset/", 

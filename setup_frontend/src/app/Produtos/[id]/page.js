@@ -112,9 +112,19 @@ function ProductPage({ params }) {
                         <div className="flex m-2 ">
                             <select className="mb-3 bg-gray-300 mx-5 w-fit rounded border-none">
                                 {product.clothes_size_color_stock.map((value, index) => (
-                                    <option key={index} onClick={(event) => { setOptionClothe(event.target.value) }}>
-                                        tamanho: {value.size.name}, cor: {value.color.name}, unidades: {value.amount}
-                                    </option>
+                                    <>
+                                        <option key={index} onClick={(event) => { setOptionClothe(event.target.value) }}>
+                                            tamanho: {value.size.name}
+                                        </option>
+                                        
+                                        <option>
+                                            cor: {value.color.name}
+                                        </option>
+                                        
+                                        <option>
+                                            unidades: {value.amount}
+                                        </option>
+                                    </>
                                 ))}
                             </select>
                         </div>
@@ -145,7 +155,7 @@ function ProductPage({ params }) {
                             className="scale-110 rounded mt-8 mx-5"
                             alt="Product"
                         />
-
+                                                                
                         <button
                             onClick={() => setCurrentImageIndex((prev) => (prev + 1) % images.length)}
                             className="relative md:relative scale-80 md:scale-100 right-0 bg-gray-700 text-white p-2 rounded-full hover:bg-gray-900"

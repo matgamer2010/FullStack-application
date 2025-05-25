@@ -39,16 +39,18 @@ export function Main(){
 
         try{
             console.log("Antes do post para o Express");
-            const response = await axios.post("http://localhost:3001/Login", data, { validateStatus: () => true });
+            const response = await axios.post("http://localhost:8000/forms/process_login/", data, { withCredentials: true });
 
-
-            if(response.status === 200){
+            if (response.status === 200) {
+                console.log(response);
+                console.log(response.data);
                 const { access, refresh } = response.data;
+
+                console.log("O status foi 200.");
 
                 localStorage.setItem("access", access);
                 localStorage.setItem("refresh", refresh);
 
-                console.log("O status foi 200.");
                 router.push(`/?message=${encodeURIComponent(response.data.Success)}&type=Success`);
             } else{
                 console.log(`O status foi diferente de 200, veja: ${response.status}`);
