@@ -37,7 +37,7 @@ export default function User() {
                     'Content-Type': 'application/json',
                     'X-CsrfToken': getCookie("csrftoken")
                 },
-                credentials: 'include'
+                credentials: 'include'  
             });
 
             if (response.status ===200) {

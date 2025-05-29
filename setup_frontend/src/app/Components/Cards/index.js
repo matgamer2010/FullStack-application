@@ -40,28 +40,63 @@ function Cards(){
             </div>
 
             <section>
-                { product.map((item) =>{
-                    return(
-                        <div key={item.name} className=" 
-                        bg-gray-100 rounded shadow-lg shadow-sky-500 m-20 mt-10 p-5 w-fit 
-                        grid-cols-1 gap-4  transition duration-700 ease-in-out hover:scale-105 hover:shadow-xl 
-                        cursor-pointer  hover:translate-5 hover:skew-3
-                        hover:shadow-sky-700 ">
 
-                            <img src={item.image} className="rounded"/>
+                <section className="mx-5">
 
-                            <h1 className="text-2xl mt-5 w-auto h-auto">{item.name}</h1>
+                    <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500">
+                        <input className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox"/>
+                        <p className="text-xl">Masculino</p>
+                    </div>
 
-                            <p className="my-5 text-2xl"> R$ {item.price}</p>
+                    <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 my-3">
+                        <input className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
+                        <p>Feminino</p>
+                    </div>
 
-                            <button onClick={() => SendInfoToDynamicPage(item.id)} className="
-                            text-white bg-indigo-600 p-3 rounded shadow-lg transition duration-700 ease-in-out 
-                            hover:scale-105 hover:animate-pulse cursor-pointer">Comprar</button>
+                    <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 mb-3">
+                        <input className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
+                        <p>Juvenil</p>
+                    </div>
 
-                        </div>
-                    );
-                })}
+                    <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500">
+                        <input className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
+                        <p>Adulto</p>
+                    </div>
+
+                    <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 my-3">
+                        <input className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
+                        <p>Infantil</p>
+                    </div>
+
+
+                </section>
+
+                <section>
+                    { product.map((item) =>{
+                        return(
+                            <div key={item.name} className=" 
+                            bg-gray-100 rounded shadow-lg shadow-sky-500 m-20 mt-10 p-5 w-fit 
+                            grid-cols-1 gap-4  transition duration-700 ease-in-out hover:scale-105 hover:shadow-xl 
+                            cursor-pointer  hover:translate-5 hover:skew-3
+                            hover:shadow-sky-700 ">
+
+                                <img src={item.image} className="rounded"/>
+
+                                <h1 className="text-2xl mt-5 w-auto h-auto">{item.name}</h1>
+
+                                <p className="my-5 text-2xl"> R$ {item.price}</p>
+
+                                <button onClick={() => SendInfoToDynamicPage(item.id)} className="
+                                text-white bg-indigo-600 p-3 rounded shadow-lg transition duration-700 ease-in-out 
+                                hover:scale-105 hover:animate-pulse cursor-pointer">Comprar</button>
+
+                            </div>
+                        );
+                    })}
+                </section>
+
             </section>
+
         </section>
     );
 }
