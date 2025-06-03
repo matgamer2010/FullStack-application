@@ -19,7 +19,7 @@ public class PaymentsController : ControllerBase
     [HttpPost("create-checkout-session")]
     public ActionResult CreateCheckoutSession([FromBody] Product product)
     {
-        Console.WriteLine(JsonSerializer.Serialize(product)); // imprime corretamente o objeto
+        Console.WriteLine(JsonSerializer.Serialize(product));
 
         try
         {

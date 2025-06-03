@@ -63,6 +63,7 @@ APPEND_SLASH=False
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000', 
     'http://127.0.0.1:3000',
+    'https://mm-vendedores-mateus-projects-7cfb9e28.vercel.app'
 ]
 
 CSRF_COOKIE_HTTPONLY = False  
@@ -86,6 +87,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3001",
     "http://localhost:5039",
     "https://mm-vendedores.vercel.app",
+    "https://mm-vendedores-mateus-projects-7cfb9e28.vercel.app"
 ]
 
 CORS_ALLOW_CREDENTIALS = True

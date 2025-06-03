@@ -4,7 +4,13 @@ import { useRouter } from "next/navigation";
 
 function Cards(){
 
-    const [product, setProduct] = useState([]);
+    const [ product, setProduct] = useState([]);
+    const [ category, setCategory] = useState([]);
+    const [ masculino, setMasculino] = useState(false);
+    const [ feminino, setFeminino] = useState(false);
+    const [ juvenil, setJuvenil] = useState(false);
+    const [ adulto, setAdulto] = useState(false);
+    const [ infantil, setInfantil] = useState(false);
 
     useEffect(() => {
         const url = "http://localhost:5039/Clothes/";
@@ -23,6 +29,33 @@ function Cards(){
         router.push(`/Produtos/${encodedID}`);
     }
 
+    function sendCategory(){
+        console.log("Chegou no sendCategory");
+        if(masculino){
+            productsToSend.push(product.filter(item => item.category === "Masculino"));
+        } else if(feminino){
+            productsToSend.push(product.filter(item => item.category === "Feminino"));
+        } else if(juvenil){
+            productsToSend.push(product.filter(item => item.category === "Juvenil"));
+        } else if(adulto){
+            productsToSend.push(product.filter(item => item.category === "Adulto"));
+        } else if(infantil){
+            productsToSend.push(product.filter(item => item.category === "Infantil"));
+        }
+        /* 
+            Aqui, tive a ideia de criar um array que armazene as categorias,
+            depois fazemos uma iteracao, e filtramos em "product" os produtos
+            que contenham a caategoria do array, sempre verificando se ha
+            algo dentro do array; por fim, usamos o setProduct para atualizar
+            os produtos que queremos.
+
+            Uma duvida que fiquei agora é como voltar o valor de product para 
+            seu estado padrao, talvez seja melhor apenas criar um novo
+            useState para as categorias.
+        */
+        
+    }
+
     if(!product) return (<p>Carregando catálogo...</p>)
 
     return(
@@ -39,36 +72,35 @@ function Cards(){
                 </p> 
             </div>
 
-            <section>
+            <section className="flex items-center">
 
-                <section className="mx-5">
+                <section className="mx-5 md:scale-100 scale-75 ">
+                    <form onSubmit={(event) => sendCategory(event) }>
+                        <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500">
+                            <input onChange={(event) => { setMasculino(event.target.checked); sendCategory() } } className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox"/>
+                            <p className="text-xl">Masculino</p>
+                        </div>
 
-                    <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500">
-                        <input className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox"/>
-                        <p className="text-xl">Masculino</p>
-                    </div>
+                        <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 my-3">
+                            <input onChange={(event) => { setFeminino(event.target.checked); sendCategory() } } className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
+                            <p>Feminino</p>
+                        </div>
 
-                    <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 my-3">
-                        <input className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
-                        <p>Feminino</p>
-                    </div>
+                        <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 mb-3">
+                            <input onChange={(event) => { setJuvenil(event.target.checked); sendCategory() } } className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
+                            <p>Juvenil</p>
+                        </div>
 
-                    <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 mb-3">
-                        <input className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
-                        <p>Juvenil</p>
-                    </div>
+                        <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500">
+                            <input onChange={(event) => { setAdulto(event.target.checked); sendCategory() } } className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
+                            <p>Adulto</p>
+                        </div>
 
-                    <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500">
-                        <input className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
-                        <p>Adulto</p>
-                    </div>
-
-                    <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 my-3">
-                        <input className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
-                        <p>Infantil</p>
-                    </div>
-
-
+                        <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 my-3">
+                            <input onChange={(event)=> {setInfantil(event.target.checked); sendCategory() } } className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
+                            <p>Infantil</p>
+                        </div>
+                    </form>
                 </section>
 
                 <section>

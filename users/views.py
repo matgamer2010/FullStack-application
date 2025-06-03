@@ -18,6 +18,7 @@ from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
 from requests import get
 from Api_Clothes.models import DataBaseClothes
+from Api_Clothes.serializers import SerializersClothes
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -199,7 +200,7 @@ def formRegister(request):
     return render(request, "Forms/Register.html", {"form": register_forms})
 
 # Vou usar isso no futuro, quando a complexidade da empresa favorecer.
-# Atualemente, há um processo relativamente burocrático cujo qual não
+# Atualmente, há um processo relativamente burocrático cujo qual não
 # vale a pena ser investido tempo nisso.
 def UsarApiCorreios(cep_destino):
     url = "https://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx"
@@ -341,6 +342,29 @@ def ProcessSearch(request):
     
     except Exception as e:
         return JsonResponse({'ERROR': str(e)}, status=400)
+
+class SerializerClothesCategory(serializers.Serializer):
+    Category = serializers.CharField()
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def ProcessSearchCategory(request):
+    try:
+        body = json.loads(request.body)
+        validate_body = SerializerClothesCategory(data=body)
+        if not validate_body.is_valid():
+            return JsonResponse({"error":"The body is not valid"})
+        category = validate_body.validated_data.get("Category")
+        if not category:
+            return JsonResponse({'error': "There is no Category"}, status=400)
+
+        process_info = DataBaseClothes.objects.filter(category__name__in=category)
+        # Sorry Uncle Bob, but I need to use another Serializer from other paste to use here
+        # I promess to fix it soon.
+        process_search = SerializersClothes(process_info, many=True)
+        return JsonResponse({'results': process_search.data})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 @login_required
 def delete_account(request):
