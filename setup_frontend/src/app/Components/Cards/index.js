@@ -31,6 +31,9 @@ function Cards(){
 
     function sendCategory(){
         console.log("Chegou no sendCategory");
+        
+        let productsToSend = [];
+
         if(masculino){
             productsToSend.push(product.filter(item => item.category === "Masculino"));
         } else if(feminino){
@@ -42,10 +45,16 @@ function Cards(){
         } else if(infantil){
             productsToSend.push(product.filter(item => item.category === "Infantil"));
         }
+        
+        if(productsToSend.length > 0){
+            setCategory([]);
+        } else{
+            setCategory(productsToSend);
+        }
         /* 
             Aqui, tive a ideia de criar um array que armazene as categorias,
             depois fazemos uma iteracao, e filtramos em "product" os produtos
-            que contenham a caategoria do array, sempre verificando se ha
+            que contenham a categoria do array, sempre verificando se ha
             algo dentro do array; por fim, usamos o setProduct para atualizar
             os produtos que queremos.
 
