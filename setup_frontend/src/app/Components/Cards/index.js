@@ -4,13 +4,8 @@ import { useRouter } from "next/navigation";
 
 function Cards(){
 
-    const [ product, setProduct] = useState([]);
-    const [ category, setCategory] = useState([]);
-    const [ masculino, setMasculino] = useState(false);
-    const [ feminino, setFeminino] = useState(false);
-    const [ juvenil, setJuvenil] = useState(false);
-    const [ adulto, setAdulto] = useState(false);
-    const [ infantil, setInfantil] = useState(false);
+    const [product, setProduct] = useState([]);
+    const [category, setCategory] = useState("");
 
     useEffect(() => {
         const url = "http://localhost:5039/Clothes/";
@@ -29,44 +24,55 @@ function Cards(){
         router.push(`/Produtos/${encodedID}`);
     }
 
-    function sendCategory(){
-        console.log("Chegou no sendCategory");
-        
-        let productsToSend = [];
+    function searchByCategory() {
 
-        if(masculino){
-            productsToSend.push(product.filter(item => item.category === "Masculino"));
-        } else if(feminino){
-            productsToSend.push(product.filter(item => item.category === "Feminino"));
-        } else if(juvenil){
-            productsToSend.push(product.filter(item => item.category === "Juvenil"));
-        } else if(adulto){
-            productsToSend.push(product.filter(item => item.category === "Adulto"));
-        } else if(infantil){
-            productsToSend.push(product.filter(item => item.category === "Infantil"));
-        }
-        
-        if(productsToSend.length > 0){
-            setCategory([]);
-        } else{
-            setCategory(productsToSend);
-        }
-        /* 
-            Aqui, tive a ideia de criar um array que armazene as categorias,
-            depois fazemos uma iteracao, e filtramos em "product" os produtos
-            que contenham a categoria do array, sempre verificando se ha
-            algo dentro do array; por fim, usamos o setProduct para atualizar
-            os produtos que queremos.
+    /*
+        Onde parei:
 
-            Uma duvida que fiquei agora é como voltar o valor de product para 
-            seu estado padrao, talvez seja melhor apenas criar um novo
-            useState para as categorias.
-        */
+        Consegui fazer a pesquisa por categoria, tanto que ao fazer um log quando
+        a condicional é positiva, podemos ver que foi encntrado o produto que queremos
         
+        Mas aqui vem o ponto que não consegui entender, pois ao adicionar o "element"
+        ele adiciona todos os produtos ao invés do pesquisado 
+        (sei disso por causa do debugger na linha antes do return, 
+        lá pude ver o retorno de um Objeto ). Por outro lado, não consegui identificar se  
+        erro pode ser proeminente das múltiplas renderizações geradas pelo React (na estrutura
+        interna há um componente que renderiza duas vezes uma ação), uma coisa que devo validar é se 
+        há algum produto duplicado nessa lista de produtos, inclusive, devo fazer uma validação Clean
+        no Django sobre isso.
+
+        Porém tem outro ponto de vista, há varios produtos de uma mesma categoria, e esse loop
+        abaixo vai definir apenas o último, ou seja, quando acabar de percorrer, devo
+        fazer um setProduct() passando a lista de todos os produtos correspondentes à categoria.
+
+    */
+        product.forEach((element) => {
+            element.category.forEach((categoryFromApi) => {
+                if (category === categoryFromApi.name) {
+                    console.log("Conseguimos verificar se temos um produto que corresponda à categoria desejada: ", element);
+                    debugger;
+                    setProduct(element);
+                    console.log("Conseguimos verificar se temos um produto que corresponda à categoria desejada")
+                } else {
+                    console.log("asdas");
+                }
+            });
+        });
     }
 
-    if(!product) return (<p>Carregando catálogo...</p>)
+    const SelectCategory = (props) => {
+        const isThereAnyCategoryAlreadySelect = category=== props.p ? true: false; 
+        return (
+            <div onClick={() => { setCategory(props.p); searchByCategory() }} className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 my-3 checked:bg-sky-500">
+                <input value={isThereAnyCategoryAlreadySelect} className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 p-4" type="checkbox" />
+                <p>{ props.p }</p>
+            </div>
+        )
+    }
 
+    if (!product) return (<p>Carregando catálogo...</p>)
+    console.log(product);
+    debugger;
     return(
         <section className="section_cards box-border">
 
@@ -84,31 +90,12 @@ function Cards(){
             <section className="flex items-center">
 
                 <section className="mx-5 md:scale-100 scale-75 ">
-                    <form onSubmit={(event) => sendCategory(event) }>
-                        <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500">
-                            <input onChange={(event) => { setMasculino(event.target.checked); sendCategory() } } className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox"/>
-                            <p className="text-xl">Masculino</p>
-                        </div>
-
-                        <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 my-3">
-                            <input onChange={(event) => { setFeminino(event.target.checked); sendCategory() } } className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
-                            <p>Feminino</p>
-                        </div>
-
-                        <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 mb-3">
-                            <input onChange={(event) => { setJuvenil(event.target.checked); sendCategory() } } className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
-                            <p>Juvenil</p>
-                        </div>
-
-                        <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500">
-                            <input onChange={(event) => { setAdulto(event.target.checked); sendCategory() } } className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
-                            <p>Adulto</p>
-                        </div>
-
-                        <div className="flex flex-center gap-2 outline w-fit p-2 rounded outline-gray-500 my-3">
-                            <input onChange={(event)=> {setInfantil(event.target.checked); sendCategory() } } className="appearance-none w-5 h-5 rounded-full border border-gray-400 checked:bg-sky-500 " type="checkbox" />
-                            <p>Infantil</p>
-                        </div>
+                    <form onSubmit={(event) => searchByCategory(event)}>
+                        <SelectCategory p="Masculino" />
+                        <SelectCategory p="Feminino" />
+                        <SelectCategory p="Juvenil" />
+                        <SelectCategory p="Adulto" />
+                        <SelectCategory p="Infantil" />
                     </form>
                 </section>
 
