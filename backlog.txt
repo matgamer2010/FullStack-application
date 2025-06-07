@@ -31,11 +31,10 @@ BACKLOG 17/5:
   - Como criei as páginas automaticas de cada produto
   - Como usei JWT com o Django e Node.
   - Como usei WebHooks com o ASP.NET Core
-  - Relacionamentos nas models do Django.
+  - Relacionamentos nas models do Django e exibição no Admin.
   - Carrossel de imagens com React.
   - Como extraí cookies do navegador
   - Como fiz uma espécie de FULL CROSS JOIN no django
-
   - Fazer flashcards acerca do cachê com Redis no Node
   - Fazer flashcards acerca da quantidade de produtos na página de produtos
 
